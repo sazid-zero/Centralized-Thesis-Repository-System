@@ -24,7 +24,7 @@ export default function Home() {
               </div>
               <div className="flex items-center gap-4">
                 <Link href="/login">
-                  <Button variant="ghost" className="text-foreground hover:bg-muted">
+                  <Button variant="ghost" className="text-foreground hover:bg-primary/80">
                     Login
                   </Button>
                 </Link>
@@ -60,7 +60,7 @@ export default function Home() {
                     <Button
                         size="lg"
                         variant="outline"
-                        className="w-full sm:w-auto border-border hover:bg-muted bg-transparent"
+                        className="w-full sm:w-auto border-border hover:bg-primary/70 bg-transparent"
                     >
                       Browse Repository
                     </Button>
@@ -94,7 +94,7 @@ export default function Home() {
                 return (
                     <Card
                         key={idx}
-                        className="border-border bg-background/60 backdrop-blur-sm p-6 text-center hover:shadow-lg hover:bg-background/80 transition-all"
+                        className="border-border bg-background/40 backdrop-blur-sm p-6 text-center shadow-xl hover:shadow-2xl hover:bg-background/80 transition-all"
                     >
                       <Icon className="h-8 w-8 mx-auto text-primary mb-3" />
                       <p className="text-3xl font-bold text-foreground">{stat.value}</p>
