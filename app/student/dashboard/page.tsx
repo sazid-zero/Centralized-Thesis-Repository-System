@@ -65,7 +65,7 @@ export default function StudentDashboard() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-              <p className="text-muted-foreground mt-1">Welcome back, Student Name</p>
+              <p className="text-muted-foreground mt-1">Welcome back, Sharif Mahmud</p>
             </div>
             <Link href="/student/submit">
               <Button className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2">

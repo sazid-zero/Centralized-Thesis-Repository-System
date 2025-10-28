@@ -60,7 +60,7 @@ export default function Home() {
                     <Button
                         size="lg"
                         variant="outline"
-                        className="w-full sm:w-auto border-border hover:bg-primary/70 bg-transparent"
+                        className="w-full sm:w-auto border-border hover:bg-primary/70 bg-background/30"
                     >
                       Browse Repository
                     </Button>
@@ -85,10 +85,10 @@ export default function Home() {
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
             <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-4">
               {[
-                { label: "Total Theses", value: "2,847", icon: FileText },
+                { label: "Total Theses", value: "2,764", icon: FileText },
                 { label: "Active Users", value: "1,250+", icon: Users },
-                { label: "Departments", value: "12", icon: BookOpen },
-                { label: "Years Archived", value: "5+", icon: Search },
+                { label: "Departments", value: "27", icon: BookOpen },
+                { label: "Years Archived", value: "1+", icon: Search },
               ].map((stat, idx) => {
                 const Icon = stat.icon
                 return (
