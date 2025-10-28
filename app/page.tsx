@@ -94,7 +94,7 @@ export default function Home() {
                 return (
                     <Card
                         key={idx}
-                        className="border-border bg-background/40 backdrop-blur-sm p-6 text-center shadow-xl hover:shadow-2xl hover:bg-background/80 transition-all"
+                        className="border-border bg-background/60 backdrop-blur-sm p-6 text-center shadow-xl hover:shadow-2xl hover:bg-background/80 transition-all"
                     >
                       <Icon className="h-8 w-8 mx-auto text-primary mb-3" />
                       <p className="text-3xl font-bold text-foreground">{stat.value}</p>
