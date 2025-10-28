@@ -155,7 +155,7 @@ export default function Home() {
                 return (
                     <Card
                         key={idx}
-                        className="border-border bg-background/60 backdrop-blur-sm p-8 hover:shadow-xl hover:bg-background/80 transition-all"
+                        className="border-border bg-background/60 backdrop-blur-sm p-8 shadow-xl hover:shadow-2xl hover:bg-background/80 transition-all"
                     >
                       <Icon className="h-10 w-10 text-primary mb-4" />
                       <h3 className="text-lg font-semibold text-foreground mb-2">{feature.title}</h3>
