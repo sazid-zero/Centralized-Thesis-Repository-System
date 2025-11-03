@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BookOpen, FileText, LayoutDashboard, LogOut, Settings, CheckCircle } from "lucide-react"
+import { BookOpen, FileText, LayoutDashboard, LogOut, Settings, CheckCircle, User } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function SupervisorSidebar() {
@@ -12,7 +12,8 @@ export function SupervisorSidebar() {
         { href: "/supervisor/dashboard", label: "Dashboard", icon: LayoutDashboard },
         { href: "/supervisor/reviews", label: "Pending Reviews", icon: CheckCircle },
         { href: "/supervisor/students", label: "My Students", icon: FileText },
-        { href: "/supervisor/profile/1", label: "Profile", icon: Settings },
+        { href: "/supervisor/profile/1", label: "Profile", icon: User },
+        { href: "/supervisor/settings", label: "Settings", icon: Settings },
     ]
 
     return (

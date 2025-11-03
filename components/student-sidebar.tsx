@@ -2,7 +2,7 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BookOpen, FileText, LayoutDashboard, LogOut, Settings, Upload } from "lucide-react"
+import { BookOpen, FileText, LayoutDashboard, LogOut, Settings, Upload, User } from "lucide-react"
 import { cn } from "@/lib/utils"
 
 export function StudentSidebar() {
@@ -12,7 +12,8 @@ export function StudentSidebar() {
         { href: "/student/dashboard", label: "Dashboard", icon: LayoutDashboard },
         { href: "/student/submit", label: "Submit Thesis", icon: Upload },
         { href: "/student/submissions", label: "My Submissions", icon: FileText },
-        { href: "/student/profile/1", label: "Profile", icon: Settings },
+        { href: "/student/profile/1", label: "Profile", icon: User },
+        { href: "/student/settings", label: "Settings", icon: Settings },
     ]
 
     return (

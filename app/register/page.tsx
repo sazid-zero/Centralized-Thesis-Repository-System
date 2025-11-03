@@ -66,7 +66,7 @@ export default function RegisterPage() {
                   <Input
                     id="fullname"
                     type="text"
-                    placeholder="John Doe"
+                    placeholder="Your Name"
                     className="bg-input border-border text-foreground placeholder:text-muted-foreground"
                     required
                   />
