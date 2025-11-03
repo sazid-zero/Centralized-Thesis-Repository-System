@@ -7,21 +7,37 @@ import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
-import {Search, Download, Eye, X, BookOpen, Zap, Microscope, TrendingUp, Github, User} from "lucide-react"
+import {
+    Search,
+    Download,
+    Eye,
+    X,
+    BookOpen,
+    Zap,
+    Microscope,
+    TrendingUp,
+    Github,
+    User,
+    BarChart3,
+    LayoutDashboard,
+} from "lucide-react"
 import { Label } from "@/components/ui/label"
 import { thesesDatabase } from "@/lib/data/theses"
+import { ThemeToggle } from "@/components/theme-toggle"
 
 export default function BrowseRepositoryPage() {
     const [searchQuery, setSearchQuery] = useState("")
     const [selectedDepartment, setSelectedDepartment] = useState("All Departments")
     const [selectedYear, setSelectedYear] = useState("All Years")
     const [selectedField, setSelectedField] = useState("All Fields")
+    const [navSearchQuery, setNavSearchQuery] = useState("")
 
     const filteredTheses = thesesDatabase.filter((thesis) => {
+        const searchTerm = searchQuery || navSearchQuery
         const matchesSearch =
-            thesis.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            thesis.author.toLowerCase().includes(searchQuery.toLowerCase()) ||
-            thesis.keywords.some((k) => k.toLowerCase().includes(searchQuery.toLowerCase()))
+            thesis.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            thesis.author.toLowerCase().includes(searchTerm.toLowerCase()) ||
+            thesis.keywords.some((k) => k.toLowerCase().includes(searchTerm.toLowerCase()))
 
         const matchesDepartment = selectedDepartment === "All Departments" || thesis.department === selectedDepartment
         const matchesYear = selectedYear === "All Years" || thesis.year.toString() === selectedYear
@@ -34,6 +50,7 @@ export default function BrowseRepositoryPage() {
 
     const clearFilters = () => {
         setSearchQuery("")
+        setNavSearchQuery("")
         setSelectedDepartment("All Departments")
         setSelectedYear("All Years")
         setSelectedField("All Fields")
@@ -44,33 +61,44 @@ export default function BrowseRepositoryPage() {
             {/* Navigation */}
             <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
                 <div className="mx-auto max-w-full px-4 sm:px-6 lg:px-8">
-                    <div className="flex h-16 items-center justify-between">
-                        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                                <Search className="h-6 w-6" />
+                    <div className="flex h-16 items-center justify-between gap-4">
+                        <Link href="/" className="flex items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
+                                <Search className="h-6 w-6 text-primary-foreground" />
                             </div>
-                            <span className="text-xl font-bold text-foreground">SUST Thesis</span>
+                            <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Research Portal
+              </span>
                         </Link>
-                        <div className="flex items-center gap-6">
-                            <Link href="/#browse" className="text-foreground hover:text-primary font-medium">
-                                Browse
-                            </Link>
-                            <Link href="/#features" className="text-foreground hover:text-primary font-medium">
-                                Features
-                            </Link>
-                            <Link href="/#about" className="text-foreground hover:text-primary font-medium">
+
+                        <div className="flex-1 max-w-md hidden md:block ">
+                            <div className="relative">
+                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                                <Input
+                                    value={navSearchQuery}
+                                    onChange={(e) => setNavSearchQuery(e.target.value)}
+                                    placeholder="Quick search..."
+                                    className="pl-9 bg-background border-border text-foreground placeholder:text-muted-foreground h-9"
+                                />
+                            </div>
+                        </div>
+
+                        <div className="flex items-center gap-5">
+                            <Link href="/#about" className="text-foreground hover:text-primary font-medium text-sm hidden lg:block">
                                 About
                             </Link>
-                            <Link href="/help" className="text-foreground hover:text-primary font-medium">
+                            <Link href="/help" className="text-foreground hover:text-primary font-medium hidden text-sm lg:block">
                                 Help
                             </Link>
-                            <Link href="/login">
-                                <Button variant="ghost" className="text-white hover:bg-muted bg-gradient-to-r from-primary to-accent">
-                                    Login
+                            <Link href="/student/dashboard">
+                                <Button variant="outline" size="sm" className="border-border hover:bg-primary bg-transparent">
+                                    <LayoutDashboard className="h-5 w-5 mr-2" />
+                                    <span className="hidden sm:inline ">Dashboard</span>
                                 </Button>
                             </Link>
+                            <ThemeToggle />
                             <Link href="/settings">
-                                <div className="hidden md:flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-accent/20 border-2 border-primary/30 cursor-pointer hover:border-primary/50 transition-colors">
+                                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-accent/20 border-2 border-primary/30 cursor-pointer hover:border-primary/50 transition-colors">
                                     <User className="h-5 w-5 text-primary" />
                                 </div>
                             </Link>
@@ -136,10 +164,40 @@ export default function BrowseRepositoryPage() {
                                                     Biotechnology
                                                 </div>
                                             </SelectItem>
-                                            <SelectItem value="Renewable">
+                                            <SelectItem value="Physics">
                                                 <div className="flex items-center gap-2">
                                                     <TrendingUp className="h-4 w-4" />
-                                                    Renewable Energy
+                                                    Physics and Mathematics
+                                                </div>
+                                            </SelectItem>
+                                            <SelectItem value="Chemistry">
+                                                <div className="flex items-center gap-2">
+                                                    <Microscope className="h-4 w-4" />
+                                                    Chemistry
+                                                </div>
+                                            </SelectItem>
+                                            <SelectItem value="Environmental">
+                                                <div className="flex items-center gap-2">
+                                                    <TrendingUp className="h-4 w-4" />
+                                                    Environmental Science
+                                                </div>
+                                            </SelectItem>
+                                            <SelectItem value="Robotics">
+                                                <div className="flex items-center gap-2">
+                                                    <Github className="h-4 w-4" />
+                                                    Robotics and Automation
+                                                </div>
+                                            </SelectItem>
+                                            <SelectItem value="Economics">
+                                                <div className="flex items-center gap-2">
+                                                    <BarChart3 className="h-4 w-4" />
+                                                    Economics
+                                                </div>
+                                            </SelectItem>
+                                            <SelectItem value="Agriculture">
+                                                <div className="flex items-center gap-2">
+                                                    <Microscope className="h-4 w-4" />
+                                                    Agriculture and Food Technology
                                                 </div>
                                             </SelectItem>
                                             <SelectItem value="Computer Science">
@@ -168,6 +226,13 @@ export default function BrowseRepositoryPage() {
                                             <SelectItem value="Civil Engineering">Civil Engineering</SelectItem>
                                             <SelectItem value="Mechanical Engineering">Mechanical Engineering</SelectItem>
                                             <SelectItem value="Biochemistry">Biochemistry</SelectItem>
+                                            <SelectItem value="Physics">Physics</SelectItem>
+                                            <SelectItem value="Mathematics">Mathematics</SelectItem>
+                                            <SelectItem value="Chemistry">Chemistry</SelectItem>
+                                            <SelectItem value="Environmental Science">Environmental Science</SelectItem>
+                                            <SelectItem value="Robotics & Automation">Robotics & Automation</SelectItem>
+                                            <SelectItem value="Economics">Economics</SelectItem>
+                                            <SelectItem value="Agriculture & Food Technology">Agriculture & Food Technology</SelectItem>
                                         </SelectContent>
                                     </Select>
                                 </div>

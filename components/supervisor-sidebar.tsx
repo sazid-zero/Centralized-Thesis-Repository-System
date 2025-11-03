@@ -20,11 +20,13 @@ export function SupervisorSidebar() {
         <aside className="w-64 border-r border-border bg-sidebar min-h-screen flex flex-col">
             {/* Logo */}
             <div className="p-6 border-b border-sidebar-border">
-                <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                        <BookOpen className="h-6 w-6" />
+                <Link href="/" className="flex items-center gap-3">
+                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
+                        <BookOpen className="h-6 w-6 text-primary-foreground" />
                     </div>
-                    <span className="font-bold text-sidebar-foreground">SUST Thesis</span>
+                    <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Research Portal
+              </span>
                 </Link>
             </div>
 

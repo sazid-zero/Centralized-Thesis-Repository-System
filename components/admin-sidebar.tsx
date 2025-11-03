@@ -24,7 +24,7 @@ export function AdminSidebar() {
           <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
             <BookOpen className="h-6 w-6" />
           </div>
-          <span className="font-bold text-sidebar-foreground">SUST Thesis</span>
+          <span className="font-bold text-sidebar-foreground">Research Portal</span>
         </Link>
       </div>
 
