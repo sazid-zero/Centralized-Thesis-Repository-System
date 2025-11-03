@@ -20,6 +20,7 @@ import {
     User,
     BarChart3,
     LayoutDashboard,
+    Menu,
 } from "lucide-react"
 import { Label } from "@/components/ui/label"
 import { thesesDatabase } from "@/lib/data/theses"
@@ -31,6 +32,7 @@ export default function BrowseRepositoryPage() {
     const [selectedYear, setSelectedYear] = useState("All Years")
     const [selectedField, setSelectedField] = useState("All Fields")
     const [navSearchQuery, setNavSearchQuery] = useState("")
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
     const filteredTheses = thesesDatabase.filter((thesis) => {
         const searchTerm = searchQuery || navSearchQuery
@@ -55,6 +57,11 @@ export default function BrowseRepositoryPage() {
         setSelectedYear("All Years")
         setSelectedField("All Fields")
     }
+
+    const navItems = [
+        { href: "/#about", label: "About", icon: BookOpen },
+        { href: "/help", label: "Help", icon: Search },
+    ]
 
     return (
         <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
@@ -91,19 +98,63 @@ export default function BrowseRepositoryPage() {
                                 Help
                             </Link>
                             <Link href="/student/dashboard">
-                                <Button variant="outline" size="sm" className="border-border hover:bg-primary bg-transparent">
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="border-border hover:bg-primary bg-transparent hidden sm:flex"
+                                >
                                     <LayoutDashboard className="h-5 w-5 mr-2" />
-                                    <span className="hidden sm:inline ">Dashboard</span>
+                                    <span>Dashboard</span>
                                 </Button>
                             </Link>
                             <ThemeToggle />
-                            <Link href="/settings">
+                            <button
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                className="md:hidden flex items-center justify-center h-9 w-9 rounded-lg hover:bg-muted transition-colors"
+                            >
+                                {isMobileMenuOpen ? (
+                                    <X className="h-5 w-5 text-foreground" />
+                                ) : (
+                                    <Menu className="h-5 w-5 text-foreground" />
+                                )}
+                            </button>
+                            <Link href="/settings" className="hidden sm:block">
                                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-accent/20 border-2 border-primary/30 cursor-pointer hover:border-primary/50 transition-colors">
                                     <User className="h-5 w-5 text-primary" />
                                 </div>
                             </Link>
                         </div>
                     </div>
+
+                    {/* Mobile Menu Dropdown */}
+                    {isMobileMenuOpen && (
+                        <div className="md:hidden border-t border-border py-4 space-y-2">
+                            <Link href="/#about">
+                                <Button variant="ghost" className="w-full justify-start text-foreground">
+                                    <BookOpen className="h-5 w-5 mr-2" />
+                                    About
+                                </Button>
+                            </Link>
+                            <Link href="/help">
+                                <Button variant="ghost" className="w-full justify-start text-foreground">
+                                    <Search className="h-5 w-5 mr-2" />
+                                    Help
+                                </Button>
+                            </Link>
+                            <Link href="/student/dashboard">
+                                <Button variant="ghost" className="w-full justify-start text-foreground">
+                                    <LayoutDashboard className="h-5 w-5 mr-2" />
+                                    Dashboard
+                                </Button>
+                            </Link>
+                            <Link href="/settings">
+                                <Button variant="ghost" className="w-full justify-start text-foreground">
+                                    <User className="h-5 w-5 mr-2" />
+                                    Settings
+                                </Button>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </nav>
 

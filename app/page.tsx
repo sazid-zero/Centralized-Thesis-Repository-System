@@ -4,6 +4,7 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { MobileMenu } from "@/components/mobile-menu"
 import {
     BookOpen,
     Users,
@@ -50,7 +51,6 @@ export default function Home() {
     }, [])
 
     const isHeroInteractive = scrollPosition < 100
-
 
     const researchCategories = [
         { id: "all", label: "All Fields", icon: BookOpen, count: 247 },
@@ -242,21 +242,33 @@ export default function Home() {
 
                         <div className="flex items-center gap-4">
                             <ThemeToggle />
-                            <Link href="/login">
-                                <Button variant="ghost" className="hover:bg-accent">
-                                    Login
-                                </Button>
-                            </Link>
-                            <Link href="/register">
-                                <Button className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground border-0">
-                                    Sign Up
-                                </Button>
-                            </Link>
-                            <Link href="/settings">
-                                <div className="hidden md:flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-accent/20 border-2 border-primary/30 cursor-pointer hover:border-primary/50 transition-colors">
-                                    <User className="h-5 w-5 text-primary" />
-                                </div>
-                            </Link>
+                            <MobileMenu
+                                items={[
+                                    { label: "Browse", href: "/browse" },
+                                    { label: "Features", href: "/#features" },
+                                    { label: "About", href: "/#about" },
+                                    { label: "Help", href: "/help" },
+                                ]}
+                                hasAuth={true}
+                            />
+                            {/* Desktop auth buttons remain hidden on mobile */}
+                            <div className="hidden sm:flex items-center gap-4">
+                                <Link href="/login">
+                                    <Button variant="ghost" className="hover:bg-accent">
+                                        Login
+                                    </Button>
+                                </Link>
+                                <Link href="/register">
+                                    <Button className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground border-0">
+                                        Sign Up
+                                    </Button>
+                                </Link>
+                                <Link href="/settings">
+                                    <div className="hidden md:flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-accent/20 border-2 border-primary/30 cursor-pointer hover:border-primary/50 transition-colors">
+                                        <User className="h-5 w-5 text-primary" />
+                                    </div>
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -266,8 +278,8 @@ export default function Home() {
                 ref={heroRef}
                 className="fixed lg:top-24 top-16 left-0 right-0 min-h-[calc(100vh-4rem)] z-30 flex flex-col lg:flex-row lg:gap-12"
                 style={{
-                pointerEvents: isHeroInteractive ? "auto" : "none",
-            }}
+                    pointerEvents: isHeroInteractive ? "auto" : "none",
+                }}
             >
                 <div className="w-full px-6 lg:px-12 h-full flex flex-col lg:flex-row lg:gap-12 lg:items-center py-12 lg:py-24">
                     <div className="flex-1 flex flex-col justify-center space-y-8">
@@ -328,7 +340,6 @@ export default function Home() {
                                 pointerEvents: isHeroInteractive ? "auto" : "none",
                             }}
                             className="space-y-5 relative"
-
                         >
                             <h3 className="text-lg font-bold text-foreground">Recent Research</h3>
                             {displayedResearch.map((research, idx) => (
