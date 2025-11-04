@@ -276,7 +276,7 @@ export default function Home() {
 
             <section
                 ref={heroRef}
-                className="fixed lg:top-24 top-16 left-0 right-0 min-h-[calc(100vh-4rem)] z-30 flex flex-col lg:flex-row lg:gap-12"
+                className="sm:fixed lg:top-24 top-16 left-0 right-0 min-h-[calc(100vh-4rem)] z-30 flex flex-col lg:flex-row lg:gap-12 sm:mt-0 mt-10"
                 style={{
                     pointerEvents: isHeroInteractive ? "auto" : "none",
                 }}
