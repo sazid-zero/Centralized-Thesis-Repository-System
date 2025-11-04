@@ -455,7 +455,7 @@ export default function Home() {
                         <div className="relative rounded-[21px] overflow-hidden border-3 border-border bg-card">
 
                             {/* ── MESH / GRID BACKGROUND – NOW VISIBLE (stronger + on top of bg-card) ── */}
-                            <div className="absolute inset-0 pointer-events-none opacity-0 dark:opacity-70 ">
+                            <div className="absolute inset-0 pointer-events-none opacity-0 dark:opacity-100 ">
                                 {/* Grid lines */}
                                 <div
                                     className="absolute inset-0"
