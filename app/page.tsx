@@ -455,7 +455,7 @@ export default function Home() {
                         <div className="relative rounded-[21px] overflow-hidden border-3 border-border bg-card">
 
                             {/* ── MESH / GRID BACKGROUND – NOW VISIBLE (stronger + on top of bg-card) ── */}
-                            <div className="absolute inset-0 pointer-events-none opacity-70">
+                            <div className="absolute inset-0 pointer-events-none opacity-0 dark:opacity-70 ">
                                 {/* Grid lines */}
                                 <div
                                     className="absolute inset-0"
@@ -481,7 +481,7 @@ export default function Home() {
                             </div>
 
                             {/* ── GLOW LAYERS – light: faint, dark: full – FIXED: all glows visible ── */}
-                            <div className="absolute inset-0 pointer-events-none opacity-10 dark:opacity-100">
+                            <div className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-100">
 
                                 {/* MAIN MID-SECTION GLOW */}
                                 <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-96">
