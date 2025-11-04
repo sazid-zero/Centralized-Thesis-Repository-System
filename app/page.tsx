@@ -454,9 +454,9 @@ export default function Home() {
 
                         <div className="relative rounded-[21px] overflow-hidden border-3 border-border bg-card">
 
-                            {/* ── MESH / GRID BACKGROUND – NOW VISIBLE (stronger + on top of bg-card) ── */}
-                            <div className="absolute inset-0 pointer-events-none opacity-0 dark:opacity-100 ">
-                                {/* Grid lines */}
+                            {/* ── MESH / GRID BACKGROUND – NOW VISIBLE (stronger + on top of bg-card) ──
+                            <div className="absolute inset-0 pointer-events-none opacity-0  ">
+                                Grid lines
                                 <div
                                     className="absolute inset-0"
                                     style={{
@@ -467,7 +467,7 @@ export default function Home() {
                                         backgroundSize: "30px 30px",
                                     }}
                                 />
-                                {/* Tiny glowing dots at intersections */}
+                                Tiny glowing dots at intersections
                                 <div
                                     className="absolute inset-0"
                                     style={{
@@ -479,6 +479,7 @@ export default function Home() {
                                     }}
                                 />
                             </div>
+                        */}
 
                             {/* ── GLOW LAYERS – light: faint, dark: full – FIXED: all glows visible ── */}
                             <div className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-100">
