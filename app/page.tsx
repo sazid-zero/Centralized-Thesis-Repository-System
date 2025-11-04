@@ -26,15 +26,21 @@ import {
 import { useState, useEffect, useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { getAllTheses } from "@/lib/data/theses"
+import { useInView } from "react-intersection-observer"
 
 export default function Home() {
     const [selectedCategory, setSelectedCategory] = useState("all")
     const [featuredIndex, setFeaturedIndex] = useState(0)
-    const [currentRecentIndex, setCurrentRecentIndex] = useState(0) // added state to track which recent research is showing
+    const [currentRecentIndex, setCurrentRecentIndex] = useState(0)
     const heroRef = useRef<HTMLDivElement>(null)
-    const browseRef = useRef<HTMLDivElement>(null)
-    const [scrollPosition, setScrollPosition] = useState(0)
+    const [heroZIndex, setHeroZIndex] = useState(50)
+    const [browseRef, browseInView] = useInView({
+        threshold: 0.3,
+        triggerOnce: false,
+        rootMargin: "0px 0px -200px 0px",   // start a little earlier
+    })
 
+    const [scrollPosition, setScrollPosition] = useState(0)
     const { scrollY } = useScroll()
 
     const heroSectionHeight = 800
@@ -45,6 +51,7 @@ export default function Home() {
     useEffect(() => {
         const handleScroll = () => {
             setScrollPosition(window.scrollY)
+            setHeroZIndex(window.scrollY < 100 ? 50 : 10)  // ← Hero drops below when scrolled
         }
         window.addEventListener("scroll", handleScroll)
         return () => window.removeEventListener("scroll", handleScroll)
@@ -57,7 +64,7 @@ export default function Home() {
         { id: "ai", label: "Artificial Intelligence", icon: Zap, count: 68 },
         { id: "biotech", label: "Biotechnology", icon: Microscope, count: 54 },
         { id: "physics", label: "Physics and Mathematics", icon: TrendingUp, count: 38 },
-        { id: "chemistry", label: "Chemistry", icon: Microscope, count: 45 },
+        { id: "chemistry", label: "Chemistry and Material Science", icon: Microscope, count: 45 },
         { id: "environmental", label: "Environmental Science", icon: TrendingUp, count: 52 },
         { id: "robotics", label: "Robotics and Automation", icon: Github, count: 61 },
         { id: "economics", label: "Economics", icon: BarChart3, count: 43 },
@@ -144,9 +151,9 @@ export default function Home() {
             })
 
     const displayedCategoryResearch = filteredResearch.slice(0, 4)
-
     const displayedResearch = featuredResearch.slice(featuredIndex, featuredIndex + 3)
 
+    // Featured carousel
     useEffect(() => {
         const interval = setInterval(() => {
             setFeaturedIndex((prev) => (prev + 3 >= featuredResearch.length ? 0 : prev + 3))
@@ -154,6 +161,7 @@ export default function Home() {
         return () => clearInterval(interval)
     }, [featuredResearch.length])
 
+    // Recent dots
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentRecentIndex((prev) => (prev + 1) % 3)
@@ -161,15 +169,21 @@ export default function Home() {
         return () => clearInterval(interval)
     }, [])
 
+    // ←←←  FIXED CATEGORY SHUFFLE  ←←←
     useEffect(() => {
-        const categoryIds = researchCategories.map((cat) => cat.id)
-        const currentIndex = categoryIds.indexOf(selectedCategory)
+        if (!browseInView) return
+
+        const ids = researchCategories.map((c) => c.id)
         const interval = setInterval(() => {
-            const nextIndex = (currentIndex + 1) % categoryIds.length
-            setSelectedCategory(categoryIds[nextIndex])
+            setSelectedCategory((prev) => {
+                const i = ids.indexOf(prev)
+                return ids[(i + 1) % ids.length]
+            })
         }, 2000)
+
         return () => clearInterval(interval)
-    }, [selectedCategory])
+    }, [browseInView])
+
 
     return (
         <div className="min-h-screen relative overflow-hidden">
@@ -278,7 +292,8 @@ export default function Home() {
                 ref={heroRef}
                 className="sm:fixed lg:top-24 top-16 left-0 right-0 min-h-[calc(100vh-4rem)] z-30 flex flex-col lg:flex-row lg:gap-12 sm:mt-0 mt-10"
                 style={{
-                    pointerEvents: isHeroInteractive ? "auto" : "none",
+                    pointerEvents: scrollPosition < 100 ? "auto" : "none",
+                    zIndex: heroZIndex,
                 }}
             >
                 <div className="w-full px-6 lg:px-12 h-full flex flex-col lg:flex-row lg:gap-12 lg:items-center py-12 lg:py-24">
@@ -431,20 +446,107 @@ export default function Home() {
             <section
                 id="browse"
                 ref={browseRef}
-                className="relative pt-[calc(100vh+8rem)] pb-10 overflow-hidden z-20 bg-transparent"
-                style={{
-                    pointerEvents: "auto",
-                }}
+                className="relative mt-[100vh] pt-10 pb-10 overflow-hidden z-40 bg-transparent"
+                style={{ pointerEvents: "auto" }}
             >
-                <div className="px-6 lg:px-12">
-                    <div className="relative p-[3px] rounded-[24px] bg-gradient-to-br from-emerald-400/40 via-teal-400/30 to-cyan-400/20 dark:from-emerald-500/30 dark:via-teal-500/20 dark:to-cyan-500/15 shadow-[0_0_80px_rgba(16,185,129,0.15)]">
-                        <div className="relative rounded-[21px] bg-card overflow-hidden border-3 border-border">
-                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+                <div className="px-6 lg:px-12 ">
+                    <div className="relative p-[3px] rounded-[24px] bg-green-600 shadow-[0_0_80px_rgba(16,185,129,0.15)] ">
+
+                        <div className="relative rounded-[21px] overflow-hidden border-3 border-border bg-card">
+
+                            {/* ── MESH / GRID BACKGROUND – NOW VISIBLE (stronger + on top of bg-card) ── */}
+                            <div className="absolute inset-0 pointer-events-none opacity-70">
+                                {/* Grid lines */}
+                                <div
+                                    className="absolute inset-0"
+                                    style={{
+                                        backgroundImage: `
+                                          repeating-linear-gradient(0deg, transparent, transparent 29px, rgba(34, 197, 94, 0.25) 29px, rgba(34, 197, 94, 0.25) 30px),
+                                          repeating-linear-gradient(90deg, transparent, transparent 29px, rgba(34, 197, 94, 0.25) 29px, rgba(34, 197, 94, 0.25) 30px)
+                                        `,
+                                        backgroundSize: "30px 30px",
+                                    }}
+                                />
+                                {/* Tiny glowing dots at intersections */}
+                                <div
+                                    className="absolute inset-0"
+                                    style={{
+                                        backgroundImage: `
+                                              radial-gradient(circle at 15px 15px, rgba(34, 197, 94, 0.35) 1px, transparent 1px)
+                                            `,
+                                        backgroundSize: "30px 30px",
+                                        backgroundPosition: "0 0",
+                                    }}
+                                />
+                            </div>
+
+                            {/* ── GLOW LAYERS – light: faint, dark: full – FIXED: all glows visible ── */}
+                            <div className="absolute inset-0 pointer-events-none opacity-10 dark:opacity-100">
+
+                                {/* MAIN MID-SECTION GLOW */}
+                                <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-96">
+                                    <div
+                                        className="absolute inset-0"   // ← fills the parent
+                                        style={{
+                                            background: `
+                                                  radial-gradient(ellipse 800px 400px at 50% 50%, 
+                                                    rgba(34, 197, 94, 0.32) 0%, 
+                                                    rgba(22, 163, 74, 0.22) 30%, 
+                                                    rgba(21, 128, 61, 0.14) 60%, 
+                                                    transparent 100%)
+                                                `,
+                                            filter: "blur(70px)",
+                                        }}
+                                    />
+                                </div>
+
+                                {/* STRONGER UPPER-RIGHT GLOW – now fully inside */}
+                                <div className="absolute w-96 h-96 top-10 right-50">
+                                    <div
+                                        className="absolute inset-0"   // ← fills the 96×96 box
+                                        style={{
+                                            background: `
+                                                  radial-gradient(ellipse 600px 500px at 100% 0%, 
+                                                    rgba(34, 197, 94, 0.38) 0%, 
+                                                    rgba(21, 128, 61, 0.25) 40%, 
+                                                    transparent 80%)
+                                                `,
+                                            filter: "blur(80px)",
+                                        }}
+                                    />
+                                </div>
+
+                                {/* STRONGER LOWER-LEFT GLOW – now fully inside */}
+                                <div className="absolute w-96 h-96 bottom-[80px] left-20">
+                                    <div
+                                        className="absolute inset-0"   // ← fills the 96×96 box
+                                        style={{
+                                            background: `
+                                                  radial-gradient(ellipse 600px 500px at 0% 100%, 
+                                                    rgba(34, 197, 94, 0.38) 0%, 
+                                                    rgba(21, 128, 61, 0.25) 40%, 
+                                                    transparent 80%)
+                                                `,
+                                            filter: "blur(80px)",
+                                        }}
+                                    />
+                                </div>
+                                {/* AESTHETIC SMALL SPARKLE GLOWS (unchanged) */}
+                                <div className="absolute inset-0">
+                                    <div className="absolute w-48 h-48 top-20 left-20" style={{ background: "radial-gradient(circle, rgba(34, 197, 94, 0.20) 0%, transparent 70%)", filter: "blur(50px)" }} />
+                                    <div className="absolute w-40 h-40 top-1/2 left-32 -translate-y-1/2" style={{ background: "radial-gradient(circle, rgba(22, 163, 74, 0.18) 0%, transparent 70%)", filter: "blur(45px)" }} />
+                                    <div className="absolute w-64 h-64 bottom-16 left-16" style={{ background: "radial-gradient(ellipse 500px 400px at 0% 100%, rgba(21, 128, 61, 0.26) 0%, transparent 75%)", filter: "blur(70px)" }} />
+                                    <div className="absolute w-56 h-56 bottom-24 right-28" style={{ background: "radial-gradient(circle, rgba(22, 163, 74, 0.16) 0%, transparent 70%)", filter: "blur(55px)" }} />
+                                    <div className="absolute w-32 h-32 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ background: "radial-gradient(circle, rgba(34, 197, 94, 0.34) 0%, transparent 60%)", filter: "blur(40px)" }} />
+                                </div>
+                            </div>
+
+                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/[0.02] rounded-full blur-3xl pointer-events-none" />
                             <div className="absolute bottom-0 right-0 w-[400px] h-[300px] bg-accent/[0.02] rounded-full blur-3xl pointer-events-none" />
 
-                            <div className="relative z-30 p-6 sm:p-12 backdrop-blur-sm">
+                            <div className="relative z-10 p-6 sm:p-12 ">
                                 <div className="mb-12">
                                     <h2 className="text-3xl font-bold text-foreground sm:text-4xl mb-4">Browse by Field</h2>
                                     <p className="text-muted-foreground text-lg">
@@ -459,7 +561,7 @@ export default function Home() {
                                             <button
                                                 key={cat.id}
                                                 onClick={() => setSelectedCategory(cat.id)}
-                                                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all border relative z-30 ${
+                                                className={`flex items-center gap-2 px-4 py-2 rounded-lg font-medium transition-all border bg-card relative z-30 ${
                                                     selectedCategory === cat.id
                                                         ? "bg-gradient-to-r from-primary to-accent text-primary-foreground border-transparent shadow-lg shadow-primary/25"
                                                         : "border-border text-foreground hover:border-primary/50 hover:bg-accent"
