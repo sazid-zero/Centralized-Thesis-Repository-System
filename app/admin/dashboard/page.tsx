@@ -6,6 +6,7 @@ import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { FileText, Users, CheckCircle, Clock, AlertCircle, TrendingUp } from "lucide-react"
 import Link from "next/link"
+import {ThemeToggle} from "@/components/theme-toggle";
 
 export default function AdminDashboard() {
   const stats = [
@@ -58,16 +59,18 @@ export default function AdminDashboard() {
   ]
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="flex h-screen bg-background">
       <AdminSidebar />
 
-      <main className="flex-1">
+      <main className="flex-1 overflow-auto">
         {/* Header */}
-        <div className="border-b border-border bg-card p-6">
+          <div className="flex items-center justify-between border-b border-border bg-card p-6">
+        <div>
           <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
           <p className="text-muted-foreground mt-1">System overview and management</p>
         </div>
-
+              <ThemeToggle/>
+          </div>
         {/* Content */}
         <div className="p-6 space-y-8">
           {/* Stats Grid */}

@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { BookOpen, FileText, LayoutDashboard, LogOut, Settings, Users, BarChart3, Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
+import {ThemeToggle} from "@/components/theme-toggle";
 
 export function AdminSidebar() {
     const pathname = usePathname()
@@ -42,11 +43,13 @@ export function AdminSidebar() {
             >
                 {/* Logo */}
                 <div className="p-6 border-b border-sidebar-border">
-                    <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-sidebar-primary text-sidebar-primary-foreground">
-                            <BookOpen className="h-6 w-6" />
+                    <Link href="/" className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
+                            <BookOpen className="h-6 w-6 text-primary-foreground" />
                         </div>
-                        <span className="font-bold text-sidebar-foreground">Research Portal</span>
+                        <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Research Portal
+            </span>
                     </Link>
                 </div>
 
@@ -63,7 +66,7 @@ export function AdminSidebar() {
                                 className={cn(
                                     "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors",
                                     isActive
-                                        ? "bg-sidebar-primary text-sidebar-primary-foreground"
+                                        ? "bg-gradient-to-br from-primary to-accent text-sidebar-primary-foreground"
                                         : "text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground",
                                 )}
                             >
@@ -72,6 +75,7 @@ export function AdminSidebar() {
                             </Link>
                         )
                     })}
+
                 </nav>
 
                 {/* Logout */}

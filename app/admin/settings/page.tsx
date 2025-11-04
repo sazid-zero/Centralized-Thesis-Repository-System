@@ -10,6 +10,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { ArrowLeft, Save } from "lucide-react"
+import {AdminSidebar} from "@/components/admin-sidebar";
 
 export default function AdminSettingsPage() {
   const [settings, setSettings] = useState({
@@ -31,7 +32,10 @@ export default function AdminSettingsPage() {
   }
 
   return (
-    <div className="min-h-screen bg-background">
+      <div className="flex h-screen bg-background">
+          <AdminSidebar />
+
+          <main className="flex-1 overflow-auto">
       {/* Header */}
       <div className="border-b border-border bg-card">
         <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-6">
@@ -221,6 +225,7 @@ export default function AdminSettingsPage() {
           </TabsContent>
         </Tabs>
       </div>
+          </main>
     </div>
   )
 }

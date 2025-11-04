@@ -31,7 +31,9 @@ export function StudentSidebar() {
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
                             <BookOpen className="h-6 w-6 text-primary-foreground" />
                         </div>
-                        <span className="text-lg font-bold text-foreground">Research Portal</span>
+                        <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Research Portal
+            </span>
                     </Link>
                 </div>
 
@@ -47,7 +49,7 @@ export function StudentSidebar() {
                                 className={cn(
                                     "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors",
                                     isActive
-                                        ? "bg-primary text-primary-foreground"
+                                        ? "bg-gradient-to-br from-primary to-accent text-primary-foreground"
                                         : "text-foreground hover:bg-accent hover:text-accent-foreground",
                                 )}
                             >

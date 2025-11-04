@@ -20,10 +20,11 @@ export default function SupervisorProfilePage() {
     lastName: "Hassan",
     email: "ahmed.hassan@sust.edu.bd",
     phone: "+880-1234-567890",
-    department: "Computer Science",
+    department: "Computer Science & Engineering",
     designation: "Associate Professor",
     bio: "Specializing in artificial intelligence, machine learning, and data science research.",
     joinDate: "2018-01-15",
+      degree: "PhD in Computer Science"
   })
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
@@ -49,7 +50,7 @@ export default function SupervisorProfilePage() {
 
           {/* Content */}
           <div className="p-8">
-            <div className="max-w-4xl">
+            <div className="max-w-full ">
               <Tabs defaultValue="profile" className="space-y-6">
                 <TabsList className="grid w-full grid-cols-2">
                   <TabsTrigger value="profile">Profile Information</TabsTrigger>
@@ -83,7 +84,7 @@ export default function SupervisorProfilePage() {
                     </div>
 
                     {/* Profile Details */}
-                    <div className="grid gap-4 md:grid-cols-2">
+                    <div className="grid gap-4 md:grid-cols-3">
                       <div className="flex items-center gap-3 text-muted-foreground">
                         <Mail className="h-5 w-5 text-primary" />
                         <div>
@@ -112,17 +113,38 @@ export default function SupervisorProfilePage() {
                           <p className="text-foreground">{formData.designation}</p>
                         </div>
                       </div>
-                      <div className="flex items-center gap-3 text-muted-foreground col-span-2">
-                        <Calendar className="h-5 w-5 text-primary" />
-                        <div>
-                          <p className="text-xs text-muted-foreground">Member Since</p>
-                          <p className="text-foreground">{new Date(formData.joinDate).toLocaleDateString()}</p>
+                        <div className="flex items-center gap-3 text-muted-foreground">
+                            <Award className="h-5 w-5 text-primary" />
+                            <div>
+                                <p className="text-xs text-muted-foreground">Degree</p>
+                                <p className="text-foreground">{formData.degree}</p>
+                            </div>
                         </div>
-                      </div>
+                        <div className="flex items-center gap-3 text-muted-foreground">
+                            <Calendar className="h-5 w-5 text-primary" />
+                            <div>
+                                <p className="text-xs text-muted-foreground">Member Since</p>
+                                <p className="text-foreground">{new Date(formData.joinDate).toLocaleDateString()}</p>
+                            </div>
+                        </div>
                     </div>
-                  </Card>
 
-                  {/* Edit Form */}
+
+                  </Card>
+                    <Card className="border-border bg-card p-8">
+                        <div className="flex items-start gap-4">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                                <Award className="h-6 w-6 text-primary" /> {/* use an icon like Award, Info, or User */}
+                            </div>
+                            <div>
+                                <h2 className="text-lg font-semibold text-primary mb-2">Bio</h2>
+                                <p className="text-base text-muted-foreground">{formData.bio}</p>
+                            </div>
+                        </div>
+                    </Card>
+
+
+                    {/* Edit Form */}
                   {isEditing && (
                       <Card className="border-border bg-card p-8">
                         <h3 className="text-lg font-semibold text-foreground mb-6">Edit Profile Information</h3>
@@ -214,8 +236,21 @@ export default function SupervisorProfilePage() {
                               />
                             </div>
                           </div>
+                            <div className="space-y-2">
+                                <Label htmlFor="degree" className="text-foreground">
+                                    Degree
+                                </Label>
+                                <Input
+                                    id="degree"
+                                    name="degree"
+                                    value={formData.degree}
+                                    onChange={handleInputChange}
+                                    className="border-border bg-background text-foreground"
+                                />
+                            </div>
 
-                          <div className="space-y-2">
+
+                            <div className="space-y-2">
                             <Label htmlFor="bio" className="text-foreground">
                               Bio
                             </Label>

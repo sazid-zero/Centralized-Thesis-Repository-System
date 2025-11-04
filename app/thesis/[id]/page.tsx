@@ -4,16 +4,31 @@ import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
-import { ArrowLeft, Download, Eye, Share2, FileText, Music, Video, File } from "lucide-react"
+import {
+    ArrowLeft,
+    Download,
+    Eye,
+    Share2,
+    FileText,
+    Music,
+    Video,
+    File,
+    BookOpen,
+    Search,
+    LayoutDashboard, X, Menu, User
+} from "lucide-react"
 import { getThesisById } from "@/lib/data/theses"
 import { notFound, useRouter } from "next/navigation"
-import { useEffect, useRef, use } from "react"
+import {useEffect, useRef, use, useState} from "react"
+import {Input} from "@/components/ui/input";
+import {ThemeToggle} from "@/components/theme-toggle";
 
 export default function ThesisDetailsPage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params)
     const thesis = getThesisById(Number.parseInt(id))
     const hasScrolled = useRef(false)
     const router = useRouter()
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
     if (!thesis) {
         notFound()
@@ -42,6 +57,10 @@ export default function ThesisDetailsPage({ params }: { params: Promise<{ id: st
                 return File
         }
     }
+    const navItems = [
+        { href: "/#about", label: "About", icon: BookOpen },
+        { href: "/help", label: "Help", icon: Search },
+    ]
 
     const getStatusBadge = (status: string) => {
         switch (status) {
@@ -61,16 +80,83 @@ export default function ThesisDetailsPage({ params }: { params: Promise<{ id: st
     return (
         <div className="min-h-screen bg-background">
             {/* Navigation */}
-            <nav className="sticky top-0 z-50 border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <div className="flex h-16 items-center justify-between">
-                        <Link href="/" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary text-primary-foreground">
-                                <FileText className="h-6 w-6" />
+            <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+                <div className="mx-auto max-w-full px-4 sm:px-6 lg:px-8">
+                    <div className="flex h-16 items-center justify-between gap-4">
+                        <Link href="/" className="flex items-center gap-3">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
+                                <Search className="h-6 w-6 text-primary-foreground" />
                             </div>
-                            <span className="text-xl font-bold text-foreground">SUST Thesis</span>
+                            <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Research Portal
+              </span>
                         </Link>
+
+                        <div className="flex items-center gap-5">
+                            <Link href="/#about" className="text-foreground hover:text-primary font-medium text-sm hidden lg:block">
+                                About
+                            </Link>
+                            <Link href="/help" className="text-foreground hover:text-primary font-medium hidden text-sm lg:block">
+                                Help
+                            </Link>
+                            <Link href="/student/dashboard">
+                                <Button
+                                    variant="outline"
+                                    size="sm"
+                                    className="border-border hover:bg-primary bg-transparent hidden sm:flex"
+                                >
+                                    <LayoutDashboard className="h-5 w-5 mr-2" />
+                                    <span>Dashboard</span>
+                                </Button>
+                            </Link>
+                            <ThemeToggle />
+                            <button
+                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                                className="md:hidden flex items-center justify-center h-9 w-9 rounded-lg hover:bg-muted transition-colors"
+                            >
+                                {isMobileMenuOpen ? (
+                                    <X className="h-5 w-5 text-foreground" />
+                                ) : (
+                                    <Menu className="h-5 w-5 text-foreground" />
+                                )}
+                            </button>
+                            <Link href="/settings" className="hidden sm:block">
+                                <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-accent/20 border-2 border-primary/30 cursor-pointer hover:border-primary/50 transition-colors">
+                                    <User className="h-5 w-5 text-primary" />
+                                </div>
+                            </Link>
+                        </div>
                     </div>
+
+                    {/* Mobile Menu Dropdown */}
+                    {isMobileMenuOpen && (
+                        <div className="md:hidden border-t border-border py-4 space-y-2">
+                            <Link href="/#about">
+                                <Button variant="ghost" className="w-full justify-start text-foreground">
+                                    <BookOpen className="h-5 w-5 mr-2" />
+                                    About
+                                </Button>
+                            </Link>
+                            <Link href="/help">
+                                <Button variant="ghost" className="w-full justify-start text-foreground">
+                                    <Search className="h-5 w-5 mr-2" />
+                                    Help
+                                </Button>
+                            </Link>
+                            <Link href="/student/dashboard">
+                                <Button variant="ghost" className="w-full justify-start text-foreground">
+                                    <LayoutDashboard className="h-5 w-5 mr-2" />
+                                    Dashboard
+                                </Button>
+                            </Link>
+                            <Link href="/settings">
+                                <Button variant="ghost" className="w-full justify-start text-foreground">
+                                    <User className="h-5 w-5 mr-2" />
+                                    Settings
+                                </Button>
+                            </Link>
+                        </div>
+                    )}
                 </div>
             </nav>
 
