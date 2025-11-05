@@ -72,7 +72,7 @@ export default function RegisterPage() {
                                 onClick={() => setUserRole("student")}
                                 className={`flex-1 py-2.5 px-6 rounded-md transition-all duration-200 font-medium text-sm ${
                                     userRole === "student"
-                                        ? "bg-primary text-primary-foreground shadow-md"
+                                        ? "bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-md"
                                         : "text-muted-foreground hover:text-foreground bg-muted/30"
                                 }`}
                             >
@@ -83,7 +83,7 @@ export default function RegisterPage() {
                                 onClick={() => setUserRole("supervisor")}
                                 className={`flex-1 py-2.5 px-6 rounded-md transition-all duration-200 font-medium text-sm ${
                                     userRole === "supervisor"
-                                        ? "bg-primary text-primary-foreground shadow-md"
+                                        ? "bg-gradient-to-r from-primary to-accent text-primary-foreground shadow-md"
                                         : "text-muted-foreground hover:text-foreground bg-muted/30"
                                 }`}
                             >
