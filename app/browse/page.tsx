@@ -7,6 +7,7 @@ import { Card } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
+import { DashboardSelector } from "@/components/dashboard-selector"
 import {
     Search,
     Download,
@@ -19,7 +20,6 @@ import {
     Github,
     User,
     BarChart3,
-    LayoutDashboard,
     Menu,
 } from "lucide-react"
 import { Label } from "@/components/ui/label"
@@ -97,16 +97,7 @@ export default function BrowseRepositoryPage() {
                             <Link href="/help" className="text-foreground hover:text-primary font-medium hidden text-sm lg:block">
                                 Help
                             </Link>
-                            <Link href="/student/dashboard">
-                                <Button
-                                    variant="outline"
-                                    size="sm"
-                                    className="border-border hover:bg-primary bg-transparent hidden sm:flex"
-                                >
-                                    <LayoutDashboard className="h-5 w-5 mr-2" />
-                                    <span>Dashboard</span>
-                                </Button>
-                            </Link>
+                            <DashboardSelector variant="nav" />
                             <ThemeToggle />
                             <button
                                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
@@ -141,12 +132,7 @@ export default function BrowseRepositoryPage() {
                                     Help
                                 </Button>
                             </Link>
-                            <Link href="/student/dashboard">
-                                <Button variant="ghost" className="w-full justify-start text-foreground">
-                                    <LayoutDashboard className="h-5 w-5 mr-2" />
-                                    Dashboard
-                                </Button>
-                            </Link>
+                            <DashboardSelector variant="mobile" />
                             <Link href="/settings">
                                 <Button variant="ghost" className="w-full justify-start text-foreground">
                                     <User className="h-5 w-5 mr-2" />

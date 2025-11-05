@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
 import { ThemeToggle } from "@/components/theme-toggle"
 import { MobileMenu } from "@/components/mobile-menu"
+import { DashboardSelector } from "@/components/dashboard-selector"
 import {
     BookOpen,
     Users,
@@ -37,7 +38,7 @@ export default function Home() {
     const [browseRef, browseInView] = useInView({
         threshold: 0.3,
         triggerOnce: false,
-        rootMargin: "0px 0px -200px 0px",   // start a little earlier
+        rootMargin: "0px 0px -200px 0px", // start a little earlier
     })
 
     const [scrollPosition, setScrollPosition] = useState(0)
@@ -51,7 +52,7 @@ export default function Home() {
     useEffect(() => {
         const handleScroll = () => {
             setScrollPosition(window.scrollY)
-            setHeroZIndex(window.scrollY < 100 ? 50 : 10)  // ← Hero drops below when scrolled
+            setHeroZIndex(window.scrollY < 100 ? 50 : 10) // ← Hero drops below when scrolled
         }
         window.addEventListener("scroll", handleScroll)
         return () => window.removeEventListener("scroll", handleScroll)
@@ -184,7 +185,6 @@ export default function Home() {
         return () => clearInterval(interval)
     }, [browseInView])
 
-
     return (
         <div className="min-h-screen relative overflow-hidden">
             <div className="fixed inset-0 -z-10">
@@ -272,11 +272,7 @@ export default function Home() {
                                         Login
                                     </Button>
                                 </Link>
-                                <Link href="/register">
-                                    <Button className="bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-primary-foreground border-0">
-                                        Sign Up
-                                    </Button>
-                                </Link>
+                                <DashboardSelector />
                                 <Link href="/settings">
                                     <div className="hidden md:flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-accent/20 border-2 border-primary/30 cursor-pointer hover:border-primary/50 transition-colors">
                                         <User className="h-5 w-5 text-primary" />
@@ -451,9 +447,7 @@ export default function Home() {
             >
                 <div className="px-6 lg:px-12 ">
                     <div className="relative p-[3px] rounded-[24px] bg-green-600 shadow-[0_0_80px_rgba(16,185,129,0.15)] ">
-
                         <div className="relative rounded-[21px] overflow-hidden border-3 border-border bg-card">
-
                             {/* ── MESH / GRID BACKGROUND – NOW VISIBLE (stronger + on top of bg-card) ──
                             <div className="absolute inset-0 pointer-events-none opacity-0  ">
                                 Grid lines
@@ -483,17 +477,16 @@ export default function Home() {
 
                             {/* ── GLOW LAYERS – light: faint, dark: full – FIXED: all glows visible ── */}
                             <div className="absolute inset-0 pointer-events-none opacity-40 dark:opacity-100">
-
                                 {/* MAIN MID-SECTION GLOW */}
                                 <div className="absolute inset-x-0 top-1/2 -translate-y-1/2 h-96">
                                     <div
-                                        className="absolute inset-0"   // ← fills the parent
+                                        className="absolute inset-0" // ← fills the parent
                                         style={{
                                             background: `
-                                                  radial-gradient(ellipse 800px 400px at 50% 50%, 
-                                                    rgba(34, 197, 94, 0.32) 0%, 
-                                                    rgba(22, 163, 74, 0.22) 30%, 
-                                                    rgba(21, 128, 61, 0.14) 60%, 
+                                                  radial-gradient(ellipse 800px 400px at 50% 50%,
+                                                    rgba(34, 197, 94, 0.32) 0%,
+                                                    rgba(22, 163, 74, 0.22) 30%,
+                                                    rgba(21, 128, 61, 0.14) 60%,
                                                     transparent 100%)
                                                 `,
                                             filter: "blur(70px)",
@@ -504,12 +497,12 @@ export default function Home() {
                                 {/* STRONGER UPPER-RIGHT GLOW – now fully inside */}
                                 <div className="absolute w-96 h-96 top-10 right-50">
                                     <div
-                                        className="absolute inset-0"   // ← fills the 96×96 box
+                                        className="absolute inset-0" // ← fills the 96×96 box
                                         style={{
                                             background: `
-                                                  radial-gradient(ellipse 600px 500px at 100% 0%, 
-                                                    rgba(34, 197, 94, 0.38) 0%, 
-                                                    rgba(21, 128, 61, 0.25) 40%, 
+                                                  radial-gradient(ellipse 600px 500px at 100% 0%,
+                                                    rgba(34, 197, 94, 0.38) 0%,
+                                                    rgba(21, 128, 61, 0.25) 40%,
                                                     transparent 80%)
                                                 `,
                                             filter: "blur(80px)",
@@ -520,12 +513,12 @@ export default function Home() {
                                 {/* STRONGER LOWER-LEFT GLOW – now fully inside */}
                                 <div className="absolute w-96 h-96 bottom-[80px] left-20">
                                     <div
-                                        className="absolute inset-0"   // ← fills the 96×96 box
+                                        className="absolute inset-0" // ← fills the 96×96 box
                                         style={{
                                             background: `
-                                                  radial-gradient(ellipse 600px 500px at 0% 100%, 
-                                                    rgba(34, 197, 94, 0.38) 0%, 
-                                                    rgba(21, 128, 61, 0.25) 40%, 
+                                                  radial-gradient(ellipse 600px 500px at 0% 100%,
+                                                    rgba(34, 197, 94, 0.38) 0%,
+                                                    rgba(21, 128, 61, 0.25) 40%,
                                                     transparent 80%)
                                                 `,
                                             filter: "blur(80px)",
@@ -534,15 +527,46 @@ export default function Home() {
                                 </div>
                                 {/* AESTHETIC SMALL SPARKLE GLOWS (unchanged) */}
                                 <div className="absolute inset-0">
-                                    <div className="absolute w-48 h-48 top-20 left-20" style={{ background: "radial-gradient(circle, rgba(34, 197, 94, 0.20) 0%, transparent 70%)", filter: "blur(50px)" }} />
-                                    <div className="absolute w-40 h-40 top-1/2 left-32 -translate-y-1/2" style={{ background: "radial-gradient(circle, rgba(22, 163, 74, 0.18) 0%, transparent 70%)", filter: "blur(45px)" }} />
-                                    <div className="absolute w-64 h-64 bottom-16 left-16" style={{ background: "radial-gradient(ellipse 500px 400px at 0% 100%, rgba(21, 128, 61, 0.26) 0%, transparent 75%)", filter: "blur(70px)" }} />
-                                    <div className="absolute w-56 h-56 bottom-24 right-28" style={{ background: "radial-gradient(circle, rgba(22, 163, 74, 0.16) 0%, transparent 70%)", filter: "blur(55px)" }} />
-                                    <div className="absolute w-32 h-32 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" style={{ background: "radial-gradient(circle, rgba(34, 197, 94, 0.34) 0%, transparent 60%)", filter: "blur(40px)" }} />
+                                    <div
+                                        className="absolute w-48 h-48 top-20 left-20"
+                                        style={{
+                                            background: "radial-gradient(circle, rgba(34, 197, 94, 0.20) 0%, transparent 70%)",
+                                            filter: "blur(50px)",
+                                        }}
+                                    />
+                                    <div
+                                        className="absolute w-40 h-40 top-1/2 left-32 -translate-y-1/2"
+                                        style={{
+                                            background: "radial-gradient(circle, rgba(22, 163, 74, 0.18) 0%, transparent 70%)",
+                                            filter: "blur(45px)",
+                                        }}
+                                    />
+                                    <div
+                                        className="absolute w-64 h-64 bottom-16 left-16"
+                                        style={{
+                                            background:
+                                                "radial-gradient(ellipse 500px 400px at 0% 100%, rgba(21, 128, 61, 0.26) 0%, transparent 75%)",
+                                            filter: "blur(70px)",
+                                        }}
+                                    />
+                                    <div
+                                        className="absolute w-56 h-56 bottom-24 right-28"
+                                        style={{
+                                            background: "radial-gradient(circle, rgba(22, 163, 74, 0.16) 0%, transparent 70%)",
+                                            filter: "blur(55px)",
+                                        }}
+                                    />
+                                    <div
+                                        className="absolute w-32 h-32 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"
+                                        style={{
+                                            background: "radial-gradient(circle, rgba(34, 197, 94, 0.34) 0%, transparent 60%)",
+                                            filter: "blur(40px)",
+                                        }}
+                                    />
                                 </div>
                             </div>
 
-                        <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
+                            <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full h-px bg-gradient-to-r from-transparent via-primary/30 to-transparent" />
 
                             <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] h-[400px] bg-primary/[0.02] rounded-full blur-3xl pointer-events-none" />
                             <div className="absolute bottom-0 right-0 w-[400px] h-[300px] bg-accent/[0.02] rounded-full blur-3xl pointer-events-none" />
