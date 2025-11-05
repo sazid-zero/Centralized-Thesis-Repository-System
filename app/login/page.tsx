@@ -30,7 +30,7 @@ export default function LoginPage() {
             <div className="flex h-12 w-12 items-center justify-center rounded-lg bg-primary text-primary-foreground">
               <BookOpen className="h-7 w-7" />
             </div>
-            <span className="text-2xl font-bold text-foreground">SUST Thesis</span>
+            <span className="text-2xl font-bold text-foreground">SUST Research Portal</span>
           </Link>
         </div>
 
