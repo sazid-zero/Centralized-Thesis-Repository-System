@@ -2,12 +2,13 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BookOpen, FileText, LayoutDashboard, LogOut, Settings, Upload, User } from "lucide-react"
+import { BookOpen, FileText, LayoutDashboard, LogOut, Settings, Upload, User, Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
-import { DashboardMobileMenu } from "@/components/dashboard-mobile-menu"
+import { useState } from "react"
 
 export function StudentSidebar() {
     const pathname = usePathname()
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
 
     const navItems = [
         { href: "/student/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -19,13 +20,22 @@ export function StudentSidebar() {
 
     return (
         <>
-            <div className="md:hidden p-4 border-b border-border bg-background">
-                <DashboardMobileMenu items={navItems} role="student" />
-            </div>
+            <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="md:hidden fixed bottom-6 right-6 z-[999] flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-lg hover:shadow-xl transition-shadow"
+            >
+                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
 
-            {/* Desktop sidebar - hidden on mobile */}
-            <aside className="max-sm:hidden relative w-64 border-r border-border bg-card min-h-screen flex flex-col">
-                {/* Logo */}
+            {isMobileMenuOpen && (
+                <div className="md:hidden fixed inset-0 z-[998] bg-black/50" onClick={() => setIsMobileMenuOpen(false)} />
+            )}
+
+            <aside
+                className={`md:hidden fixed inset-y-0 left-0 z-[999] w-64 bg-card border-r border-border transform transition-transform duration-300 ease-in-out ${
+                    isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
+                }`}
+            >
                 <div className="p-6 border-b border-border">
                     <Link href="/" className="flex items-center gap-3">
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
@@ -37,7 +47,50 @@ export function StudentSidebar() {
                     </Link>
                 </div>
 
-                {/* Navigation */}
+                <nav className="flex-1 p-4 space-y-2">
+                    {navItems.map((item) => {
+                        const Icon = item.icon
+                        const isActive = pathname === item.href
+                        return (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className={cn(
+                                    "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors",
+                                    isActive
+                                        ? "bg-gradient-to-br from-primary to-accent text-primary-foreground"
+                                        : "text-foreground hover:bg-accent hover:text-accent-foreground",
+                                )}
+                            >
+                                <Icon className="h-5 w-5" />
+                                <span className="font-medium">{item.label}</span>
+                            </Link>
+                        )
+                    })}
+                </nav>
+
+                <div className="p-4 border-t border-border">
+                    <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
+                        <LogOut className="h-5 w-5" />
+                        <span className="font-medium">Logout</span>
+                    </button>
+                </div>
+            </aside>
+
+            {/* Desktop sidebar - hidden on mobile */}
+            <aside className="max-sm:hidden relative w-64 border-r border-border bg-card min-h-screen flex flex-col">
+                <div className="p-6 border-b border-border">
+                    <Link href="/" className="flex items-center gap-3">
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
+                            <BookOpen className="h-6 w-6 text-primary-foreground" />
+                        </div>
+                        <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Research Portal
+            </span>
+                    </Link>
+                </div>
+
                 <nav className="flex-1 p-4 space-y-2">
                     {navItems.map((item) => {
                         const Icon = item.icon
@@ -60,7 +113,6 @@ export function StudentSidebar() {
                     })}
                 </nav>
 
-                {/* Logout */}
                 <div className="p-4 border-t border-border">
                     <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
                         <LogOut className="h-5 w-5" />

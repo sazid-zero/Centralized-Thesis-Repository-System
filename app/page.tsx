@@ -23,13 +23,19 @@ import {
     BarChart3,
     Video,
     Mail,
+    Menu,
+    X,
+    Moon,
+    Sun,
 } from "lucide-react"
 import { useState, useEffect, useRef } from "react"
 import { motion, useScroll, useTransform } from "framer-motion"
 import { getAllTheses } from "@/lib/data/theses"
 import { useInView } from "react-intersection-observer"
+import { useTheme } from "next-themes"
 
 export default function Home() {
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
     const [selectedCategory, setSelectedCategory] = useState("all")
     const [featuredIndex, setFeaturedIndex] = useState(0)
     const [currentRecentIndex, setCurrentRecentIndex] = useState(0)
@@ -40,6 +46,8 @@ export default function Home() {
         triggerOnce: false,
         rootMargin: "0px 0px -200px 0px", // start a little earlier
     })
+    const { theme, setTheme } = useTheme()
+    const [mounted, setMounted] = useState(false)
 
     const [scrollPosition, setScrollPosition] = useState(0)
     const { scrollY } = useScroll()
@@ -48,6 +56,10 @@ export default function Home() {
     const textScale = useTransform(scrollY, [0, heroSectionHeight], [1, 0.8])
     const textOpacity = useTransform(scrollY, [0, heroSectionHeight], [1, 0])
     const buttonsOpacity = useTransform(scrollY, [0, 50], [1, 0])
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
 
     useEffect(() => {
         const handleScroll = () => {
@@ -152,6 +164,7 @@ export default function Home() {
             })
 
     const displayedCategoryResearch = filteredResearch.slice(0, 4)
+    const displayedCategoryResearchMobile = filteredResearch.slice(0, 2)
     const displayedResearch = featuredResearch.slice(featuredIndex, featuredIndex + 3)
 
     // Featured carousel
@@ -185,6 +198,14 @@ export default function Home() {
         return () => clearInterval(interval)
     }, [browseInView])
 
+    // Navigation items for mobile menu
+    const navItems = [
+        { label: "Browse", href: "/browse" },
+        { label: "Features", href: "/#features" },
+        { label: "About", href: "/#about" },
+        { label: "Help", href: "/help" },
+    ]
+
     return (
         <div className="min-h-screen relative overflow-hidden">
             <div className="fixed inset-0 -z-10">
@@ -215,8 +236,8 @@ export default function Home() {
                 />
             </div>
 
-            <nav className="fixed top-0 left-0 right-0 z-50 bg-background/70 backdrop-blur-xl supports-[backdrop-filter]:bg-background/50">
-                <div className="px-6 lg:px-12">
+            <nav className="hidden md:fixed md:top-0 md:left-0 md:right-0 md:z-50 md:flex md:bg-background/70 md:backdrop-blur-xl md:supports-[backdrop-filter]:bg-background/50">
+                <div className="px-6 lg:px-12 w-full">
                     <div className="flex h-16 items-center justify-between">
                         <Link href="/" className="flex items-center gap-3">
                             <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
@@ -284,22 +305,108 @@ export default function Home() {
                 </div>
             </nav>
 
+            <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="md:hidden fixed bottom-6 right-6 z-[999] flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-lg hover:shadow-xl transition-shadow"
+            >
+                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+
+            {isMobileMenuOpen && (
+                <div className="md:hidden fixed inset-0 z-[998] bg-black/50" onClick={() => setIsMobileMenuOpen(false)} />
+            )}
+
+            <aside
+                className={`md:hidden fixed inset-y-0 right-0 z-[999] w-64 bg-background border-l border-border transform transition-transform duration-300 ease-in-out ${
+                    isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+                }`}
+            >
+                <div className="flex flex-col h-full p-6">
+                    <Link href="/" className="flex items-center gap-3 mb-8" onClick={() => setIsMobileMenuOpen(false)}>
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
+                            <BookOpen className="h-6 w-6 text-primary-foreground" />
+                        </div>
+                        <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Research Portal
+            </span>
+                    </Link>
+
+                    <nav className="flex-1 space-y-3">
+                        <Link
+                            href="/settings"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                        >
+                            <User className="h-5 w-5" />
+                            <span className="font-medium">Profile</span>
+                        </Link>
+
+                        <div className="px-4 py-3">
+                            <DashboardSelector />
+                        </div>
+
+                        {navItems.map((item) => (
+                            <Link
+                                key={item.href}
+                                href={item.href}
+                                onClick={() => setIsMobileMenuOpen(false)}
+                                className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                            >
+                                {item.label === "Browse" && <BookOpen className="h-5 w-5" />}
+                                {item.label === "Features" && <Zap className="h-5 w-5" />}
+                                {item.label === "About" && <FileText className="h-5 w-5" />}
+                                {item.label === "Help" && <Mail className="h-5 w-5" />}
+                                <span className="font-medium">{item.label}</span>
+                            </Link>
+                        ))}
+
+                        <div className="my-2 border-t border-border" />
+
+                        <button
+                            onClick={() => {
+                                setTheme(theme === "dark" ? "light" : "dark")
+                            }}
+                            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                        >
+                            {mounted && theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                            <span className="font-medium">Dark Mode</span>
+                        </button>
+                    </nav>
+
+                    <div className="border-t border-border pt-4">
+                        <Link href="/login" onClick={() => setIsMobileMenuOpen(false)} className="w-full">
+                            <Button className="w-full bg-gradient-to-r from-primary to-accent hover:from-primary/90 hover:to-accent/90 text-white border-0">
+                                Login
+                            </Button>
+                        </Link>
+                    </div>
+                </div>
+            </aside>
+
             <section
                 ref={heroRef}
-                className="sm:fixed lg:top-24 top-16 left-0 right-0 min-h-[calc(100vh-4rem)] z-30 flex flex-col lg:flex-row lg:gap-12 sm:mt-0 mt-10"
+                className="md:fixed md:top-16 md:left-0 md:right-0 md:min-h-[calc(100vh-4rem)] md:z-30 w-full md:flex md:flex-col md:lg:flex-row md:lg:gap-12 pt-0 mt-0"
                 style={{
-                    pointerEvents: scrollPosition < 100 ? "auto" : "none",
+                    pointerEvents: scrollPosition < 50 ? "auto" : "none",
                     zIndex: heroZIndex,
                 }}
             >
                 <div className="w-full px-6 lg:px-12 h-full flex flex-col lg:flex-row lg:gap-12 lg:items-center py-12 lg:py-24">
                     <div className="flex-1 flex flex-col justify-center space-y-8">
+                        <div className="md:hidden flex items-center gap-3 mb-4">
+                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
+                                <BookOpen className="h-6 w-6 text-primary-foreground" />
+                            </div>
+                            <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Research Portal
+              </span>
+                        </div>
                         <motion.div
                             style={{
                                 scale: textScale,
                                 opacity: textOpacity,
                             }}
-                            className="space-y-6"
+                            className="space-y-6 max-md:!opacity-100 max-md:!scale-100"
                         >
                             <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full border border-primary/30 bg-primary/5 text-xs font-medium text-primary w-fit">
                                 <Zap className="h-3 w-3" />
@@ -320,7 +427,7 @@ export default function Home() {
                             style={{
                                 opacity: buttonsOpacity,
                             }}
-                            className="flex flex-col sm:flex-row gap-4 relative z-50 pointer-events-auto"
+                            className="flex flex-col sm:flex-row gap-4 relative z-50 pointer-events-auto max-md:!opacity-100"
                         >
                             <Link href="/register" className="w-full sm:w-auto">
                                 <Button
@@ -345,12 +452,17 @@ export default function Home() {
 
                     <div className="flex-1 h-full flex flex-col justify-center py-12 lg:py-0">
                         <motion.div
+                            className="space-y-5 relative max-md:!opacity-100 max-md:!scale-100 max-md:pointer-events-auto"
                             style={{
-                                scale: textScale,
-                                opacity: textOpacity,
-                                pointerEvents: isHeroInteractive ? "auto" : "none",
+                                scale: typeof window !== "undefined" && window.innerWidth >= 768 ? textScale : 1,
+                                opacity: typeof window !== "undefined" && window.innerWidth >= 768 ? textOpacity : 1,
+                                pointerEvents:
+                                    typeof window !== "undefined" && window.innerWidth >= 768
+                                        ? isHeroInteractive
+                                            ? "auto"
+                                            : "none"
+                                        : "auto",
                             }}
-                            className="space-y-5 relative"
                         >
                             <h3 className="text-lg font-bold text-foreground">Recent Research</h3>
                             {displayedResearch.map((research, idx) => (
@@ -442,7 +554,7 @@ export default function Home() {
             <section
                 id="browse"
                 ref={browseRef}
-                className="relative mt-[100vh] pt-10 pb-10 overflow-hidden z-40 bg-transparent"
+                className="relative md:mt-[100vh] pt-6 md:pt-10 pb-10 overflow-hidden z-40 bg-transparent"
                 style={{ pointerEvents: "auto" }}
             >
                 <div className="px-6 lg:px-12 ">
@@ -604,57 +716,115 @@ export default function Home() {
                                 </div>
 
                                 <div className="grid gap-6 md:grid-cols-2">
-                                    {displayedCategoryResearch.map((research, idx) => (
-                                        <Link key={research.id} href={`/thesis/${research.id}`} className="block group">
-                                            <Card className="relative overflow-hidden border-border bg-card p-6 hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/10 cursor-pointer h-full backdrop-blur-sm">
-                                                <div className="space-y-4">
-                                                    <div>
-                                                        <div className="flex items-start justify-between mb-2">
-                              <span className="inline-block px-2 py-1 rounded bg-primary/10 text-primary text-xs font-medium">
-                                {research.year}
-                              </span>
-                                                            <div className="flex items-center gap-1 text-muted-foreground">
-                                                                <Star className="h-4 w-4 fill-primary text-primary" />
-                                                                <span className="text-sm font-medium">{research.downloads}</span>
+                                    {/* Mobile: show only 2 items */}
+                                    <div className="md:hidden contents">
+                                        {displayedCategoryResearchMobile.map((research, idx) => (
+                                            <Link key={research.id} href={`/thesis/${research.id}`} className="block group">
+                                                <Card className="relative overflow-hidden border-border bg-card p-6 hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/10 cursor-pointer h-full backdrop-blur-sm">
+                                                    <div className="space-y-4">
+                                                        <div>
+                                                            <div className="flex items-start justify-between mb-2">
+                                <span className="inline-block px-2 py-1 rounded bg-primary/10 text-primary text-xs font-medium">
+                                  {research.year}
+                                </span>
+                                                                <div className="flex items-center gap-1 text-muted-foreground">
+                                                                    <Star className="h-4 w-4 fill-primary text-primary" />
+                                                                    <span className="text-sm font-medium">{research.downloads}</span>
+                                                                </div>
+                                                            </div>
+                                                            <h3 className="text-lg font-bold text-card-foreground group-hover:text-primary transition-colors leading-tight">
+                                                                {research.title}
+                                                            </h3>
+                                                        </div>
+
+                                                        <div className="space-y-1">
+                                                            <p className="text-sm text-foreground font-medium">{research.author}</p>
+                                                            <p className="text-sm text-muted-foreground">{research.department}</p>
+                                                        </div>
+
+                                                        <p className="text-sm text-muted-foreground line-clamp-2">{research.abstract}</p>
+
+                                                        <div className="flex flex-wrap gap-2 pt-2">
+                                                            {research.keywords.map((keyword) => (
+                                                                <span
+                                                                    key={keyword}
+                                                                    className="inline-block px-2 py-1 rounded text-xs font-medium text-foreground bg-muted border border-border"
+                                                                >
+                                  {keyword}
+                                </span>
+                                                            ))}
+                                                        </div>
+
+                                                        <div className="flex items-center justify-between pt-4 border-t border-border">
+                                                            <div className="flex items-center gap-2 text-muted-foreground">
+                                                                <Eye className="h-4 w-4" />
+                                                                <span className="text-xs">{research.views.toLocaleString()} views</span>
+                                                            </div>
+                                                            <div className="flex items-center gap-1 text-foreground group-hover:text-primary transition-colors">
+                                                                <span className="text-xs font-medium">View</span>
+                                                                <ExternalLink className="h-3 w-3" />
                                                             </div>
                                                         </div>
-                                                        <h3 className="text-lg font-bold text-card-foreground group-hover:text-primary transition-colors leading-tight">
-                                                            {research.title}
-                                                        </h3>
                                                     </div>
+                                                </Card>
+                                            </Link>
+                                        ))}
+                                    </div>
 
-                                                    <div className="space-y-1">
-                                                        <p className="text-sm text-foreground font-medium">{research.author}</p>
-                                                        <p className="text-sm text-muted-foreground">{research.department}</p>
-                                                    </div>
-
-                                                    <p className="text-sm text-muted-foreground line-clamp-2">{research.abstract}</p>
-
-                                                    <div className="flex flex-wrap gap-2 pt-2">
-                                                        {research.keywords.map((keyword) => (
-                                                            <span
-                                                                key={keyword}
-                                                                className="inline-block px-2 py-1 rounded text-xs font-medium text-foreground bg-muted border border-border"
-                                                            >
-                                {keyword}
-                              </span>
-                                                        ))}
-                                                    </div>
-
-                                                    <div className="flex items-center justify-between pt-4 border-t border-border">
-                                                        <div className="flex items-center gap-2 text-muted-foreground">
-                                                            <Eye className="h-4 w-4" />
-                                                            <span className="text-xs">{research.views.toLocaleString()} views</span>
+                                    {/* Desktop: show all 4 items */}
+                                    <div className="hidden md:contents">
+                                        {displayedCategoryResearch.map((research, idx) => (
+                                            <Link key={research.id} href={`/thesis/${research.id}`} className="block group">
+                                                <Card className="relative overflow-hidden border-border bg-card p-6 hover:border-primary/50 transition-all hover:shadow-xl hover:shadow-primary/10 cursor-pointer h-full backdrop-blur-sm">
+                                                    <div className="space-y-4">
+                                                        <div>
+                                                            <div className="flex items-start justify-between mb-2">
+                                <span className="inline-block px-2 py-1 rounded bg-primary/10 text-primary text-xs font-medium">
+                                  {research.year}
+                                </span>
+                                                                <div className="flex items-center gap-1 text-muted-foreground">
+                                                                    <Star className="h-4 w-4 fill-primary text-primary" />
+                                                                    <span className="text-sm font-medium">{research.downloads}</span>
+                                                                </div>
+                                                            </div>
+                                                            <h3 className="text-lg font-bold text-card-foreground group-hover:text-primary transition-colors leading-tight">
+                                                                {research.title}
+                                                            </h3>
                                                         </div>
-                                                        <div className="flex items-center gap-1 text-foreground group-hover:text-primary transition-colors">
-                                                            <span className="text-xs font-medium">View</span>
-                                                            <ExternalLink className="h-3 w-3" />
+
+                                                        <div className="space-y-1">
+                                                            <p className="text-sm text-foreground font-medium">{research.author}</p>
+                                                            <p className="text-sm text-muted-foreground">{research.department}</p>
+                                                        </div>
+
+                                                        <p className="text-sm text-muted-foreground line-clamp-2">{research.abstract}</p>
+
+                                                        <div className="flex flex-wrap gap-2 pt-2">
+                                                            {research.keywords.map((keyword) => (
+                                                                <span
+                                                                    key={keyword}
+                                                                    className="inline-block px-2 py-1 rounded text-xs font-medium text-foreground bg-muted border border-border"
+                                                                >
+                                  {keyword}
+                                </span>
+                                                            ))}
+                                                        </div>
+
+                                                        <div className="flex items-center justify-between pt-4 border-t border-border">
+                                                            <div className="flex items-center gap-2 text-muted-foreground">
+                                                                <Eye className="h-4 w-4" />
+                                                                <span className="text-xs">{research.views.toLocaleString()} views</span>
+                                                            </div>
+                                                            <div className="flex items-center gap-1 text-foreground group-hover:text-primary transition-colors">
+                                                                <span className="text-xs font-medium">View</span>
+                                                                <ExternalLink className="h-3 w-3" />
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            </Card>
-                                        </Link>
-                                    ))}
+                                                </Card>
+                                            </Link>
+                                        ))}
+                                    </div>
                                 </div>
 
                                 <div className="flex justify-center mt-8 relative z-20">

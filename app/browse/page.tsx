@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
 import { Card } from "@/components/ui/card"
@@ -21,10 +21,13 @@ import {
     User,
     BarChart3,
     Menu,
+    Moon,
+    Sun,
 } from "lucide-react"
 import { Label } from "@/components/ui/label"
 import { thesesDatabase } from "@/lib/data/theses"
 import { ThemeToggle } from "@/components/theme-toggle"
+import { useTheme } from "next-themes"
 
 export default function BrowseRepositoryPage() {
     const [searchQuery, setSearchQuery] = useState("")
@@ -33,6 +36,19 @@ export default function BrowseRepositoryPage() {
     const [selectedField, setSelectedField] = useState("All Fields")
     const [navSearchQuery, setNavSearchQuery] = useState("")
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+    const [scrollPosition, setScrollPosition] = useState(0)
+    const { theme, setTheme } = useTheme()
+    const [mounted, setMounted] = useState(false)
+
+    useEffect(() => {
+        setMounted(true)
+    }, [])
+
+    useEffect(() => {
+        const handleScroll = () => setScrollPosition(window.scrollY)
+        window.addEventListener("scroll", handleScroll)
+        return () => window.removeEventListener("scroll", handleScroll)
+    }, [])
 
     const filteredTheses = thesesDatabase.filter((thesis) => {
         const searchTerm = searchQuery || navSearchQuery
@@ -58,15 +74,9 @@ export default function BrowseRepositoryPage() {
         setSelectedField("All Fields")
     }
 
-    const navItems = [
-        { href: "/#about", label: "About", icon: BookOpen },
-        { href: "/help", label: "Help", icon: Search },
-    ]
-
     return (
         <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted">
-            {/* Navigation */}
-            <nav className="sticky top-0 z-50 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+            <nav className="hidden md:sticky md:top-0 md:z-50 md:block md:bg-background/95 md:backdrop-blur md:supports-[backdrop-filter]:md:bg-background/60">
                 <div className="mx-auto max-w-full px-4 sm:px-6 lg:px-8">
                     <div className="flex h-16 items-center justify-between gap-4">
                         <Link href="/" className="flex items-center gap-3">
@@ -78,7 +88,7 @@ export default function BrowseRepositoryPage() {
               </span>
                         </Link>
 
-                        <div className="flex-1 max-w-md hidden md:block ">
+                        <div className="flex-1 max-w-md">
                             <div className="relative">
                                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
                                 <Input
@@ -91,73 +101,271 @@ export default function BrowseRepositoryPage() {
                         </div>
 
                         <div className="flex items-center gap-5">
-                            <Link href="/#about" className="text-foreground hover:text-primary font-medium text-sm hidden lg:block">
+                            <Link href="/#about" className="text-foreground hover:text-primary font-medium text-sm">
                                 About
                             </Link>
-                            <Link href="/help" className="text-foreground hover:text-primary font-medium hidden text-sm lg:block">
+                            <Link href="/help" className="text-foreground hover:text-primary font-medium text-sm">
                                 Help
                             </Link>
                             <DashboardSelector variant="nav" />
                             <ThemeToggle />
-                            <button
-                                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                                className="md:hidden flex items-center justify-center h-9 w-9 rounded-lg hover:bg-muted transition-colors"
-                            >
-                                {isMobileMenuOpen ? (
-                                    <X className="h-5 w-5 text-foreground" />
-                                ) : (
-                                    <Menu className="h-5 w-5 text-foreground" />
-                                )}
-                            </button>
-                            <Link href="/settings" className="hidden sm:block">
+                            <Link href="/settings">
                                 <div className="flex h-9 w-9 items-center justify-center rounded-full bg-gradient-to-br from-primary/20 to-accent/20 border-2 border-primary/30 cursor-pointer hover:border-primary/50 transition-colors">
                                     <User className="h-5 w-5 text-primary" />
                                 </div>
                             </Link>
                         </div>
                     </div>
-
-                    {/* Mobile Menu Dropdown */}
-                    {isMobileMenuOpen && (
-                        <div className="md:hidden border-t border-border py-4 space-y-2">
-                            <Link href="/#about">
-                                <Button variant="ghost" className="w-full justify-start text-foreground">
-                                    <BookOpen className="h-5 w-5 mr-2" />
-                                    About
-                                </Button>
-                            </Link>
-                            <Link href="/help">
-                                <Button variant="ghost" className="w-full justify-start text-foreground">
-                                    <Search className="h-5 w-5 mr-2" />
-                                    Help
-                                </Button>
-                            </Link>
-                            <DashboardSelector variant="mobile" />
-                            <Link href="/settings">
-                                <Button variant="ghost" className="w-full justify-start text-foreground">
-                                    <User className="h-5 w-5 mr-2" />
-                                    Settings
-                                </Button>
-                            </Link>
-                        </div>
-                    )}
                 </div>
             </nav>
 
-            {/* Header */}
-            <div className="border-b border-border bg-gradient-to-br from-background via-background to-muted py-12">
+            <nav className="md:hidden fixed top-0 left-0 right-0 z-50 bg-background/95 backdrop-blur-xl border-b border-border">
+                <div className="px-4 py-3">
+                    <div className="flex items-center gap-3 mb-3">
+                        <Link href="/" className="flex items-center gap-2">
+                            <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
+                                <Search className="h-5 w-5 text-primary-foreground" />
+                            </div>
+                            <span className="text-sm font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+                Research Portal
+              </span>
+                        </Link>
+                    </div>
+                    <div className="relative">
+                        <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-4 w-4 text-muted-foreground" />
+                        <Input
+                            value={navSearchQuery}
+                            onChange={(e) => setNavSearchQuery(e.target.value)}
+                            placeholder="Search theses..."
+                            className="pl-9 bg-background border-border text-foreground placeholder:text-muted-foreground h-9 text-sm"
+                        />
+                    </div>
+                </div>
+            </nav>
+
+            <button
+                onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
+                className="md:hidden fixed bottom-6 right-6 z-[999] flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-lg hover:shadow-xl transition-shadow"
+            >
+                {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+            </button>
+
+            {isMobileMenuOpen && (
+                <div className="md:hidden fixed inset-0 z-[998] bg-black/50" onClick={() => setIsMobileMenuOpen(false)} />
+            )}
+
+            <aside
+                className={`md:hidden fixed inset-y-0 right-0 z-[999] w-64 bg-background border-l border-border transform transition-transform duration-300 ease-in-out ${
+                    isMobileMenuOpen ? "translate-x-0" : "translate-x-full"
+                }`}
+            >
+                <div className="flex flex-col h-full p-6">
+                    <Link href="/" className="flex items-center gap-3 mb-8" onClick={() => setIsMobileMenuOpen(false)}>
+                        <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
+                            <Search className="h-6 w-6 text-primary-foreground" />
+                        </div>
+                        <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
+              Research Portal
+            </span>
+                    </Link>
+
+                    <nav className="flex-1 space-y-3">
+                        <Link
+                            href="/#about"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                        >
+                            <BookOpen className="h-5 w-5" />
+                            <span className="font-medium">About</span>
+                        </Link>
+
+                        <Link
+                            href="/help"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                        >
+                            <Search className="h-5 w-5" />
+                            <span className="font-medium">Help</span>
+                        </Link>
+
+                        <div className="px-4 py-3">
+                            <DashboardSelector />
+                        </div>
+
+                        <div className="my-2 border-t border-border" />
+
+                        <button
+                            onClick={() => {
+                                setTheme(theme === "dark" ? "light" : "dark")
+                            }}
+                            className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                        >
+                            {mounted && theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                            <span className="font-medium">Dark Mode</span>
+                        </button>
+
+                        <Link
+                            href="/settings"
+                            onClick={() => setIsMobileMenuOpen(false)}
+                            className="flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                        >
+                            <User className="h-5 w-5" />
+                            <span className="font-medium">Settings</span>
+                        </Link>
+                    </nav>
+                </div>
+            </aside>
+
+            <div className="border-b border-border bg-gradient-to-br from-background via-background to-muted py-8 md:py-12 px-4 md:px-0 mt-[120px] md:mt-0">
                 <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-                    <h1 className="text-4xl font-bold text-foreground mb-4">Browse Thesis Repository</h1>
-                    <p className="text-lg text-muted-foreground">Search and discover academic research from SUST</p>
+                    <h1 className="text-2xl md:text-4xl font-bold text-foreground mb-2 md:mb-4">Browse Thesis Repository</h1>
+                    <p className="text-base md:text-lg text-muted-foreground">Search and discover academic research from SUST</p>
                 </div>
             </div>
 
-            {/* Content */}
-            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-8">
-                <div className="grid gap-8 lg:grid-cols-4">
-                    {/* Sidebar Filters */}
-                    <div className="lg:col-span-1">
-                        <Card className="border-2 border-border bg-card backdrop-blur-sm p-6 sticky top-24">
+            <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 py-6 md:py-8">
+                <div className="mb-6 md:hidden">
+                    <Card className="border-2 border-border bg-card backdrop-blur-sm p-6">
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-lg font-bold text-foreground">Filters</h2>
+                            {(searchQuery !== "" ||
+                                selectedDepartment !== "All Departments" ||
+                                selectedYear !== "All Years" ||
+                                selectedField !== "All Fields") && (
+                                <button onClick={clearFilters} className="text-sm text-primary hover:underline flex items-center gap-1">
+                                    <X className="h-3 w-3" />
+                                    Clear
+                                </button>
+                            )}
+                        </div>
+
+                        <div className="space-y-6">
+                            <div>
+                                <Label className="text-foreground font-medium mb-2 block">Field</Label>
+                                <Select value={selectedField} onValueChange={setSelectedField}>
+                                    <SelectTrigger className="bg-background border-border text-foreground">
+                                        <SelectValue placeholder="All Fields" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-popover border-border">
+                                        <SelectItem value="All Fields">
+                                            <div className="flex items-center gap-2">
+                                                <BookOpen className="h-4 w-4" />
+                                                All Fields
+                                            </div>
+                                        </SelectItem>
+                                        <SelectItem value="Machine Learning">
+                                            <div className="flex items-center gap-2">
+                                                <Zap className="h-4 w-4" />
+                                                Artificial Intelligence
+                                            </div>
+                                        </SelectItem>
+                                        <SelectItem value="Biomedical">
+                                            <div className="flex items-center gap-2">
+                                                <Microscope className="h-4 w-4" />
+                                                Biotechnology
+                                            </div>
+                                        </SelectItem>
+                                        <SelectItem value="Physics">
+                                            <div className="flex items-center gap-2">
+                                                <TrendingUp className="h-4 w-4" />
+                                                Physics and Mathematics
+                                            </div>
+                                        </SelectItem>
+                                        <SelectItem value="Chemistry">
+                                            <div className="flex items-center gap-2">
+                                                <Microscope className="h-4 w-4" />
+                                                Chemistry
+                                            </div>
+                                        </SelectItem>
+                                        <SelectItem value="Environmental">
+                                            <div className="flex items-center gap-2">
+                                                <TrendingUp className="h-4 w-4" />
+                                                Environmental Science
+                                            </div>
+                                        </SelectItem>
+                                        <SelectItem value="Robotics">
+                                            <div className="flex items-center gap-2">
+                                                <Github className="h-4 w-4" />
+                                                Robotics and Automation
+                                            </div>
+                                        </SelectItem>
+                                        <SelectItem value="Economics">
+                                            <div className="flex items-center gap-2">
+                                                <BarChart3 className="h-4 w-4" />
+                                                Economics
+                                            </div>
+                                        </SelectItem>
+                                        <SelectItem value="Agriculture">
+                                            <div className="flex items-center gap-2">
+                                                <Microscope className="h-4 w-4" />
+                                                Agriculture and Food Technology
+                                            </div>
+                                        </SelectItem>
+                                        <SelectItem value="Computer Science">
+                                            <div className="flex items-center gap-2">
+                                                <Github className="h-4 w-4" />
+                                                Computer Science
+                                            </div>
+                                        </SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            <div>
+                                <Label className="text-foreground font-medium mb-2 block">Department</Label>
+                                <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
+                                    <SelectTrigger className="bg-background border-border text-foreground">
+                                        <SelectValue placeholder="All Departments" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-popover border-border">
+                                        <SelectItem value="All Departments">All Departments</SelectItem>
+                                        <SelectItem value="Computer Science & Engineering">Computer Science & Engineering</SelectItem>
+                                        <SelectItem value="Electrical & Electronic Engineering">
+                                            Electrical & Electronic Engineering
+                                        </SelectItem>
+                                        <SelectItem value="Civil Engineering">Civil Engineering</SelectItem>
+                                        <SelectItem value="Mechanical Engineering">Mechanical Engineering</SelectItem>
+                                        <SelectItem value="Biochemistry">Biochemistry</SelectItem>
+                                        <SelectItem value="Physics">Physics</SelectItem>
+                                        <SelectItem value="Mathematics">Mathematics</SelectItem>
+                                        <SelectItem value="Chemistry">Chemistry</SelectItem>
+                                        <SelectItem value="Environmental Science">Environmental Science</SelectItem>
+                                        <SelectItem value="Robotics & Automation">Robotics & Automation</SelectItem>
+                                        <SelectItem value="Economics">Economics</SelectItem>
+                                        <SelectItem value="Agriculture & Food Technology">Agriculture & Food Technology</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            <div>
+                                <Label className="text-foreground font-medium mb-2 block">Year</Label>
+                                <Select value={selectedYear} onValueChange={setSelectedYear}>
+                                    <SelectTrigger className="bg-background border-border text-foreground">
+                                        <SelectValue placeholder="All Years" />
+                                    </SelectTrigger>
+                                    <SelectContent className="bg-popover border-border">
+                                        <SelectItem value="All Years">All Years</SelectItem>
+                                        <SelectItem value="2024">2024</SelectItem>
+                                        <SelectItem value="2023">2023</SelectItem>
+                                        <SelectItem value="2022">2022</SelectItem>
+                                        <SelectItem value="2021">2021</SelectItem>
+                                    </SelectContent>
+                                </Select>
+                            </div>
+
+                            <div className="pt-4 border-t border-border">
+                                <p className="text-sm text-muted-foreground">
+                                    Showing <span className="font-semibold text-foreground">{filteredTheses.length}</span> of{" "}
+                                    <span className="font-semibold text-foreground">{thesesDatabase.length}</span> theses
+                                </p>
+                            </div>
+                        </div>
+                    </Card>
+                </div>
+
+                <div className="grid gap-6 md:gap-8 md:grid-cols-4">
+                    <div className="hidden md:block md:col-span-1">
+                        <Card className="border-2 border-border bg-card backdrop-blur-sm p-6 md:sticky md:top-24">
                             <div className="flex items-center justify-between mb-6">
                                 <h2 className="text-lg font-bold text-foreground">Filters</h2>
                                 {(searchQuery !== "" ||
@@ -175,7 +383,6 @@ export default function BrowseRepositoryPage() {
                             </div>
 
                             <div className="space-y-6">
-                                {/* Field Filter */}
                                 <div>
                                     <Label className="text-foreground font-medium mb-2 block">Field</Label>
                                     <Select value={selectedField} onValueChange={setSelectedField}>
@@ -247,7 +454,6 @@ export default function BrowseRepositoryPage() {
                                     </Select>
                                 </div>
 
-                                {/* Department Filter */}
                                 <div>
                                     <Label className="text-foreground font-medium mb-2 block">Department</Label>
                                     <Select value={selectedDepartment} onValueChange={setSelectedDepartment}>
@@ -274,7 +480,6 @@ export default function BrowseRepositoryPage() {
                                     </Select>
                                 </div>
 
-                                {/* Year Filter */}
                                 <div>
                                     <Label className="text-foreground font-medium mb-2 block">Year</Label>
                                     <Select value={selectedYear} onValueChange={setSelectedYear}>
@@ -291,7 +496,6 @@ export default function BrowseRepositoryPage() {
                                     </Select>
                                 </div>
 
-                                {/* Results Count */}
                                 <div className="pt-4 border-t border-border">
                                     <p className="text-sm text-muted-foreground">
                                         Showing <span className="font-semibold text-foreground">{filteredTheses.length}</span> of{" "}
@@ -302,54 +506,40 @@ export default function BrowseRepositoryPage() {
                         </Card>
                     </div>
 
-                    {/* Main Content */}
-                    <div className="lg:col-span-3 space-y-6">
-                        {/* Search Bar */}
-                        <Card className="border-border bg-card p-4">
-                            <div className="relative">
-                                <Search className="absolute left-3 top-1/2 -translate-y-1/2 h-5 w-5 text-muted-foreground" />
-                                <Input
-                                    value={searchQuery}
-                                    onChange={(e) => setSearchQuery(e.target.value)}
-                                    placeholder="Search by title, author, or keywords..."
-                                    className="pl-10 bg-input border-border text-foreground placeholder:text-muted-foreground h-10"
-                                />
-                            </div>
-                        </Card>
-
-                        {/* Results */}
+                    <div className="md:col-span-3 space-y-4 md:space-y-6">
                         {filteredTheses.length > 0 ? (
                             <div className="space-y-4">
                                 {filteredTheses.map((thesis) => (
-                                    <Card key={thesis.id} className="border-border bg-card p-6 hover:shadow-lg transition-shadow">
-                                        <div className="space-y-4">
-                                            {/* Title and Author */}
+                                    <Card key={thesis.id} className="border-border bg-card p-4 md:p-6 hover:shadow-lg transition-shadow">
+                                        <div className="space-y-3 md:space-y-4">
                                             <div>
                                                 <Link href={`/thesis/${thesis.id}`}>
-                                                    <h3 className="text-xl font-bold text-foreground hover:text-primary transition-colors cursor-pointer">
+                                                    <h3 className="text-lg md:text-xl font-bold text-foreground hover:text-primary transition-colors cursor-pointer line-clamp-2">
                                                         {thesis.title}
                                                     </h3>
                                                 </Link>
-                                                <p className="text-sm text-muted-foreground mt-1">
+                                                <p className="text-xs md:text-sm text-muted-foreground mt-1">
                                                     By <span className="font-medium">{thesis.author}</span> • {thesis.department} • {thesis.year}
                                                 </p>
                                             </div>
 
-                                            {/* Abstract */}
-                                            <p className="text-foreground leading-relaxed line-clamp-2">{thesis.abstract}</p>
+                                            <p className="text-sm text-foreground leading-relaxed line-clamp-2">{thesis.abstract}</p>
 
-                                            {/* Keywords */}
                                             <div className="flex flex-wrap gap-2">
-                                                {thesis.keywords.map((keyword, idx) => (
-                                                    <Badge key={idx} className="bg-primary/10 text-primary border border-primary/20">
+                                                {thesis.keywords.slice(0, 3).map((keyword, idx) => (
+                                                    <Badge key={idx} className="bg-primary/10 text-primary border border-primary/20 text-xs">
                                                         {keyword}
                                                     </Badge>
                                                 ))}
+                                                {thesis.keywords.length > 3 && (
+                                                    <Badge className="bg-muted text-muted-foreground border border-border text-xs">
+                                                        +{thesis.keywords.length - 3} more
+                                                    </Badge>
+                                                )}
                                             </div>
 
-                                            {/* Stats and Actions */}
-                                            <div className="flex items-center justify-between pt-4 border-t border-border">
-                                                <div className="flex gap-6 text-sm text-muted-foreground">
+                                            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pt-3 md:pt-4 border-t border-border">
+                                                <div className="flex gap-4 md:gap-6 text-xs md:text-sm text-muted-foreground">
                                                     <div className="flex items-center gap-2">
                                                         <Eye className="h-4 w-4" />
                                                         <span>{thesis.views} views</span>
@@ -359,14 +549,21 @@ export default function BrowseRepositoryPage() {
                                                         <span>{thesis.downloads} downloads</span>
                                                     </div>
                                                 </div>
-                                                <div className="flex gap-2">
-                                                    <Link href={`/thesis/${thesis.id}`}>
-                                                        <Button variant="outline" size="sm" className="border-border hover:bg-muted bg-transparent">
+                                                <div className="flex gap-2 w-full sm:w-auto">
+                                                    <Link href={`/thesis/${thesis.id}`} className="flex-1 sm:flex-none">
+                                                        <Button
+                                                            variant="outline"
+                                                            size="sm"
+                                                            className="border-border hover:bg-muted bg-transparent w-full sm:w-auto text-xs md:text-sm"
+                                                        >
                                                             <Eye className="h-4 w-4 mr-2" />
                                                             View
                                                         </Button>
                                                     </Link>
-                                                    <Button size="sm" className="bg-primary hover:bg-primary/90 text-primary-foreground">
+                                                    <Button
+                                                        size="sm"
+                                                        className="flex-1 sm:flex-none bg-primary hover:bg-primary/90 text-primary-foreground text-xs md:text-sm"
+                                                    >
                                                         <Download className="h-4 w-4 mr-2" />
                                                         Download
                                                     </Button>
@@ -377,19 +574,18 @@ export default function BrowseRepositoryPage() {
                                 ))}
                             </div>
                         ) : (
-                            <Card className="border-border bg-card p-12 text-center">
+                            <Card className="border-border bg-card p-8 md:p-12 text-center">
                                 <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4 opacity-50" />
                                 <h3 className="text-lg font-semibold text-foreground mb-2">No theses found</h3>
-                                <p className="text-muted-foreground">Try adjusting your search or filters</p>
+                                <p className="text-sm md:text-base text-muted-foreground">Try adjusting your search or filters</p>
                             </Card>
                         )}
                     </div>
                 </div>
             </div>
 
-            {/* Footer */}
-            <footer className="border-t border-border bg-background py-12 mt-16">
-                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-sm text-muted-foreground">
+            <footer className="border-t border-border bg-background py-8 md:py-12 mt-12 md:mt-16 px-4">
+                <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 text-center text-xs md:text-sm text-muted-foreground">
                     <p>© 2025 SUST Thesis Repository. All rights reserved.</p>
                 </div>
             </footer>
