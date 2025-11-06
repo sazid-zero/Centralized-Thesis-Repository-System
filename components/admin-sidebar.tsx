@@ -37,7 +37,7 @@ export function AdminSidebar() {
 
             <aside
                 className={cn(
-                    "max-sm:fixed max-sm:inset-y-0 max-sm:left-0 max-sm:z-40 max-sm:w-64 max-sm:transform max-sm:transition-transform w-64 border-r border-border bg-sidebar h-[calc(100vh)] flex flex-col",
+                    "max-sm:fixed max-sm:inset-y-0 max-sm:left-0 max-sm:z-40 max-sm:w-64 max-sm:transform max-sm:transition-transform w-64 border-r border-border bg-sidebar min-h-screen flex flex-col",
                     isMobileMenuOpen ? "max-sm:translate-x-0" : "max-sm:-translate-x-full",
                 )}
             >
@@ -79,8 +79,8 @@ export function AdminSidebar() {
                 </nav>
 
                 {/* Logout */}
-                <div className="p-4 border-t border-sidebar-border">
-                    <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-sidebar-foreground hover:bg-sidebar-accent hover:text-sidebar-accent-foreground transition-colors">
+                <div className="p-4 border-t border-border">
+                    <button className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-colors">
                         <LogOut className="h-5 w-5" />
                         <span className="font-medium">Logout</span>
                     </button>
