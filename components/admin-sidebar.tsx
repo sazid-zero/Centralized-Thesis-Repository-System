@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation"
 import { BookOpen, FileText, LayoutDashboard, LogOut, Settings, Users, BarChart3, Menu, X } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
+import {ThemeToggle} from "@/components/theme-toggle";
 
 export function AdminSidebar() {
     const pathname = usePathname()
@@ -22,27 +23,27 @@ export function AdminSidebar() {
         <>
             <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="hidden max-sm:flex fixed bottom-6 right-6 z-[999] items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-lg"
+                className="hidden max-sm:flex fixed bottom-6 right-6 z-50 items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-lg"
             >
                 {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
 
             {isMobileMenuOpen && (
                 <div
-                    className="hidden max-sm:block fixed inset-0 z-[998] bg-black/50"
+                    className="hidden max-sm:block fixed inset-0 z-40 bg-black/50"
                     onClick={() => setIsMobileMenuOpen(false)}
                 />
             )}
 
             <aside
                 className={cn(
-                    "max-sm:fixed max-sm:inset-y-0 max-sm:left-0 max-sm:z-[999] max-sm:w-64 max-sm:transform max-sm:transition-transform w-64 border-r border-border bg-sidebar min-h-screen flex flex-col",
+                    "max-sm:fixed max-sm:inset-y-0 max-sm:left-0 max-sm:z-40 max-sm:w-64 max-sm:transform max-sm:transition-transform w-64 border-r border-border bg-sidebar h-screen flex flex-col",
                     isMobileMenuOpen ? "max-sm:translate-x-0" : "max-sm:-translate-x-full",
                 )}
             >
                 {/* Logo */}
                 <div className="p-6 border-b border-sidebar-border">
-                    <Link href="/" className="flex items-center gap-3 hover:opacity-80 transition-opacity">
+                    <Link href="/" className="flex items-center gap-3">
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
                             <BookOpen className="h-6 w-6 text-primary-foreground" />
                         </div>
@@ -74,6 +75,7 @@ export function AdminSidebar() {
                             </Link>
                         )
                     })}
+
                 </nav>
 
                 {/* Logout */}
