@@ -37,7 +37,7 @@ export function AdminSidebar() {
 
             <aside
                 className={cn(
-                    "max-sm:fixed max-sm:inset-y-0 max-sm:left-0 max-sm:z-40 max-sm:w-64 max-sm:transform max-sm:transition-transform w-64 border-r border-border bg-sidebar h-[calc(100vh-4rem)] flex flex-col",
+                    "max-sm:fixed max-sm:inset-y-0 max-sm:left-0 max-sm:z-40 max-sm:w-64 max-sm:transform max-sm:transition-transform w-64 border-r border-border bg-sidebar h-[calc(100vh)] flex flex-col",
                     isMobileMenuOpen ? "max-sm:translate-x-0" : "max-sm:-translate-x-full",
                 )}
             >
