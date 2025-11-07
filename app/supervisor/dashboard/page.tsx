@@ -32,9 +32,9 @@ export default function SupervisorDashboard() {
 
             <main className="flex-1">
                 {/* Header */}
-                <div className="border-b border-border bg-card p-4 sm:p-6 pb-2 sm:pb-4">
-                    <div className="flex flex-wrap items-center justify-between">
-                        <div className="mb-2">
+                <div className="border-b border-border bg-card p-4 sm:p-6">
+                    <div className="flex items-center justify-between">
+                        <div className="">
                             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Dashboard</h1>
                             <p className="text-xs sm:text-sm text-muted-foreground mt-1">Welcome back, Dr. Ahmed Hassan</p>
                         </div>
