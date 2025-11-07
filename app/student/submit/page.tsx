@@ -12,239 +12,241 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Upload, X, FileText, Music, Video, Presentation } from "lucide-react"
 
 export default function SubmitThesisPage() {
-  const [files, setFiles] = useState<{ name: string; type: string; size: number }[]>([])
-  const [keywords, setKeywords] = useState<string[]>([])
-  const [keywordInput, setKeywordInput] = useState("")
+    const [files, setFiles] = useState<{ name: string; type: string; size: number }[]>([])
+    const [keywords, setKeywords] = useState<string[]>([])
+    const [keywordInput, setKeywordInput] = useState("")
 
-  const handleAddKeyword = () => {
-    if (keywordInput.trim() && keywords.length < 5) {
-      setKeywords([...keywords, keywordInput.trim()])
-      setKeywordInput("")
+    const handleAddKeyword = () => {
+        if (keywordInput.trim() && keywords.length < 5) {
+            setKeywords([...keywords, keywordInput.trim()])
+            setKeywordInput("")
+        }
     }
-  }
 
-  const handleRemoveKeyword = (index: number) => {
-    setKeywords(keywords.filter((_, i) => i !== index))
-  }
-
-  const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const uploadedFiles = e.currentTarget.files
-    if (uploadedFiles) {
-      Array.from(uploadedFiles).forEach((file) => {
-        setFiles((prev) => [...prev, { name: file.name, type: file.type, size: file.size }])
-      })
+    const handleRemoveKeyword = (index: number) => {
+        setKeywords(keywords.filter((_, i) => i !== index))
     }
-  }
 
-  const handleRemoveFile = (index: number) => {
-    setFiles(files.filter((_, i) => i !== index))
-  }
+    const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const uploadedFiles = e.currentTarget.files
+        if (uploadedFiles) {
+            Array.from(uploadedFiles).forEach((file) => {
+                setFiles((prev) => [...prev, { name: file.name, type: file.type, size: file.size }])
+            })
+        }
+    }
 
-  const getFileIcon = (type: string) => {
-    if (type.includes("audio")) return <Music className="h-4 w-4" />
-    if (type.includes("video")) return <Video className="h-4 w-4" />
-    if (type.includes("presentation")) return <Presentation className="h-4 w-4" />
-    return <FileText className="h-4 w-4" />
-  }
+    const handleRemoveFile = (index: number) => {
+        setFiles(files.filter((_, i) => i !== index))
+    }
 
-  return (
-    <div className="flex min-h-screen bg-background">
-      <StudentSidebar />
+    const getFileIcon = (type: string) => {
+        if (type.includes("audio")) return <Music className="h-4 w-4" />
+        if (type.includes("video")) return <Video className="h-4 w-4" />
+        if (type.includes("presentation")) return <Presentation className="h-4 w-4" />
+        return <FileText className="h-4 w-4" />
+    }
 
-      <main className="flex-1">
-        {/* Header */}
-        <div className="border-b border-border bg-card p-6">
-          <h1 className="text-3xl font-bold text-foreground">Submit Thesis</h1>
-          <p className="text-muted-foreground mt-1">Upload your thesis with supporting materials</p>
-        </div>
+    return (
+        <div className="flex min-h-screen bg-background">
+            <StudentSidebar />
 
-        {/* Content */}
-        <div className="p-6 max-w-4xl">
-          <form className="space-y-8">
-            {/* Thesis Title */}
-            <Card className="border-border bg-card p-6">
-              <h2 className="text-lg font-semibold text-foreground mb-4">Thesis Information</h2>
-              <div className="space-y-4">
-                <div>
-                  <Label htmlFor="title" className="text-foreground font-medium">
-                    Thesis Title
-                  </Label>
-                  <Input
-                    id="title"
-                    placeholder="Enter your thesis title"
-                    className="mt-2 bg-input border-border text-foreground placeholder:text-muted-foreground"
-                    required
-                  />
+            <main className="flex-1 mb-20">
+                <div className="border-b border-border bg-card p-3 sm:p-4 md:p-6">
+                    <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Submit Thesis</h1>
+                    <p className="text-muted-foreground mt-1 text-sm sm:text-base">
+                        Upload your thesis with supporting materials
+                    </p>
                 </div>
 
-                <div>
-                  <Label htmlFor="abstract" className="text-foreground font-medium">
-                    Abstract
-                  </Label>
-                  <textarea
-                    id="abstract"
-                    placeholder="Write a brief abstract of your thesis (200-300 words)"
-                    className="mt-2 w-full px-4 py-3 rounded-lg bg-input border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
-                    rows={6}
-                    required
-                  />
-                </div>
+                <div className="p-3 sm:p-4 md:p-6 max-w-full lg:max-w-4xl">
+                    <form className="space-y-4 sm:space-y-6 md:space-y-8">
+                        <Card className="border-border bg-card p-3 sm:p-4 md:p-6">
+                            <h2 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">Thesis Information</h2>
+                            <div className="space-y-3 sm:space-y-4">
+                                <div>
+                                    <Label htmlFor="title" className="text-foreground font-medium text-sm sm:text-base">
+                                        Thesis Title
+                                    </Label>
+                                    <Input
+                                        id="title"
+                                        placeholder="Enter your thesis title"
+                                        className="mt-2 bg-input border-border text-foreground placeholder:text-muted-foreground text-sm sm:text-base"
+                                        required
+                                    />
+                                </div>
 
-                <div className="grid gap-4 md:grid-cols-2">
-                  <div>
-                    <Label htmlFor="department" className="text-foreground font-medium">
-                      Department
-                    </Label>
-                    <Select>
-                      <SelectTrigger className="mt-2 bg-input border-border text-foreground">
-                        <SelectValue placeholder="Select department" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-card border-border">
-                        <SelectItem value="cse">Computer Science & Engineering</SelectItem>
-                        <SelectItem value="eee">Electrical & Electronic Engineering</SelectItem>
-                        <SelectItem value="ce">Civil Engineering</SelectItem>
-                        <SelectItem value="me">Mechanical Engineering</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
+                                <div>
+                                    <Label htmlFor="abstract" className="text-foreground font-medium text-sm sm:text-base">
+                                        Abstract
+                                    </Label>
+                                    <textarea
+                                        id="abstract"
+                                        placeholder="Write a brief abstract of your thesis (200-300 words)"
+                                        className="mt-2 w-full px-3 sm:px-4 py-2 sm:py-3 rounded-lg bg-input border border-border text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary text-sm sm:text-base"
+                                        rows={6}
+                                        required
+                                    />
+                                </div>
 
-                  <div>
-                    <Label htmlFor="supervisor" className="text-foreground font-medium">
-                      Supervisor
-                    </Label>
-                    <Select>
-                      <SelectTrigger className="mt-2 bg-input border-border text-foreground">
-                        <SelectValue placeholder="Select supervisor" />
-                      </SelectTrigger>
-                      <SelectContent className="bg-card border-border">
-                        <SelectItem value="dr-ahmed">Dr. Ahmed Hassan</SelectItem>
-                        <SelectItem value="dr-fatima">Dr. Fatima Khan</SelectItem>
-                        <SelectItem value="dr-karim">Dr. Karim Ahmed</SelectItem>
-                      </SelectContent>
-                    </Select>
-                  </div>
-                </div>
-              </div>
-            </Card>
+                                <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2">
+                                    <div>
+                                        <Label htmlFor="department" className="text-foreground font-medium text-sm sm:text-base">
+                                            Department
+                                        </Label>
+                                        <Select>
+                                            <SelectTrigger className="mt-2 bg-input border-border text-foreground text-sm sm:text-base">
+                                                <SelectValue placeholder="Select department" />
+                                            </SelectTrigger>
+                                            <SelectContent className="bg-card border-border">
+                                                <SelectItem value="cse">Computer Science & Engineering</SelectItem>
+                                                <SelectItem value="eee">Electrical & Electronic Engineering</SelectItem>
+                                                <SelectItem value="ce">Civil Engineering</SelectItem>
+                                                <SelectItem value="me">Mechanical Engineering</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
 
-            {/* Keywords */}
-            <Card className="border-border bg-card p-6">
-              <h2 className="text-lg font-semibold text-foreground mb-4">Keywords</h2>
-              <div className="space-y-4">
-                <div className="flex gap-2">
-                  <Input
-                    value={keywordInput}
-                    onChange={(e) => setKeywordInput(e.target.value)}
-                    onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), handleAddKeyword())}
-                    placeholder="Add keyword and press Enter"
-                    className="bg-input border-border text-foreground placeholder:text-muted-foreground"
-                  />
-                  <Button
-                    type="button"
-                    onClick={handleAddKeyword}
-                    className="bg-primary hover:bg-primary/90 text-primary-foreground"
-                  >
-                    Add
-                  </Button>
-                </div>
-                <div className="flex flex-wrap gap-2">
-                  {keywords.map((keyword, idx) => (
-                    <div
-                      key={idx}
-                      className="flex items-center gap-2 px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20"
-                    >
-                      <span className="text-sm">{keyword}</span>
-                      <button
-                        type="button"
-                        onClick={() => handleRemoveKeyword(idx)}
-                        className="hover:opacity-70 transition-opacity"
-                      >
-                        <X className="h-4 w-4" />
-                      </button>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </Card>
-
-            {/* File Uploads */}
-            <Card className="border-border bg-card p-6">
-              <h2 className="text-lg font-semibold text-foreground mb-4">File Uploads</h2>
-              <div className="space-y-6">
-                {/* PDF Upload */}
-                <div>
-                  <Label className="text-foreground font-medium mb-2 block">Thesis Document (PDF) - Required</Label>
-                  <label className="flex items-center justify-center w-full px-4 py-8 border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
-                    <div className="text-center">
-                      <Upload className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-                      <p className="text-sm text-foreground font-medium">Click to upload or drag and drop</p>
-                      <p className="text-xs text-muted-foreground">PDF up to 50MB</p>
-                    </div>
-                    <input type="file" accept=".pdf" onChange={handleFileUpload} className="hidden" />
-                  </label>
-                </div>
-
-                {/* Other Files Upload */}
-                <div>
-                  <Label className="text-foreground font-medium mb-2 block">Supporting Materials (Optional)</Label>
-                  <label className="flex items-center justify-center w-full px-4 py-8 border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
-                    <div className="text-center">
-                      <Upload className="h-8 w-8 mx-auto text-muted-foreground mb-2" />
-                      <p className="text-sm text-foreground font-medium">Click to upload or drag and drop</p>
-                      <p className="text-xs text-muted-foreground">Audio, Video, Slides (MP3, MP4, PPT, PDF)</p>
-                    </div>
-                    <input
-                      type="file"
-                      multiple
-                      accept=".mp3,.wav,.mp4,.avi,.ppt,.pptx,.pdf"
-                      onChange={handleFileUpload}
-                      className="hidden"
-                    />
-                  </label>
-                </div>
-
-                {/* Uploaded Files List */}
-                {files.length > 0 && (
-                  <div className="space-y-2">
-                    <h3 className="text-sm font-semibold text-foreground">Uploaded Files</h3>
-                    <div className="space-y-2">
-                      {files.map((file, idx) => (
-                        <div
-                          key={idx}
-                          className="flex items-center justify-between p-3 rounded-lg bg-muted/50 border border-border"
-                        >
-                          <div className="flex items-center gap-3">
-                            {getFileIcon(file.type)}
-                            <div>
-                              <p className="text-sm font-medium text-foreground">{file.name}</p>
-                              <p className="text-xs text-muted-foreground">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                                    <div>
+                                        <Label htmlFor="supervisor" className="text-foreground font-medium text-sm sm:text-base">
+                                            Supervisor
+                                        </Label>
+                                        <Select>
+                                            <SelectTrigger className="mt-2 bg-input border-border text-foreground text-sm sm:text-base">
+                                                <SelectValue placeholder="Select supervisor" />
+                                            </SelectTrigger>
+                                            <SelectContent className="bg-card border-border">
+                                                <SelectItem value="dr-ahmed">Dr. Ahmed Hassan</SelectItem>
+                                                <SelectItem value="dr-fatima">Dr. Fatima Khan</SelectItem>
+                                                <SelectItem value="dr-karim">Dr. Karim Ahmed</SelectItem>
+                                            </SelectContent>
+                                        </Select>
+                                    </div>
+                                </div>
                             </div>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => handleRemoveFile(idx)}
-                            className="text-muted-foreground hover:text-foreground transition-colors"
-                          >
-                            <X className="h-4 w-4" />
-                          </button>
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            </Card>
+                        </Card>
 
-            {/* Action Buttons */}
-            <div className="flex gap-4">
-              <Button variant="outline" className="border-border hover:bg-muted bg-transparent">
-                Save Draft
-              </Button>
-              <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Submit for Review</Button>
-            </div>
-          </form>
+                        <Card className="border-border bg-card p-3 sm:p-4 md:p-6">
+                            <h2 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">Keywords</h2>
+                            <div className="space-y-3 sm:space-y-4">
+                                <div className="flex gap-2">
+                                    <Input
+                                        value={keywordInput}
+                                        onChange={(e) => setKeywordInput(e.target.value)}
+                                        onKeyPress={(e) => e.key === "Enter" && (e.preventDefault(), handleAddKeyword())}
+                                        placeholder="Add keyword and press Enter"
+                                        className="bg-input border-border text-foreground placeholder:text-muted-foreground text-sm sm:text-base"
+                                    />
+                                    <Button
+                                        type="button"
+                                        onClick={handleAddKeyword}
+                                        className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm sm:text-base h-9 sm:h-10"
+                                    >
+                                        Add
+                                    </Button>
+                                </div>
+                                <div className="flex flex-wrap gap-2">
+                                    {keywords.map((keyword, idx) => (
+                                        <div
+                                            key={idx}
+                                            className="flex items-center gap-2 px-2 sm:px-3 py-1 rounded-full bg-primary/10 text-primary border border-primary/20"
+                                        >
+                                            <span className="text-xs sm:text-sm">{keyword}</span>
+                                            <button
+                                                type="button"
+                                                onClick={() => handleRemoveKeyword(idx)}
+                                                className="hover:opacity-70 transition-opacity"
+                                            >
+                                                <X className="h-3 w-3 sm:h-4 sm:w-4" />
+                                            </button>
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                        </Card>
+
+                        <Card className="border-border bg-card p-3 sm:p-4 md:p-6">
+                            <h2 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">File Uploads</h2>
+                            <div className="space-y-4 sm:space-y-6">
+                                <div>
+                                    <Label className="text-foreground font-medium mb-2 block text-sm sm:text-base">
+                                        Thesis Document (PDF) - Required
+                                    </Label>
+                                    <label className="flex items-center justify-center w-full px-3 sm:px-4 py-6 sm:py-8 border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
+                                        <div className="text-center">
+                                            <Upload className="h-6 w-6 sm:h-8 sm:w-8 mx-auto text-muted-foreground mb-2" />
+                                            <p className="text-xs sm:text-sm text-foreground font-medium">Click to upload or drag and drop</p>
+                                            <p className="text-xs text-muted-foreground">PDF up to 50MB</p>
+                                        </div>
+                                        <input type="file" accept=".pdf" onChange={handleFileUpload} className="hidden" />
+                                    </label>
+                                </div>
+
+                                <div>
+                                    <Label className="text-foreground font-medium mb-2 block text-sm sm:text-base">
+                                        Supporting Materials (Optional)
+                                    </Label>
+                                    <label className="flex items-center justify-center w-full px-3 sm:px-4 py-6 sm:py-8 border-2 border-dashed border-border rounded-lg cursor-pointer hover:bg-muted/50 transition-colors">
+                                        <div className="text-center">
+                                            <Upload className="h-6 w-6 sm:h-8 sm:w-8 mx-auto text-muted-foreground mb-2" />
+                                            <p className="text-xs sm:text-sm text-foreground font-medium">Click to upload or drag and drop</p>
+                                            <p className="text-xs text-muted-foreground">Audio, Video, Slides (MP3, MP4, PPT, PDF)</p>
+                                        </div>
+                                        <input
+                                            type="file"
+                                            multiple
+                                            accept=".mp3,.wav,.mp4,.avi,.ppt,.pptx,.pdf"
+                                            onChange={handleFileUpload}
+                                            className="hidden"
+                                        />
+                                    </label>
+                                </div>
+
+                                {files.length > 0 && (
+                                    <div className="space-y-2">
+                                        <h3 className="text-xs sm:text-sm font-semibold text-foreground">Uploaded Files</h3>
+                                        <div className="space-y-2">
+                                            {files.map((file, idx) => (
+                                                <div
+                                                    key={idx}
+                                                    className="flex items-center justify-between p-2 sm:p-3 rounded-lg bg-muted/50 border border-border"
+                                                >
+                                                    <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+                                                        {getFileIcon(file.type)}
+                                                        <div className="min-w-0">
+                                                            <p className="text-xs sm:text-sm font-medium text-foreground truncate">{file.name}</p>
+                                                            <p className="text-xs text-muted-foreground">{(file.size / 1024 / 1024).toFixed(2)} MB</p>
+                                                        </div>
+                                                    </div>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => handleRemoveFile(idx)}
+                                                        className="text-muted-foreground hover:text-foreground transition-colors flex-shrink-0 ml-2"
+                                                    >
+                                                        <X className="h-4 w-4" />
+                                                    </button>
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+                            </div>
+                        </Card>
+
+                        <div className="flex flex-col sm:flex-row gap-3 sm:gap-4">
+                            <Button
+                                variant="outline"
+                                className="border-border hover:bg-muted bg-transparent text-sm sm:text-base h-9 sm:h-10"
+                            >
+                                Save Draft
+                            </Button>
+                            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground text-sm sm:text-base h-9 sm:h-10">
+                                Submit for Review
+                            </Button>
+                        </div>
+                    </form>
+                </div>
+            </main>
         </div>
-      </main>
-    </div>
-  )
+    )
 }
