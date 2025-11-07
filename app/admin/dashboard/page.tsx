@@ -112,7 +112,7 @@ export default function AdminDashboard() {
           </Card>
 
           {/* Recent Activity */}
-          <Card className="gap-0 border-border bg-card overflow-hidden">
+          <Card className="gap-0 border-border bg-card overflow-hidden pt-0">
             <div className="p-6 border-b border-border">
               <h2 className="text-lg font-bold text-foreground">Recent Activity</h2>
             </div>

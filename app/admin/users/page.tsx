@@ -65,12 +65,12 @@ export default function UserManagementPage() {
   }
 
   return (
-    <div className="md:flex min-h-screen bg-background">
+    <div className="flex min-h-screen bg-background">
       <AdminSidebar />
 
-      <main className="flex-1">
+      <main className="overflow-hidden">
         {/* Header */}
-        <div className="border-b border-border bg-card p-4 sm:p-6 overflow:hidden">
+        <div className="border-b border-border bg-card p-4 sm:p-6">
           <div className="flex items-center justify-between">
             <div>
               <h1 className="md:text-3xl sm:text-2xl text-xl font-bold text-foreground">User Management</h1>
@@ -102,7 +102,7 @@ export default function UserManagementPage() {
           </Card>
 
           {/* Users Table */}
-          <Card className="border-border bg-card overflow-auto mb-20">
+          <Card className="border-border bg-card overflow-auto mb-20 pt-0">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
