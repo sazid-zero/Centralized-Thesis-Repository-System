@@ -16,7 +16,7 @@ export default function SupervisorReviewsPage() {
         .map((thesis) => ({
             id: thesis.id,
             title: thesis.title,
-            student: `Student ${thesis.id}`,
+            student: `${thesis.author}`,
             department: thesis.department,
             submittedDate: `2024-02-${String((thesis.id % 28) + 1).padStart(2, "0")}`,
             daysWaiting: (thesis.id % 10) + 1,
@@ -56,8 +56,8 @@ export default function SupervisorReviewsPage() {
                                                 <FileText className="h-4 w-4 sm:h-5 sm:w-5 shrink-0 text-primary" />
                                                 <CardTitle className="text-base sm:text-lg md:text-xl">{review.title}</CardTitle>
                                             </div>
-                                            <CardDescription className="text-xs sm:text-sm">
-                                                Student: {review.student} • Department: {review.department}
+                                            <CardDescription className="text-xs sm:text-sm space-y-2">
+                                                <p>Student: {review.student}</p>  <p>Department: {review.department}</p>
                                             </CardDescription>
                                         </div>
                                         <div className="pt-2 sm:pt-0 flex gap-2">

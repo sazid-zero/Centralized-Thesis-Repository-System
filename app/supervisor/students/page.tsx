@@ -64,7 +64,7 @@ export default function SupervisorStudentsPage() {
                                 </CardHeader>
                                 <CardContent>
                                     <div className="space-y-4">
-                                        <div className="flex flex-wrap space-x-4 space-y-2 text-sm">
+                                        <div className="grid grid-cols-3 gap-4 text-sm">
                                             <div>
                                                 <p className="text-muted-foreground">Department</p>
                                                 <p className="font-medium">{student.department}</p>
