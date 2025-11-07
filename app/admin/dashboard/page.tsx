@@ -66,15 +66,15 @@ export default function AdminDashboard() {
         {/* Header */}
           <div className="flex items-center justify-between border-b border-border bg-card p-6">
         <div>
-          <h1 className="text-3xl font-bold text-foreground">Admin Dashboard</h1>
-          <p className="text-muted-foreground mt-1">System overview and management</p>
+          <h1 className="sm:text-2xl md:text-3xl text-xl font-bold text-foreground">Admin Dashboard</h1>
+          <p className="text-muted-foreground mt-1 text-sm sm:text-base">System overview and management</p>
         </div>
               <ThemeToggle/>
           </div>
         {/* Content */}
         <div className="p-6 space-y-8">
           {/* Stats Grid */}
-          <div className="grid gap-4 md:grid-cols-4">
+          <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
             {stats.map((stat, idx) => {
               const Icon = stat.icon
               return (
@@ -82,7 +82,7 @@ export default function AdminDashboard() {
                   <div className="flex items-center justify-between">
                     <div>
                       <p className="text-sm text-muted-foreground">{stat.label}</p>
-                      <p className="text-3xl font-bold text-foreground mt-2">{stat.value}</p>
+                      <p className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mt-2">{stat.value}</p>
                     </div>
                     <Icon className={`h-8 w-8 ${stat.color}`} />
                   </div>
@@ -93,7 +93,7 @@ export default function AdminDashboard() {
 
           {/* Quick Actions */}
           <Card className="border-border bg-card p-6">
-            <h2 className="text-lg font-bold text-foreground mb-4">Quick Actions</h2>
+            <h2 className="text-lg font-bold text-foreground">Quick Actions</h2>
             <div className="grid gap-3 md:grid-cols-4">
               {quickActions.map((action, idx) => {
                 const Icon = action.icon === "settings" ? "⚙️" : action.icon
@@ -112,7 +112,7 @@ export default function AdminDashboard() {
           </Card>
 
           {/* Recent Activity */}
-          <Card className="border-border bg-card overflow-hidden">
+          <Card className="gap-0 border-border bg-card overflow-hidden">
             <div className="p-6 border-b border-border">
               <h2 className="text-lg font-bold text-foreground">Recent Activity</h2>
             </div>
@@ -172,7 +172,7 @@ export default function AdminDashboard() {
               </div>
             </Card>
 
-            <Card className="border-border bg-card p-6">
+            <Card className="border-border bg-card p-6 mb-15">
               <h2 className="text-lg font-bold text-foreground mb-4">Support Requests</h2>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50 border border-border">
