@@ -40,27 +40,27 @@ export default function SupervisorReviewsPage() {
         <div className="flex h-screen bg-background">
             <SupervisorSidebar />
             <main className="flex-1 overflow-auto">
-                <div className="p-8">
+                <div className="p-4 sm:p-6">
                     <div className="mb-8">
-                        <h1 className="text-3xl font-bold text-foreground mb-2">Pending Reviews</h1>
-                        <p className="text-muted-foreground">Review and approve student thesis submissions</p>
+                        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">Pending Reviews</h1>
+                        <p className="text-sm sm:text-base text-muted-foreground">Review and approve student thesis submissions</p>
                     </div>
 
-                    <div className="grid gap-4">
+                    <div className="grid gap-4 mb-20">
                         {pendingReviews.map((review) => (
                             <Card key={review.id} className="hover:shadow-lg transition-shadow">
                                 <CardHeader>
-                                    <div className="flex items-start justify-between">
+                                    <div className="flex flex-col sm:flex-row items-start justify-between">
                                         <div className="flex-1">
                                             <div className="flex items-center gap-3 mb-2">
-                                                <FileText className="h-5 w-5 text-primary" />
-                                                <CardTitle className="text-lg">{review.title}</CardTitle>
+                                                <FileText className="h-4 w-4 sm:h-5 sm:w-5 shrink-0 text-primary" />
+                                                <CardTitle className="text-base sm:text-lg md:text-xl">{review.title}</CardTitle>
                                             </div>
-                                            <CardDescription>
+                                            <CardDescription className="text-xs sm:text-sm">
                                                 Student: {review.student} • Department: {review.department}
                                             </CardDescription>
                                         </div>
-                                        <div className="flex gap-2">
+                                        <div className="pt-2 sm:pt-0 flex gap-2">
                                             <Badge className={getPriorityColor(review.priority)}>
                                                 {review.priority.charAt(0).toUpperCase() + review.priority.slice(1)} Priority
                                             </Badge>
@@ -74,16 +74,16 @@ export default function SupervisorReviewsPage() {
                                     </div>
                                 </CardHeader>
                                 <CardContent>
-                                    <div className="flex items-center justify-between">
-                                        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-                                            <Clock className="h-4 w-4" />
+                                    <div className="flex flex-wrap items-center justify-between">
+                                        <div className="mr-2 flex items-center gap-2 text-xs sm:text-sm text-muted-foreground">
+                                            <Clock className="h-4 w-4 sm:h-5 sm:w-5" />
                                             <span>Submitted {review.daysWaiting} days ago</span>
                                         </div>
-                                        <Link href={`/supervisor/review/${review.id}`}>
-                                            <Button className="gap-2">Review Now</Button>
+                                        <Link href={`/supervisor/review/${review.id}`} className="pt-3 sm:pt-0">
+                                            <Button className="bg-gradient-to-r from-primary to-accent text-xs sm:text-sm gap-2">Review Now</Button>
                                         </Link>
                                     </div>
-                                </CardContent>
+                                </CardContent> 
                             </Card>
                         ))}
                     </div>
