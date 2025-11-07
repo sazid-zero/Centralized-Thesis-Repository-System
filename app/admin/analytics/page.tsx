@@ -56,12 +56,12 @@ export default function AdminAnalyticsPage() {
             <main className="flex-1 overflow-auto">
                 <div className="p-4 sm:p-8">
                     <div className="mb-6 sm:mb-8">
-                        <h1 className="text-2xl sm:text-3xl font-bold text-foreground mb-2">Analytics</h1>
+                        <h1 className="text-xl md:text-3xl sm:text-2xl font-bold text-foreground mb-2">Analytics</h1>
                         <p className="text-muted-foreground text-sm sm:text-base">System statistics and performance metrics</p>
                     </div>
 
                     {/* Stats Cards */}
-                    <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-4 mb-6 sm:mb-8">
+                    <div className="grid gap-4 grid-cols-2 md:grid-cols-4 mb-6 sm:mb-8">
                         {stats.map((stat, idx) => {
                             const Icon = stat.icon
                             return (
@@ -85,7 +85,7 @@ export default function AdminAnalyticsPage() {
                     {/* Charts */}
                     <div className="grid gap-6 md:grid-cols-2 mb-6">
                         {/* Submission Trend */}
-                        <Card>
+                        <Card className="">
                             <CardHeader className="p-4 sm:p-6">
                                 <CardTitle className="text-base sm:text-xl">Submission Trend</CardTitle>
                                 <CardDescription className="text-xs sm:text-sm">Monthly submissions and approvals</CardDescription>
