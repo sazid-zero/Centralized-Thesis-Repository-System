@@ -42,7 +42,7 @@ export default function StudentSubmissionsPage() {
     return (
         <div className="flex h-scree bg-background">
             <StudentSidebar />
-            <main className="flex-1 overflow-auto">
+            <main className="flex-1">
                 <div className="p-4 sm:p-6 md:p-8">
                     <div className="mb-4 sm:mb-6 md:mb-8">
                         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">My Submissions</h1>
@@ -51,13 +51,13 @@ export default function StudentSubmissionsPage() {
 
                     <div className="space-y-3 sm:space-y-4 mb-20">
                         {submissions.map((submission) => (
-                            <Card key={submission.id} className="hover:shadow-lg transition-shadow">
-                                <CardHeader className="p-3 sm:p-4 md:p-6">
+                            <Card key={submission.id} className="hover:shadow-lg transition-shadow gap-0">
+                                <CardHeader className="p-3 md:p-4 pb-1 md:pb-2">
                                     <div className="flex flex-col sm:flex-row items-start justify-between gap-3">
                                         <div className="flex-1 min-w-0">
                                             <div className="flex items-center gap-2 sm:gap-3 mb-2">
                                                 <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
-                                                <CardTitle className="text-base sm:text-lg md:text-xl truncate">{submission.title}</CardTitle>
+                                                <CardTitle className="text-base sm:text-lg md:text-xl ">{submission.title}</CardTitle>
                                             </div>
                                             <CardDescription className="text-xs sm:text-sm">
                                                 Supervisor: {submission.supervisor} • Department: {submission.department}
@@ -68,7 +68,7 @@ export default function StudentSubmissionsPage() {
                                         </Badge>
                                     </div>
                                 </CardHeader>
-                                <CardContent className="p-3 sm:p-4 md:p-6 pt-0">
+                                <CardContent className="p-3 md:p-4 pt-1 md:pt-2">
                                     <div className="space-y-3 sm:space-y-4">
                                         <div className="flex items-center justify-between text-xs sm:text-sm text-muted-foreground">
                                             <span>Submitted: {new Date(submission.submittedDate).toLocaleDateString()}</span>
