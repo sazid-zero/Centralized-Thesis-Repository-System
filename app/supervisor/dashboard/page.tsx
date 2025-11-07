@@ -27,7 +27,7 @@ export default function SupervisorDashboard() {
     ]
 
     return (
-        <div className="flex min-h-screen bg-background">
+        <div className="min-h-screen bg-background">
             <SupervisorSidebar />
 
             <main className="flex-1">
@@ -35,8 +35,8 @@ export default function SupervisorDashboard() {
                 <div className="border-b border-border bg-card p-6">
                     <div className="flex items-center justify-between">
                         <div>
-                            <h1 className="text-3xl font-bold text-foreground">Dashboard</h1>
-                            <p className="text-muted-foreground mt-1">Welcome back, Dr. Ahmed Hassan</p>
+                            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Dashboard</h1>
+                            <p className="text-xs sm:text-sm text-muted-foreground mt-1">Welcome back, Dr. Ahmed Hassan</p>
                         </div>
                         <Link href="/supervisor/reviews">
                             <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Review Submissions</Button>
@@ -45,19 +45,19 @@ export default function SupervisorDashboard() {
                 </div>
 
                 {/* Content */}
-                <div className="p-6 space-y-8">
+                <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
                     {/* Stats Grid */}
-                    <div className="grid gap-4 md:grid-cols-4">
+                    <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
                         {stats.map((stat, idx) => {
                             const Icon = stat.icon
                             return (
-                                <Card key={idx} className="border-border bg-card p-6">
+                                <Card key={idx} className="border-border bg-card p-4 sm:p-6">
                                     <div className="flex items-center justify-between">
                                         <div>
-                                            <p className="text-sm text-muted-foreground">{stat.label}</p>
-                                            <p className="text-3xl font-bold text-foreground mt-2">{stat.value}</p>
+                                            <p className="text-xs sm:text-sm text-muted-foreground">{stat.label}</p>
+                                            <p className="text-xl sm:text-2xl font-bold text-foreground mt-2">{stat.value}</p>
                                         </div>
-                                        <Icon className={`h-8 w-8 ${stat.color}`} />
+                                        <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${stat.color}`} />
                                     </div>
                                 </Card>
                             )
@@ -65,8 +65,8 @@ export default function SupervisorDashboard() {
                     </div>
 
                     {/* Pending Reviews */}
-                    <Card className="border-border bg-card overflow-hidden">
-                        <div className="p-6 border-b border-border flex items-center justify-between">
+                    <Card className="mb-20 gap-0 border-border bg-card overflow-hidden">
+                        <div className="pt-0 p-4 sm:p-6 sm:pt-0 border-b border-border flex items-center justify-between">
                             <h2 className="text-xl font-bold text-foreground">Pending Reviews</h2>
                             <Badge className="bg-yellow-100 text-yellow-800">{pendingReviews.length} Pending</Badge>
                         </div>
