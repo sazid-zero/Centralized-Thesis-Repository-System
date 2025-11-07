@@ -52,7 +52,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
     return (
         <div className="flex h-screen bg-background">
             <StudentSidebar />
-            <main className="flex-1 overflow-auto mb-20">
+            <main className="flex-1 overflow-auto">
                 {/* Header */}
                 <div className="border-b border-border bg-card">
                     <div className="px-8 py-6">
@@ -180,7 +180,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                                 </div>
                             </Card>
                             {/* Bio Card */}
-                            <Card className="border-border bg-card p-8">
+                            <Card className="border-border bg-card p-8 mb-20">
                                 <div className="flex items-start gap-4">
                                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                                         <User className="h-6 w-6 text-primary" />
@@ -193,7 +193,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                             </Card>
                             {/* Edit Form */}
                             {isEditing && (
-                                <Card className="border-border bg-card p-8">
+                                <Card className="border-border bg-card p-8 mb-20">
                                     <h3 className="text-lg font-semibold text-foreground mb-6">Edit Profile Information</h3>
                                     <div className="space-y-6">
                                         <div className="grid gap-4 md:grid-cols-2">
