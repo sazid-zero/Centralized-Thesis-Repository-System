@@ -137,7 +137,7 @@ export default function AdminDashboard() {
             </div>
           </Card>
 
-          {/* System Health */}
+          {/* System Health Check*/}
           <div className="grid gap-6 md:grid-cols-2">
             <Card className="border-border bg-card p-6">
               <h2 className="text-lg font-bold text-foreground mb-4">System Health</h2>

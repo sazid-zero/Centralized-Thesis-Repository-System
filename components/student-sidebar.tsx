@@ -22,17 +22,17 @@ export function StudentSidebar() {
         <>
             <button
                 onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-                className="md:hidden fixed bottom-6 right-6 z-[999] flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-lg hover:shadow-xl transition-shadow"
+                className="lg:hidden fixed bottom-6 right-6 z-[999] flex items-center justify-center h-14 w-14 rounded-full bg-gradient-to-br from-primary to-accent text-primary-foreground shadow-lg hover:shadow-xl transition-shadow"
             >
                 {isMobileMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
             </button>
 
             {isMobileMenuOpen && (
-                <div className="md:hidden fixed inset-0 z-[998] bg-black/50" onClick={() => setIsMobileMenuOpen(false)} />
+                <div className="lg:hidden fixed inset-0 z-[998] bg-black/50" onClick={() => setIsMobileMenuOpen(false)} />
             )}
 
             <aside
-                className={`md:hidden fixed inset-y-0 left-0 z-[999] w-64 bg-card border-r border-border transform transition-transform duration-300 ease-in-out ${
+                className={`lg:hidden fixed inset-y-0 left-0 z-[999] w-64 bg-card border-r border-border transform transition-transform duration-300 ease-in-out ${
                     isMobileMenuOpen ? "translate-x-0" : "-translate-x-full"
                 }`}
             >
@@ -79,7 +79,7 @@ export function StudentSidebar() {
             </aside>
 
             {/* Desktop sidebar - hidden on mobile */}
-            <aside className="max-sm:hidden relative w-64 border-r border-border bg-card min-h-screen flex flex-col">
+            <aside className="hidden lg:flex relative min-w-64 border-r border-border bg-card min-h-screen flex-col">
                 <div className="p-6 border-b border-border">
                     <Link href="/" className="flex items-center gap-3">
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
