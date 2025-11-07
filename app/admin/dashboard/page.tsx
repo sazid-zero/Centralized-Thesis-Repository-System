@@ -172,7 +172,7 @@ export default function AdminDashboard() {
               </div>
             </Card>
 
-            <Card className="border-border bg-card p-6 mb-15">
+            <Card className="border-border bg-card p-6 mb-20">
               <h2 className="text-lg font-bold text-foreground mb-4">Support Requests</h2>
               <div className="space-y-3">
                 <div className="flex items-center justify-between p-3 rounded-lg bg-muted/50 border border-border">
