@@ -161,7 +161,7 @@ export default function ThesisDetailsPage({ params }: { params: Promise<{ id: st
             </nav>
 
             {/* Content */}
-            <div className="mx-auto max-w-4xl px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+            <div className="mx-auto max-w-4xl p-4 sm:p-6 space-y-6">
                 {/* Back Button */}
                 <button
                     onClick={() => router.back()}
@@ -173,16 +173,16 @@ export default function ThesisDetailsPage({ params }: { params: Promise<{ id: st
 
                 {/* Title and Status */}
                 <div className="space-y-4">
-                    <div className="flex items-start justify-between gap-4">
+                    <div className="flex flex-wrap items-start justify-between gap-4">
                         <div className="flex-1">
-                            <h1 className="text-4xl font-bold text-foreground mb-3">{thesis.title}</h1>
+                            <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-3">{thesis.title}</h1>
                             <div className="flex items-center gap-3 flex-wrap">
                                 {getStatusBadge(thesis.status)}
                                 <span className="text-muted-foreground">•</span>
                                 <span className="text-muted-foreground">{thesis.year}</span>
                             </div>
                         </div>
-                        <Button className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
+                        <Button className="text-xs sm:text-sm md:text-base bg-gradient-to-r from-primary to-accent hover:scale-105 text-primary-foreground gap-2">
                             <Download className="h-4 w-4" />
                             Download
                         </Button>
@@ -214,13 +214,13 @@ export default function ThesisDetailsPage({ params }: { params: Promise<{ id: st
 
                 {/* Abstract */}
                 <Card className="border-border bg-card p-6">
-                    <h2 className="text-xl font-bold text-foreground mb-4">Abstract</h2>
+                    <h2 className="text-lg sm:text-xl font-bold text-foreground mb-4">Abstract</h2>
                     <p className="text-foreground leading-relaxed">{thesis.abstract}</p>
                 </Card>
 
                 {/* Keywords */}
                 <Card className="border-border bg-card p-6">
-                    <h2 className="text-xl font-bold text-foreground mb-4">Keywords</h2>
+                    <h2 className="text-lg sm:text-xl font-bold text-foreground mb-4">Keywords</h2>
                     <div className="flex flex-wrap gap-2">
                         {thesis.keywords.map((keyword, idx) => (
                             <Badge key={idx} className="bg-primary/10 text-primary border border-primary/20">
@@ -232,14 +232,14 @@ export default function ThesisDetailsPage({ params }: { params: Promise<{ id: st
 
                 {/* Files */}
                 <Card className="border-border bg-card p-6">
-                    <h2 className="text-xl font-bold text-foreground mb-4">Available Files</h2>
+                    <h2 className="text-lg sm:text-xl font-bold text-foreground mb-4">Available Files</h2>
                     <div className="space-y-3">
                         {thesis.files.map((file, idx) => {
                             const Icon = getFileIcon(file.type)
                             return (
                                 <div
                                     key={idx}
-                                    className="flex items-center justify-between p-4 rounded-lg bg-muted/50 border border-border hover:bg-muted transition-colors"
+                                    className="flex flex-col sm:flex-row items-center justify-between p-4 rounded-lg bg-muted/50 border border-border hover:bg-muted transition-colors"
                                 >
                                     <div className="flex items-center gap-3">
                                         <Icon className="h-5 w-5 text-primary" />
@@ -265,7 +265,7 @@ export default function ThesisDetailsPage({ params }: { params: Promise<{ id: st
                             <Eye className="h-8 w-8 text-primary" />
                             <div>
                                 <p className="text-sm text-muted-foreground">Total Views</p>
-                                <p className="text-2xl font-bold text-foreground">{thesis.views}</p>
+                                <p className="text-lg sm:text-xl font-bold text-foreground">{thesis.views}</p>
                             </div>
                         </div>
                     </Card>
@@ -274,7 +274,7 @@ export default function ThesisDetailsPage({ params }: { params: Promise<{ id: st
                             <Download className="h-8 w-8 text-primary" />
                             <div>
                                 <p className="text-sm text-muted-foreground">Total Downloads</p>
-                                <p className="text-2xl font-bold text-foreground">{thesis.downloads}</p>
+                                <p className="text-lg sm:text-xl font-bold text-foreground">{thesis.downloads}</p>
                             </div>
                         </div>
                     </Card>
@@ -282,7 +282,7 @@ export default function ThesisDetailsPage({ params }: { params: Promise<{ id: st
 
                 {/* Share */}
                 <Card className="border-border bg-card p-6">
-                    <h2 className="text-lg font-bold text-foreground mb-4">Share This Thesis</h2>
+                    <h2 className=" text-lg font-bold text-foreground mb-4">Share This Thesis</h2>
                     <div className="flex gap-3">
                         <Button variant="outline" className="border-border hover:bg-muted bg-transparent gap-2">
                             <Share2 className="h-4 w-4" />
