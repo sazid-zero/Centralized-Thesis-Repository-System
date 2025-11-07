@@ -2,13 +2,29 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { BookOpen, FileText, LayoutDashboard, LogOut, Settings, CheckCircle, User, Menu, X } from "lucide-react"
+import {
+    BookOpen,
+    FileText,
+    LayoutDashboard,
+    LogOut,
+    Settings,
+    CheckCircle,
+    User,
+    Menu,
+    X,
+    Sun,
+    Moon
+} from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useState } from "react"
+import {useTheme} from "next-themes";
 
 export function SupervisorSidebar() {
     const pathname = usePathname()
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false)
+
+    const { theme, setTheme } = useTheme()
+    const [mounted, setMounted] = useState(false)
 
     const navItems = [
         { href: "/supervisor/dashboard", label: "Dashboard", icon: LayoutDashboard },
@@ -68,6 +84,15 @@ export function SupervisorSidebar() {
                             </Link>
                         )
                     })}
+                    <button
+                        onClick={() => {
+                            setTheme(theme === "dark" ? "light" : "dark")
+                        }}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                    >
+                        {mounted && theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                        <span className="font-medium">Dark Mode</span>
+                    </button>
                 </nav>
 
                 <div className="p-4 border-t border-border">
@@ -111,6 +136,15 @@ export function SupervisorSidebar() {
                             </Link>
                         )
                     })}
+                    <button
+                        onClick={() => {
+                            setTheme(theme === "dark" ? "light" : "dark")
+                        }}
+                        className="w-full flex items-center gap-3 px-4 py-3 rounded-lg text-foreground hover:bg-accent hover:text-accent-foreground transition-colors"
+                    >
+                        {mounted && theme === "dark" ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                        <span className="font-medium">Dark Mode</span>
+                    </button>
                 </nav>
 
                 <div className="p-4 border-t border-border">
