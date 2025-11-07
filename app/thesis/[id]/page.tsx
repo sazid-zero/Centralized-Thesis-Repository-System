@@ -239,7 +239,7 @@ export default function ThesisDetailsPage({ params }: { params: Promise<{ id: st
                             return (
                                 <div
                                     key={idx}
-                                    className="flex flex-col sm:flex-row items-center justify-between p-4 rounded-lg bg-muted/50 border border-border hover:bg-muted transition-colors"
+                                    className="flex flex-col sm:flex-row sm:items-center sm:justify-between items-start space-y-2 sm:space-y-0 p-4 rounded-lg bg-muted/50 border border-border hover:bg-muted transition-colors"
                                 >
                                     <div className="flex items-center gap-3">
                                         <Icon className="h-5 w-5 text-primary" />
