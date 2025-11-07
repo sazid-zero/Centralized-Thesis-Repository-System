@@ -65,16 +65,16 @@ export default function UserManagementPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-background">
+    <div className="min-h-screen bg-background">
       <AdminSidebar />
 
-      <main className="flex-1">
+      <main className="">
         {/* Header */}
-        <div className="border-b border-border bg-card p-6">
+        <div className="border-b border-border bg-card p-3 sm:p-4 md:p-6">
           <div className="flex items-center justify-between">
             <div>
-              <h1 className="text-3xl font-bold text-foreground">User Management</h1>
-              <p className="text-muted-foreground mt-1">Manage system users and permissions</p>
+              <h1 className="md:text-3xl sm:text-2xl text-xl font-bold text-foreground">User Management</h1>
+              <p className="text-muted-foreground mt-1 text-sm sm:text-base">Manage system users and permissions</p>
             </div>
             <Button className="bg-primary hover:bg-primary/90 text-primary-foreground gap-2">
               <Plus className="h-4 w-4" />
@@ -84,7 +84,7 @@ export default function UserManagementPage() {
         </div>
 
         {/* Content */}
-        <div className="p-6 space-y-6">
+        <div className="space-y-4 sm:space-y-6 p-3 sm:p-4 md:p-6">
           {/* Search and Filters */}
           <Card className="border-border bg-card p-6">
             <div className="flex gap-4 flex-col md:flex-row">
@@ -102,7 +102,7 @@ export default function UserManagementPage() {
           </Card>
 
           {/* Users Table */}
-          <Card className="border-border bg-card overflow-hidden">
+          <Card className="border-border bg-card overflow-hidden mb-20">
             <div className="overflow-x-auto">
               <table className="w-full">
                 <thead>
