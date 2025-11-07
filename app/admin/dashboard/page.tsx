@@ -81,8 +81,8 @@ export default function AdminDashboard() {
                 <Card key={idx} className="border-border bg-card p-6">
                   <div className="flex items-center justify-between">
                     <div>
-                      <p className="text-sm text-muted-foreground">{stat.label}</p>
-                      <p className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mt-2">{stat.value}</p>
+                      <p className="text-xs sm:text-sm text-muted-foreground mb-1">{stat.label}</p>
+                      <p className="text-xl sm:text-2xl font-bold text-foreground mt-2">{stat.value}</p>
                     </div>
                     <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${stat.color}`} />
                   </div>
