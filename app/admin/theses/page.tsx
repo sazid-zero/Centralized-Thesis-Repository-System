@@ -42,10 +42,10 @@ export default function AdminThesesPage() {
         <div className="flex h-screen bg-background">
             <AdminSidebar />
             <main className="flex-1 overflow-auto">
-                <div className="p-8">
+                <div className="p-4 sm:p-6">
                     <div className="mb-8">
-                        <h1 className="text-3xl font-bold text-foreground mb-2">Thesis Management</h1>
-                        <p className="text-muted-foreground">Manage all theses in the repository</p>
+                        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">Thesis Management</h1>
+                        <p className="text-sm sm:text-base text-muted-foreground">Manage all theses in the repository</p>
                     </div>
 
                     <div className="mb-6 flex gap-2">
@@ -60,13 +60,13 @@ export default function AdminThesesPage() {
                         {theses.map((thesis) => (
                             <Card key={thesis.id} className="hover:shadow-lg transition-shadow">
                                 <CardHeader>
-                                    <div className="flex items-start justify-between">
+                                    <div className="flex flex-wrap items-start justify-between">
                                         <div className="flex-1">
                                             <div className="flex items-center gap-3 mb-2">
-                                                <FileText className="h-5 w-5 text-primary" />
-                                                <CardTitle className="text-lg">{thesis.title}</CardTitle>
+                                                <FileText className="shrink-0 h-4 w-4 sm:h-5 sm:w-5 text-primary" />
+                                                <CardTitle className="text-base sm:text-lg md:text-xl">{thesis.title}</CardTitle>
                                             </div>
-                                            <CardDescription>
+                                            <CardDescription className="text-xs sm:text-sm">
                                                 Student: {thesis.student} • Supervisor: {thesis.supervisor}
                                             </CardDescription>
                                         </div>
@@ -95,7 +95,7 @@ export default function AdminThesesPage() {
                                                 </p>
                                             </div>
                                         </div>
-                                        <div className="flex gap-2 pt-2">
+                                        <div className="flex flex-wrap gap-2 pt-2">
                                             <Button size="sm" variant="outline" className="gap-2 bg-transparent">
                                                 <Eye className="h-4 w-4" />
                                                 View
