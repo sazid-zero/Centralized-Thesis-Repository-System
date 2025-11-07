@@ -55,13 +55,13 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
             <main className="flex-1 overflow-auto">
                 {/* Header */}
                 <div className="border-b border-border bg-card">
-                    <div className="px-8 py-6">
-                        <h1 className="text-3xl font-bold text-foreground">Student Profile</h1>
-                        <p className="text-muted-foreground mt-1">Review and update your personal and academic information</p>
+                    <div className="p-4 sm:p-6">
+                        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Student Profile</h1>
+                        <p className="text-muted-foreground mt-1 text-xs sm:text-sm">Review and update your personal and academic information</p>
                     </div>
                 </div>
 
-                <div className="mx-auto px-4 sm:px-6 lg:px-8 py-8">
+                <div className="p-4 sm:p-6">
                     <Tabs defaultValue="profile" className="space-y-6">
                         <TabsList className="grid w-full grid-cols-2 mb-6">
                             <TabsTrigger value="profile">Profile</TabsTrigger>
@@ -96,7 +96,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                                         <Mail className="h-5 w-5 text-primary" />
                                         <div>
                                             <p className="text-xs text-muted-foreground">Email</p>
-                                            <p className="text-foreground">{student.email}</p>
+                                            <p className="text-foreground text-sm sm:text-base">{student.email}</p>
                                         </div>
                                     </div>
 
@@ -105,7 +105,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                                         <Phone className="h-5 w-5 text-primary" />
                                         <div>
                                             <p className="text-xs text-muted-foreground">Phone</p>
-                                            <p className="text-foreground">{student.Phone}</p>
+                                            <p className="text-foreground text-sm sm:text-base">{student.Phone}</p>
                                         </div>
                                     </div>
 
@@ -114,7 +114,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                                         <User className="h-5 w-5 text-primary" />
                                         <div>
                                             <p className="text-xs text-muted-foreground">Designation</p>
-                                            <p className="text-foreground">{student.Designation}</p>
+                                            <p className="text-foreground text-sm sm:text-base">{student.Designation}</p>
                                         </div>
                                     </div>
 
@@ -122,7 +122,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                                         <MapPin className="h-5 w-5 text-primary" />
                                         <div>
                                             <p className="text-xs text-muted-foreground">Department</p>
-                                            <p className="text-foreground">{student.department}</p>
+                                            <p className="text-foreground text-sm sm:text-base">{student.department}</p>
                                         </div>
                                     </div>
 
@@ -131,7 +131,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                                         <User className="h-5 w-5 text-primary" />
                                         <div>
                                             <p className="text-xs text-muted-foreground">Registration</p>
-                                            <p className="text-foreground">{student.Registration}</p>
+                                            <p className="text-foreground text-sm sm:text-base">{student.Registration}</p>
                                         </div>
                                     </div>
 
@@ -140,7 +140,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                                         <Calendar className="h-5 w-5 text-primary" />
                                         <div>
                                             <p className="text-xs text-muted-foreground">Session</p>
-                                            <p className="text-foreground">{student.Session}</p>
+                                            <p className="text-foreground text-sm sm:text-base">{student.Session}</p>
                                         </div>
                                     </div>
 
@@ -149,7 +149,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                                         <FileText className="h-5 w-5 text-primary" />
                                         <div>
                                             <p className="text-xs text-muted-foreground">Semester</p>
-                                            <p className="text-foreground">{student.Semester}</p>
+                                            <p className="text-foreground text-sm sm:text-base">{student.Semester}</p>
                                         </div>
                                     </div>
 
@@ -158,7 +158,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                                         <Award className="h-5 w-5 text-primary" />
                                         <div>
                                             <p className="text-xs text-muted-foreground">Degree</p>
-                                            <p className="text-foreground">{student.Degree}</p>
+                                            <p className="text-foreground text-sm sm:text-base">{student.Degree}</p>
                                         </div>
                                     </div>
 
@@ -167,14 +167,14 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                                         <Calendar className="h-5 w-5 text-primary" />
                                         <div>
                                             <p className="text-xs text-muted-foreground">Member Since</p>
-                                            <p className="text-foreground">{new Date(student.joinDate).toLocaleDateString()}</p>
+                                            <p className="text-foreground text-sm sm:text-base">{new Date(student.joinDate).toLocaleDateString()}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-center gap-3">
                                         <FileText className="h-5 w-5 text-primary" />
                                         <div>
                                             <p className="text-xs text-muted-foreground">Theses</p>
-                                            <p className="text-foreground">{student.thesesCount}</p>
+                                            <p className="text-foreground text-sm sm:text-base">{student.thesesCount}</p>
                                         </div>
                                     </div>
                                 </div>
@@ -189,7 +189,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                                         <h2 className="text-lg font-semibold text-primary">Bio</h2>
                                     </div>
                                 </div>
-                                <p className="text-base text-muted-foreground">🙶 {student.bio}</p>
+                                <p className="text-muted-foreground text-sm sm:text-base">🙶 {student.bio}</p>
                             </Card>
                             {/* Edit Form */}
                             {isEditing && (

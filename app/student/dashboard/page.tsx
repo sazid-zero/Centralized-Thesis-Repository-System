@@ -56,7 +56,7 @@ export default function StudentDashboard() {
             <StudentSidebar />
 
             <main className="mb-20 w-full">
-                <div className="border-b border-border bg-card p-3 sm:p-4 md:p-6">
+                <div className="border-b border-border bg-card p-4 sm:p-6">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                         <div>
                             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Dashboard</h1>
@@ -72,8 +72,8 @@ export default function StudentDashboard() {
                     </div>
                 </div>
 
-                <div className="p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6 md:space-y-8">
-                    <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 w- overflow-hidden">
+                <div className="p-4 sm:p-6 space-y-4 sm:space-y-6 md:space-y-8">
+                    <div className="grid gap-3 sm:gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-4 overflow-auto">
                         {stats.map((stat, idx) => {
                             const Icon = stat.icon
                             return (
@@ -92,8 +92,8 @@ export default function StudentDashboard() {
                         })}
                     </div>
 
-                    <Card className="border-border bg-card w-full overflow-auto">
-                        <div className="p-3 sm:p-4 md:p-6 border-b border-border">
+                    <Card className="border-border bg-card w-full overflow-auto gap-0">
+                        <div className="p-3 sm:p-4 md:p-6 border-b border-border pt-0 sm:pt-0 md:pt-0 ">
                             <h2 className="text-base sm:text-lg md:text-xl font-bold text-foreground">My Submissions</h2>
                         </div>
                         <div className="overflow-x-auto">

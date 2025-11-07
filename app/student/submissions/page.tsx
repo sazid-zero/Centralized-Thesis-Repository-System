@@ -59,8 +59,8 @@ export default function StudentSubmissionsPage() {
                                                 <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
                                                 <CardTitle className="text-base sm:text-lg md:text-xl ">{submission.title}</CardTitle>
                                             </div>
-                                            <CardDescription className="text-xs sm:text-sm">
-                                                Supervisor: {submission.supervisor} • Department: {submission.department}
+                                            <CardDescription className="text-xs sm:text-sm space-y-2">
+                                                <p>Supervisor: {submission.supervisor}</p> <p>Department: {submission.department}</p>
                                             </CardDescription>
                                         </div>
                                         <Badge className={`${getStatusColor(submission.status)} text-xs flex-shrink-0`}>
