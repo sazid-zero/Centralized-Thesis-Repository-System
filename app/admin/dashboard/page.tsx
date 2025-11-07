@@ -64,7 +64,7 @@ export default function AdminDashboard() {
 
       <main className="flex-1 overflow-auto">
         {/* Header */}
-          <div className="flex items-center justify-between border-b border-border bg-card p-3 sm:p-4 md:p-6">
+          <div className="flex items-center justify-between border-b border-border bg-card p-4 sm:p-6">
         <div>
           <h1 className="sm:text-2xl md:text-3xl text-xl font-bold text-foreground">Admin Dashboard</h1>
           <p className="text-muted-foreground mt-1 text-sm sm:text-base">System overview and management</p>
@@ -72,7 +72,7 @@ export default function AdminDashboard() {
               <ThemeToggle/>
           </div>
         {/* Content */}
-        <div className="p-3 sm:p-4 md:p-6 space-y-5 sm:space-y-8">
+        <div className="p-4 sm:p-6 space-y-6 sm:space-y-8">
           {/* Stats Grid */}
           <div className="grid gap-4 grid-cols-2 md:grid-cols-4">
             {stats.map((stat, idx) => {
@@ -84,7 +84,7 @@ export default function AdminDashboard() {
                       <p className="text-sm text-muted-foreground">{stat.label}</p>
                       <p className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mt-2">{stat.value}</p>
                     </div>
-                    <Icon className={`h-8 w-8 ${stat.color}`} />
+                    <Icon className={`h-5 w-5 sm:h-6 sm:w-6 ${stat.color}`} />
                   </div>
                 </Card>
               )
