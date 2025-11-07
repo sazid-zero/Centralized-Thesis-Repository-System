@@ -39,7 +39,7 @@ export default function SupervisorDashboard() {
                             <p className="text-xs sm:text-sm text-muted-foreground mt-1">Welcome back, Dr. Ahmed Hassan</p>
                         </div>
                         <Link href="/supervisor/reviews">
-                            <Button className="bg-primary hover:bg-primary/90 text-primary-foreground">Review Submissions</Button>
+                            <Button className="text-xs sm:text-sm md:text-base bg-primary hover:bg-primary/90 text-primary-foreground">Review Submissions</Button>
                         </Link>
                     </div>
                 </div>
