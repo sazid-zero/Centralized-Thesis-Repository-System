@@ -180,7 +180,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                                 </div>
                             </Card>
                             {/* Bio Card */}
-                            <Card className="border-border bg-card p-8 mb-20">
+                            <Card className="border-border bg-card p-8 mb-10">
                                 <div className="flex items-start gap-4">
                                     <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
                                         <User className="h-6 w-6 text-primary" />
@@ -193,7 +193,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                             </Card>
                             {/* Edit Form */}
                             {isEditing && (
-                                <Card className="border-border bg-card p-8 mb-20">
+                                <Card className="border-border bg-card p-8 mb-10">
                                     <h3 className="text-lg font-semibold text-foreground mb-6">Edit Profile Information</h3>
                                     <div className="space-y-6">
                                         <div className="grid gap-4 md:grid-cols-2">
@@ -339,7 +339,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                         </TabsContent>
 
                         {/* Thesis Tab */}
-                        <TabsContent value="theses" className="space-y-4">
+                        <TabsContent value="theses" className="space-y-4 mb-10">
                             <h3 className="text-xl font-bold text-foreground mb-4">Published Theses</h3>
                             {student.theses.map((thesis) => (
                                 <Card key={thesis.id} className="border-border bg-card p-6 hover:shadow-md transition-shadow">
