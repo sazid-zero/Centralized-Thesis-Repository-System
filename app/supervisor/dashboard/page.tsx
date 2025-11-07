@@ -32,7 +32,7 @@ export default function SupervisorDashboard() {
 
             <main className="flex-1">
                 {/* Header */}
-                <div className="border-b border-border bg-card p-6 pb-4">
+                <div className="border-b border-border bg-card p-4 sm:p-6 pb-2 sm:pb-4">
                     <div className="flex flex-wrap items-center justify-between">
                         <div className="mb-2">
                             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Dashboard</h1>
