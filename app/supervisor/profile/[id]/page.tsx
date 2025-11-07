@@ -42,14 +42,14 @@ export default function SupervisorProfilePage() {
         <main className="flex-1">
           {/* Header */}
           <div className="border-b border-border bg-card">
-            <div className="px-8 py-6">
-              <h1 className="text-3xl font-bold text-foreground">My Profile</h1>
-              <p className="text-muted-foreground mt-1">Manage your account information and settings</p>
+            <div className="p-4 sm:p-6">
+              <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">My Profile</h1>
+              <p className="text-sm sm:text-base text-muted-foreground mt-1">Manage your account information and settings</p>
             </div>
           </div>
 
           {/* Content */}
-          <div className="p-8">
+          <div className="p-4 sm:p-6">
             <div className="max-w-full ">
               <Tabs defaultValue="profile" className="space-y-6">
                 <TabsList className="grid w-full grid-cols-2">
@@ -63,21 +63,21 @@ export default function SupervisorProfilePage() {
                   <Card className="border-border bg-card p-8">
                     <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-6">
                       <Avatar className="h-24 w-24">
-                        <AvatarFallback className="bg-primary text-primary-foreground text-xl font-bold">
+                        <AvatarFallback className="bg-gradient-to-r from-primary to-accent text-primary-foreground text-xl font-bold">
                           {formData.firstName[0]}
                           {formData.lastName[0]}
                         </AvatarFallback>
                       </Avatar>
                       <div className="flex-1">
-                        <h2 className="text-2xl font-bold text-foreground">
+                        <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-foreground">
                           {formData.firstName} {formData.lastName}
                         </h2>
-                        <p className="text-muted-foreground">{formData.designation}</p>
-                        <p className="text-sm text-muted-foreground mt-1">{formData.department}</p>
+                        <p className="text-sm sm:text-base text-muted-foreground">{formData.designation}</p>
+                        <p className="text-sm sm:text-base text-muted-foreground mt-1">{formData.department}</p>
                       </div>
                       <Button
                           onClick={() => setIsEditing(!isEditing)}
-                          className="w-full sm:w-auto bg-primary hover:bg-primary/90"
+                          className="w-full sm:w-auto bg-gradient-to-r from-primary to-accent hover:scale-105"
                       >
                         {isEditing ? "Cancel" : "Edit Profile"}
                       </Button>
@@ -89,42 +89,42 @@ export default function SupervisorProfilePage() {
                         <Mail className="h-5 w-5 text-primary" />
                         <div>
                           <p className="text-xs text-muted-foreground">Email</p>
-                          <p className="text-foreground">{formData.email}</p>
+                          <p className="text-sm sm:text-base text-foreground">{formData.email}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 text-muted-foreground">
                         <Phone className="h-5 w-5 text-primary" />
                         <div>
                           <p className="text-xs text-muted-foreground">Phone</p>
-                          <p className="text-foreground">{formData.phone}</p>
+                          <p className="text-sm sm:text-base text-foreground">{formData.phone}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 text-muted-foreground">
                         <MapPin className="h-5 w-5 text-primary" />
                         <div>
                           <p className="text-xs text-muted-foreground">Department</p>
-                          <p className="text-foreground">{formData.department}</p>
+                          <p className="text-sm sm:text-base text-foreground">{formData.department}</p>
                         </div>
                       </div>
                       <div className="flex items-center gap-3 text-muted-foreground">
                         <Award className="h-5 w-5 text-primary" />
                         <div>
                           <p className="text-xs text-muted-foreground">Designation</p>
-                          <p className="text-foreground">{formData.designation}</p>
+                          <p className="text-sm sm:text-base text-foreground">{formData.designation}</p>
                         </div>
                       </div>
                         <div className="flex items-center gap-3 text-muted-foreground">
                             <Award className="h-5 w-5 text-primary" />
                             <div>
                                 <p className="text-xs text-muted-foreground">Degree</p>
-                                <p className="text-foreground">{formData.degree}</p>
+                                <p className="text-sm sm:text-base text-foreground">{formData.degree}</p>
                             </div>
                         </div>
                         <div className="flex items-center gap-3 text-muted-foreground">
                             <Calendar className="h-5 w-5 text-primary" />
                             <div>
                                 <p className="text-xs text-muted-foreground">Member Since</p>
-                                <p className="text-foreground">{new Date(formData.joinDate).toLocaleDateString()}</p>
+                                <p className="text-sm sm:text-base text-foreground">{new Date(formData.joinDate).toLocaleDateString()}</p>
                             </div>
                         </div>
                     </div>
@@ -138,7 +138,7 @@ export default function SupervisorProfilePage() {
                             </div>
                             <div>
                                 <h2 className="text-lg font-semibold text-primary mb-2">Bio</h2>
-                                <p className="text-base text-muted-foreground">{formData.bio}</p>
+                                <p className="text-sm sm:text-base  text-muted-foreground">{formData.bio}</p>
                             </div>
                         </div>
                     </Card>
