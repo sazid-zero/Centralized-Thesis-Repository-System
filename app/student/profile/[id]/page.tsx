@@ -52,7 +52,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
     return (
         <div className="flex h-screen bg-background">
             <StudentSidebar />
-            <main className="flex-1 overflow-auto">
+            <main className="flex-1 overflow-auto mb-20">
                 {/* Header */}
                 <div className="border-b border-border bg-card">
                     <div className="px-8 py-6">
