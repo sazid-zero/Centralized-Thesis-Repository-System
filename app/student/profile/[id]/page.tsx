@@ -73,7 +73,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                             <Card className="border-border bg-card p-8">
                                 <div className="flex flex-col sm:flex-row items-start sm:items-center gap-6 mb-6">
                                     <Avatar className="h-24 w-24">
-                                        <AvatarFallback className="bg-primary text-primary-foreground text-xl font-bold">
+                                        <AvatarFallback className="bg-gradient-to-r from-primary to-accent text-primary-foreground text-xl font-bold">
                                             {student.name
                                                 .split(" ")
                                                 .map((n) => n[0])
@@ -86,7 +86,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                                     </div>
                                     <Button
                                         onClick={() => setIsEditing(!isEditing)}
-                                        className="w-full sm:w-auto bg-primary hover:bg-primary/90"
+                                        className="w-full sm:w-auto bg-gradient-to-r from-primary to-accent hover:scale-105"
                                     >
                                         {isEditing ? "Cancel" : "Edit Profile"}
                                     </Button>
@@ -181,15 +181,15 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                             </Card>
                             {/* Bio Card */}
                             <Card className="border-border bg-card p-8 mb-10">
-                                <div className="flex items-start gap-4">
-                                    <div className="flex items-center justify-center rounded-lg bg-primary/10">
-                                        <User className="h-6 w-7 text-primary" />
+                                <div className="flex items-center justify-start gap-3 mb-1">
+                                    <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
+                                        <User className="h-6 w-6 text-primary" />
                                     </div>
                                     <div>
-                                        <h2 className="text-lg font-semibold text-primary mb-2">Bio</h2>
-                                        <p className="text-base text-muted-foreground">{student.bio}</p>
+                                        <h2 className="text-lg font-semibold text-primary">Bio</h2>
                                     </div>
                                 </div>
+                                <p className="text-base text-muted-foreground">🙶 {student.bio}</p>
                             </Card>
                             {/* Edit Form */}
                             {isEditing && (
@@ -328,7 +328,7 @@ export default function StudentProfilePage({ params }: { params: Promise<{ id: s
                                             />
                                         </div>
                                         <div className="flex gap-3">
-                                            <Button className="bg-primary hover:bg-primary/90">Save Changes</Button>
+                                            <Button className="bg-gradient-to-r from-primary to-accent hover:scale-105">Save Changes</Button>
                                             <Button variant="outline" onClick={() => setIsEditing(false)}>
                                                 Cancel
                                             </Button>
