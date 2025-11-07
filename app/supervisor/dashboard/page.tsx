@@ -27,19 +27,22 @@ export default function SupervisorDashboard() {
     ]
 
     return (
-        <div className="min-h-screen bg-background">
+        <div className="md:flex h-screen bg-background">
             <SupervisorSidebar />
 
-            <main className="flex-1">
+            <main className="w-full">
                 {/* Header */}
                 <div className="border-b border-border bg-card p-4 sm:p-6">
-                    <div className="flex items-center justify-between">
+                    <div className="flex flex-wrap items-center justify-between">
                         <div className="">
                             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Dashboard</h1>
                             <p className="text-xs sm:text-sm text-muted-foreground mt-1">Welcome back, Dr. Ahmed Hassan</p>
                         </div>
                         <Link href="/supervisor/reviews">
-                            <Button className="text-xs sm:text-sm md:text-base bg-primary hover:bg-primary/90 text-primary-foreground">Review Submissions</Button>
+                            <Button className="text-xs sm:text-sm md:text-base bg-gradient-to-r from-primary to-accent hover:scale-105 text-primary-foreground">
+                                <span className="hidden sm:inline text-base">Review Submission</span>
+                                <span className="sm:hidden">Review</span>
+                            </Button>
                         </Link>
                     </div>
                 </div>
@@ -65,7 +68,7 @@ export default function SupervisorDashboard() {
                     </div>
 
                     {/* Pending Reviews */}
-                    <Card className="mb-20 gap-0 border-border bg-card overflow-hidden">
+                    <Card className="mb-20 gap-0 border-border bg-card overflow-auto">
                         <div className="pt-0 p-4 sm:p-6 sm:pt-0 border-b border-border flex items-center justify-between">
                             <h2 className="text-xl font-bold text-foreground">Pending Reviews</h2>
                             <Badge className="bg-yellow-100 text-yellow-800">{pendingReviews.length} Pending</Badge>

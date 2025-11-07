@@ -56,7 +56,7 @@ export default function AdminThesesPage() {
                         <Button variant="outline">Filter</Button>
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-4 mb-20">
                         {theses.map((thesis) => (
                             <Card key={thesis.id} className="hover:shadow-lg transition-shadow">
                                 <CardHeader>
