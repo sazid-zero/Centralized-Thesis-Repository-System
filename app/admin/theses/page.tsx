@@ -67,7 +67,7 @@ export default function AdminThesesPage() {
                                                 <CardTitle className="text-base sm:text-lg md:text-xl">{thesis.title}</CardTitle>
                                             </div>
                                             <CardDescription className="text-xs sm:text-sm">
-                                                Student: {thesis.student} • Supervisor: {thesis.supervisor}
+                                                <p>Student: {thesis.student}</p> • <p>Supervisor: {thesis.supervisor}</p>
                                             </CardDescription>
                                         </div>
                                         <Badge className={getStatusColor(thesis.status)}>
