@@ -27,7 +27,7 @@ export default function SupervisorDashboard() {
     ]
 
     return (
-        <div className="md:flex h-screen bg-background">
+        <div className="flex h-screen bg-background">
             <SupervisorSidebar />
 
             <main className="w-full">
