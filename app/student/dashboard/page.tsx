@@ -55,7 +55,7 @@ export default function StudentDashboard() {
         <div className="flex min-h-screen w-full bg-background">
             <StudentSidebar />
 
-            <main className=" w-full">
+            <main className="mb-20 w-full">
                 <div className="border-b border-border bg-card p-3 sm:p-4 md:p-6">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                         <div>
