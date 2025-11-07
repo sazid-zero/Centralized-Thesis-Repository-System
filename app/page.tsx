@@ -48,6 +48,7 @@ export default function Home() {
     })
     const { theme, setTheme } = useTheme()
     const [mounted, setMounted] = useState(false)
+    const [isDesktop, setIsDesktop] = useState(false)
 
     const [scrollPosition, setScrollPosition] = useState(0)
     const { scrollY } = useScroll()
@@ -59,6 +60,14 @@ export default function Home() {
 
     useEffect(() => {
         setMounted(true)
+        setIsDesktop(window.innerWidth >= 768)
+
+        const handleResize = () => {
+            setIsDesktop(window.innerWidth >= 768)
+        }
+
+        window.addEventListener("resize", handleResize)
+        return () => window.removeEventListener("resize", handleResize)
     }, [])
 
     useEffect(() => {
@@ -454,14 +463,9 @@ export default function Home() {
                         <motion.div
                             className="space-y-5 relative max-md:!opacity-100 max-md:!scale-100 max-md:pointer-events-auto"
                             style={{
-                                scale: typeof window !== "undefined" && window.innerWidth >= 768 ? textScale : 1,
-                                opacity: typeof window !== "undefined" && window.innerWidth >= 768 ? textOpacity : 1,
-                                pointerEvents:
-                                    typeof window !== "undefined" && window.innerWidth >= 768
-                                        ? isHeroInteractive
-                                            ? "auto"
-                                            : "none"
-                                        : "auto",
+                                scale: isDesktop ? textScale : 1,
+                                opacity: isDesktop ? textOpacity : 1,
+                                pointerEvents: isDesktop ? (isHeroInteractive ? "auto" : "none") : "auto",
                             }}
                         >
                             <h3 className="text-lg font-bold text-foreground">Recent Research</h3>
