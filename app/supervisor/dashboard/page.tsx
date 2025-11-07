@@ -32,14 +32,14 @@ export default function SupervisorDashboard() {
 
             <main className="flex-1">
                 {/* Header */}
-                <div className="border-b border-border bg-card p-6">
-                    <div className="flex items-center justify-between">
-                        <div>
+                <div className="border-b border-border bg-card p-6 pb-4">
+                    <div className="flex flex-wrap items-center justify-between">
+                        <div className="mb-2">
                             <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Dashboard</h1>
                             <p className="text-xs sm:text-sm text-muted-foreground mt-1">Welcome back, Dr. Ahmed Hassan</p>
                         </div>
                         <Link href="/supervisor/reviews">
-                            <Button className="ml-2 text-xs sm:text-sm md:text-base bg-primary hover:bg-primary/90 text-primary-foreground">Review Submissions</Button>
+                            <Button className="text-xs sm:text-sm md:text-base bg-primary hover:bg-primary/90 text-primary-foreground">Review Submissions</Button>
                         </Link>
                     </div>
                 </div>
