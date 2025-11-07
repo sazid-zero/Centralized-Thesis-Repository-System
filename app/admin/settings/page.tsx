@@ -61,7 +61,7 @@ export default function AdminSettingsPage() {
 
           {/* General Settings */}
           <TabsContent value="general" className="space-y-6">
-            <Card className="border-border bg-card p-8">
+            <Card className="border-border bg-card p-8 mb-10">
               <h3 className="text-lg font-semibold text-foreground mb-6">General Settings</h3>
               <div className="space-y-6">
                 <div className="space-y-2">
