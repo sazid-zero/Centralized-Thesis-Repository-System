@@ -12,7 +12,7 @@ export default function StudentSettings() {
         <div className="flex min-h-screen bg-background">
             <StudentSidebar />
 
-            <main className="flex-1">
+            <main className="flex-1 mb-10 ">
                 <div className="border-b border-border bg-card p-3 sm:p-4 md:p-6">
                     <div>
                         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Settings</h1>
