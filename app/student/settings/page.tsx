@@ -13,27 +13,24 @@ export default function StudentSettings() {
             <StudentSidebar />
 
             <main className="flex-1">
-                {/* Header */}
-                <div className="border-b border-border bg-card p-6">
+                <div className="border-b border-border bg-card p-3 sm:p-4 md:p-6">
                     <div>
-                        <h1 className="text-3xl font-bold text-foreground">Settings</h1>
-                        <p className="text-muted-foreground mt-1">Manage your account preferences</p>
+                        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">Settings</h1>
+                        <p className="text-muted-foreground mt-1 text-sm sm:text-base">Manage your account preferences</p>
                     </div>
                 </div>
 
-                {/* Content */}
-                <div className="p-6 space-y-6 max-w-4xl">
-                    {/* Appearance */}
-                    <Card className="border-border bg-card p-6">
-                        <div className="flex items-start gap-4">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                                <Palette className="h-5 w-5 text-primary" />
+                <div className="p-3 sm:p-4 md:p-6 space-y-4 sm:space-y-6 max-w-full lg:max-w-4xl">
+                    <Card className="border-border bg-card p-3 sm:p-4 md:p-6">
+                        <div className="flex items-start gap-3 sm:gap-4">
+                            <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-primary/10 flex-shrink-0">
+                                <Palette className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                             </div>
-                            <div className="flex-1">
-                                <h3 className="text-lg font-semibold text-foreground mb-1">Appearance</h3>
-                                <p className="text-sm text-muted-foreground mb-4">Customize how the app looks</p>
+                            <div className="flex-1 min-w-0">
+                                <h3 className="text-base sm:text-lg font-semibold text-foreground mb-1">Appearance</h3>
+                                <p className="text-xs sm:text-sm text-muted-foreground mb-3 sm:mb-4">Customize how the app looks</p>
                                 <div className="flex items-center justify-between">
-                                    <Label htmlFor="theme" className="text-foreground">
+                                    <Label htmlFor="theme" className="text-foreground text-sm sm:text-base">
                                         Theme
                                     </Label>
                                     <ThemeToggle />
@@ -42,32 +39,31 @@ export default function StudentSettings() {
                         </div>
                     </Card>
 
-                    {/* Notifications */}
-                    <Card className="border-border bg-card p-6">
-                        <div className="flex items-start gap-4">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                                <Bell className="h-5 w-5 text-primary" />
+                    <Card className="border-border bg-card p-3 sm:p-4 md:p-6">
+                        <div className="flex items-start gap-3 sm:gap-4">
+                            <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-primary/10 flex-shrink-0">
+                                <Bell className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                             </div>
-                            <div className="flex-1 space-y-4">
+                            <div className="flex-1 space-y-3 sm:space-y-4 min-w-0">
                                 <div>
-                                    <h3 className="text-lg font-semibold text-foreground mb-1">Notifications</h3>
-                                    <p className="text-sm text-muted-foreground">Manage your notification preferences</p>
+                                    <h3 className="text-base sm:text-lg font-semibold text-foreground mb-1">Notifications</h3>
+                                    <p className="text-xs sm:text-sm text-muted-foreground">Manage your notification preferences</p>
                                 </div>
-                                <div className="space-y-4">
-                                    <div className="flex items-center justify-between">
-                                        <Label htmlFor="thesis-updates" className="text-foreground">
+                                <div className="space-y-3 sm:space-y-4">
+                                    <div className="flex items-center justify-between gap-3">
+                                        <Label htmlFor="thesis-updates" className="text-foreground text-sm sm:text-base">
                                             Thesis status updates
                                         </Label>
                                         <Switch id="thesis-updates" defaultChecked />
                                     </div>
-                                    <div className="flex items-center justify-between">
-                                        <Label htmlFor="supervisor-feedback" className="text-foreground">
+                                    <div className="flex items-center justify-between gap-3">
+                                        <Label htmlFor="supervisor-feedback" className="text-foreground text-sm sm:text-base">
                                             Supervisor feedback
                                         </Label>
                                         <Switch id="supervisor-feedback" defaultChecked />
                                     </div>
-                                    <div className="flex items-center justify-between">
-                                        <Label htmlFor="deadline-reminders" className="text-foreground">
+                                    <div className="flex items-center justify-between gap-3">
+                                        <Label htmlFor="deadline-reminders" className="text-foreground text-sm sm:text-base">
                                             Deadline reminders
                                         </Label>
                                         <Switch id="deadline-reminders" defaultChecked />
@@ -77,26 +73,25 @@ export default function StudentSettings() {
                         </div>
                     </Card>
 
-                    {/* Email Preferences */}
-                    <Card className="border-border bg-card p-6">
-                        <div className="flex items-start gap-4">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                                <Mail className="h-5 w-5 text-primary" />
+                    <Card className="border-border bg-card p-3 sm:p-4 md:p-6">
+                        <div className="flex items-start gap-3 sm:gap-4">
+                            <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-primary/10 flex-shrink-0">
+                                <Mail className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                             </div>
-                            <div className="flex-1 space-y-4">
+                            <div className="flex-1 space-y-3 sm:space-y-4 min-w-0">
                                 <div>
-                                    <h3 className="text-lg font-semibold text-foreground mb-1">Email Preferences</h3>
-                                    <p className="text-sm text-muted-foreground">Control what emails you receive</p>
+                                    <h3 className="text-base sm:text-lg font-semibold text-foreground mb-1">Email Preferences</h3>
+                                    <p className="text-xs sm:text-sm text-muted-foreground">Control what emails you receive</p>
                                 </div>
-                                <div className="space-y-4">
-                                    <div className="flex items-center justify-between">
-                                        <Label htmlFor="email-notifications" className="text-foreground">
+                                <div className="space-y-3 sm:space-y-4">
+                                    <div className="flex items-center justify-between gap-3">
+                                        <Label htmlFor="email-notifications" className="text-foreground text-sm sm:text-base">
                                             Email notifications
                                         </Label>
                                         <Switch id="email-notifications" defaultChecked />
                                     </div>
-                                    <div className="flex items-center justify-between">
-                                        <Label htmlFor="weekly-digest" className="text-foreground">
+                                    <div className="flex items-center justify-between gap-3">
+                                        <Label htmlFor="weekly-digest" className="text-foreground text-sm sm:text-base">
                                             Weekly digest
                                         </Label>
                                         <Switch id="weekly-digest" />
@@ -106,26 +101,25 @@ export default function StudentSettings() {
                         </div>
                     </Card>
 
-                    {/* Privacy */}
-                    <Card className="border-border bg-card p-6">
-                        <div className="flex items-start gap-4">
-                            <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-primary/10">
-                                <Shield className="h-5 w-5 text-primary" />
+                    <Card className="border-border bg-card p-3 sm:p-4 md:p-6">
+                        <div className="flex items-start gap-3 sm:gap-4">
+                            <div className="flex h-8 w-8 sm:h-10 sm:w-10 items-center justify-center rounded-lg bg-primary/10 flex-shrink-0">
+                                <Shield className="h-4 w-4 sm:h-5 sm:w-5 text-primary" />
                             </div>
-                            <div className="flex-1 space-y-4">
+                            <div className="flex-1 space-y-3 sm:space-y-4 min-w-0">
                                 <div>
-                                    <h3 className="text-lg font-semibold text-foreground mb-1">Privacy</h3>
-                                    <p className="text-sm text-muted-foreground">Manage your privacy settings</p>
+                                    <h3 className="text-base sm:text-lg font-semibold text-foreground mb-1">Privacy</h3>
+                                    <p className="text-xs sm:text-sm text-muted-foreground">Manage your privacy settings</p>
                                 </div>
-                                <div className="space-y-4">
-                                    <div className="flex items-center justify-between">
-                                        <Label htmlFor="profile-visibility" className="text-foreground">
+                                <div className="space-y-3 sm:space-y-4">
+                                    <div className="flex items-center justify-between gap-3">
+                                        <Label htmlFor="profile-visibility" className="text-foreground text-sm sm:text-base">
                                             Public profile
                                         </Label>
                                         <Switch id="profile-visibility" defaultChecked />
                                     </div>
-                                    <div className="flex items-center justify-between">
-                                        <Label htmlFor="show-email" className="text-foreground">
+                                    <div className="flex items-center justify-between gap-3">
+                                        <Label htmlFor="show-email" className="text-foreground text-sm sm:text-base">
                                             Show email address
                                         </Label>
                                         <Switch id="show-email" />

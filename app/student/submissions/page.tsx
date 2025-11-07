@@ -40,49 +40,49 @@ export default function StudentSubmissionsPage() {
     }
 
     return (
-        <div className="flex h-screen bg-background">
+        <div className="flex h-scree bg-background">
             <StudentSidebar />
             <main className="flex-1 overflow-auto">
-                <div className="p-8">
-                    <div className="mb-8">
-                        <h1 className="text-3xl font-bold text-foreground mb-2">My Submissions</h1>
-                        <p className="text-muted-foreground">Track and manage all your thesis submissions</p>
+                <div className="p-4 sm:p-6 md:p-8">
+                    <div className="mb-4 sm:mb-6 md:mb-8">
+                        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">My Submissions</h1>
+                        <p className="text-muted-foreground text-sm sm:text-base">Track and manage all your thesis submissions</p>
                     </div>
 
-                    <div className="space-y-4">
+                    <div className="space-y-3 sm:space-y-4 mb-20">
                         {submissions.map((submission) => (
                             <Card key={submission.id} className="hover:shadow-lg transition-shadow">
-                                <CardHeader>
-                                    <div className="flex items-start justify-between">
-                                        <div className="flex-1">
-                                            <div className="flex items-center gap-3 mb-2">
-                                                <FileText className="h-5 w-5 text-primary" />
-                                                <CardTitle className="text-xl">{submission.title}</CardTitle>
+                                <CardHeader className="p-3 sm:p-4 md:p-6">
+                                    <div className="flex flex-col sm:flex-row items-start justify-between gap-3">
+                                        <div className="flex-1 min-w-0">
+                                            <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                                                <FileText className="h-4 w-4 sm:h-5 sm:w-5 text-primary flex-shrink-0" />
+                                                <CardTitle className="text-base sm:text-lg md:text-xl truncate">{submission.title}</CardTitle>
                                             </div>
-                                            <CardDescription className="text-sm">
+                                            <CardDescription className="text-xs sm:text-sm">
                                                 Supervisor: {submission.supervisor} • Department: {submission.department}
                                             </CardDescription>
                                         </div>
-                                        <Badge className={getStatusColor(submission.status)}>
+                                        <Badge className={`${getStatusColor(submission.status)} text-xs flex-shrink-0`}>
                                             {submission.status.charAt(0).toUpperCase() + submission.status.slice(1).replace("-", " ")}
                                         </Badge>
                                     </div>
                                 </CardHeader>
-                                <CardContent>
-                                    <div className="space-y-4">
-                                        <div className="flex items-center justify-between text-sm text-muted-foreground">
+                                <CardContent className="p-3 sm:p-4 md:p-6 pt-0">
+                                    <div className="space-y-3 sm:space-y-4">
+                                        <div className="flex items-center justify-between text-xs sm:text-sm text-muted-foreground">
                                             <span>Submitted: {new Date(submission.submittedDate).toLocaleDateString()}</span>
                                             <span>{submission.files.length} file(s)</span>
                                         </div>
 
                                         {submission.feedback && (
-                                            <div className="p-3 bg-red-50 border border-red-200 rounded-lg">
-                                                <p className="text-sm font-medium text-red-900 mb-1">Feedback:</p>
-                                                <p className="text-sm text-red-800">{submission.feedback}</p>
+                                            <div className="p-2 sm:p-3 bg-red-50 border border-red-200 rounded-lg">
+                                                <p className="text-xs sm:text-sm font-medium text-red-900 mb-1">Feedback:</p>
+                                                <p className="text-xs sm:text-sm text-red-800">{submission.feedback}</p>
                                             </div>
                                         )}
 
-                                        <div className="flex flex-wrap gap-2">
+                                        <div className="flex flex-wrap gap-1 sm:gap-2">
                                             {submission.files.map((file, idx) => (
                                                 <Badge key={idx} variant="outline" className="text-xs">
                                                     {file}
@@ -90,22 +90,38 @@ export default function StudentSubmissionsPage() {
                                             ))}
                                         </div>
 
-                                        <div className="flex gap-2 pt-2">
-                                            <Button size="sm" variant="outline" className="gap-2 bg-transparent">
-                                                <Eye className="h-4 w-4" />
+                                        <div className="flex flex-wrap gap-2 pt-2">
+                                            <Button
+                                                size="sm"
+                                                variant="outline"
+                                                className="gap-2 bg-transparent text-xs sm:text-sm h-8 sm:h-9"
+                                            >
+                                                <Eye className="h-3 w-3 sm:h-4 sm:w-4" />
                                                 View
                                             </Button>
-                                            <Button size="sm" variant="outline" className="gap-2 bg-transparent">
-                                                <Download className="h-4 w-4" />
+                                            <Button
+                                                size="sm"
+                                                variant="outline"
+                                                className="gap-2 bg-transparent text-xs sm:text-sm h-8 sm:h-9"
+                                            >
+                                                <Download className="h-3 w-3 sm:h-4 sm:w-4" />
                                                 Download
                                             </Button>
                                             {submission.status === "rejected" && (
-                                                <Button size="sm" variant="outline" className="gap-2 bg-transparent">
+                                                <Button
+                                                    size="sm"
+                                                    variant="outline"
+                                                    className="gap-2 bg-transparent text-xs sm:text-sm h-8 sm:h-9"
+                                                >
                                                     Resubmit
                                                 </Button>
                                             )}
-                                            <Button size="sm" variant="ghost" className="gap-2 text-red-600 hover:text-red-700">
-                                                <Trash2 className="h-4 w-4" />
+                                            <Button
+                                                size="sm"
+                                                variant="ghost"
+                                                className="gap-2 text-red-600 hover:text-red-700 text-xs sm:text-sm h-8 sm:h-9"
+                                            >
+                                                <Trash2 className="h-3 w-3 sm:h-4 sm:w-4" />
                                                 Delete
                                             </Button>
                                         </div>
