@@ -1,20 +1,8 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import {
-    BookOpen,
-    FileText,
-    LayoutDashboard,
-    LogOut,
-    Settings,
-    CheckCircle,
-    User,
-    Menu,
-    X,
-    Sun,
-    Moon
-} from "lucide-react"
+import { usePathname } from 'next/navigation'
+import { BookOpen, FileText, LayoutDashboard, LogOut, Settings, CheckCircle, User, Menu, X, Sun, Moon, FolderOpen, Beaker } from 'lucide-react'
 import { cn } from "@/lib/utils"
 import { useState } from "react"
 import {useTheme} from "next-themes";
@@ -28,6 +16,8 @@ export function SupervisorSidebar() {
 
     const navItems = [
         { href: "/supervisor/dashboard", label: "Dashboard", icon: LayoutDashboard },
+        { href: "/supervisor/projects", label: "Student Projects", icon: FolderOpen },
+        { href: "/supervisor/research", label: "My Research", icon: Beaker },
         { href: "/supervisor/reviews", label: "Pending Reviews", icon: CheckCircle },
         { href: "/supervisor/students", label: "My Students", icon: FileText },
         { href: "/supervisor/profile/1", label: "Profile", icon: User },
@@ -103,7 +93,7 @@ export function SupervisorSidebar() {
                 </div>
             </aside>
 
-            {/* Desktop sidebar - hidden on mobile */}
+            {/* Desktop sidebar */}
             <aside className="hidden lg:flex relative min-w-64 border-r border-border bg-card min-h-screen flex-col">
                 <div className="p-6 border-b border-border">
                     <Link href="/" className="flex items-center gap-3">

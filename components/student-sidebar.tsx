@@ -1,11 +1,11 @@
 "use client"
 
 import Link from "next/link"
-import { usePathname } from "next/navigation"
-import {BookOpen, FileText, LayoutDashboard, LogOut, Settings, Upload, User, Menu, X, Sun, Moon} from "lucide-react"
+import { usePathname } from 'next/navigation'
+import { BookOpen, FileText, LayoutDashboard, LogOut, Settings, Upload, User, Menu, X, Sun, Moon, FolderOpen } from 'lucide-react'
 import { cn } from "@/lib/utils"
 import { useState } from "react"
-import {useTheme} from "next-themes";
+import { useTheme } from "next-themes"
 
 export function StudentSidebar() {
     const pathname = usePathname()
@@ -15,8 +15,8 @@ export function StudentSidebar() {
     const [mounted, setMounted] = useState(false)
 
     const navItems = [
+        { href: "/student/projects", label: "My Projects", icon: FolderOpen },
         { href: "/student/dashboard", label: "Dashboard", icon: LayoutDashboard },
-        { href: "/student/submit", label: "Submit Thesis", icon: Upload },
         { href: "/student/submissions", label: "My Submissions", icon: FileText },
         { href: "/student/profile/1", label: "Profile", icon: User },
         { href: "/student/settings", label: "Settings", icon: Settings },
@@ -46,8 +46,8 @@ export function StudentSidebar() {
                             <BookOpen className="h-6 w-6 text-primary-foreground" />
                         </div>
                         <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Research Portal
-            </span>
+                            Research Portal
+                        </span>
                     </Link>
                 </div>
 
@@ -100,8 +100,8 @@ export function StudentSidebar() {
                             <BookOpen className="h-6 w-6 text-primary-foreground" />
                         </div>
                         <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Research Portal
-            </span>
+                            Research Portal
+                        </span>
                     </Link>
                 </div>
 

@@ -10,13 +10,22 @@ import { Badge } from "@/components/ui/badge"
 import { Avatar, AvatarFallback } from "@/components/ui/avatar"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Upload, X, FileText, Download, Send, Clock, CheckCircle, Users, Settings, MessageSquare } from 'lucide-react'
-import { getProjectById } from "@/lib/data/projects"
+import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
+import { Textarea } from "@/components/ui/textarea"
+import { Upload, X, FileText, Download, Send, Clock, CheckCircle, Users, Settings, MessageSquare, UserCheck } from 'lucide-react'
+import { getProjectById, createSupervisorRequest } from "@/lib/data/projects"
 import Link from "next/link"
+
+const mockSupervisors = [
+    { id: 'supervisor1', name: 'Dr. Ahmed Hassan', department: 'Computer Science & Engineering', specialization: 'Machine Learning', currentProjects: 5 },
+    { id: 'supervisor2', name: 'Dr. Sarah Khan', department: 'Computer Science & Engineering', specialization: 'IoT & Networks', currentProjects: 3 },
+    { id: 'supervisor3', name: 'Dr. Michael Wong', department: 'Computer Science & Engineering', specialization: 'Blockchain & Security', currentProjects: 4 },
+    { id: 'supervisor4', name: 'Dr. Emily Davis', department: 'Electrical & Electronic Engineering', specialization: 'Power Systems', currentProjects: 6 },
+]
 
 export default function ProjectWorkspacePage({ params }: { params: Promise<{ id: string }> }) {
     const { id } = use(params)
-    const project = getProjectById(Number.parseInt(id))
+    const project = getProjectById(id)
 
     const [files, setFiles] = useState<{ name: string; type: string; size: number }[]>([])
     const [keywords, setKeywords] = useState<string[]>(["Machine Learning", "AI"])
@@ -27,9 +36,28 @@ export default function ProjectWorkspacePage({ params }: { params: Promise<{ id:
         { user: "You", action: "updated abstract", time: "1 day ago" },
     ])
 
+    const [isRequestDialogOpen, setIsRequestDialogOpen] = useState(false)
+    const [selectedSupervisor, setSelectedSupervisor] = useState<string>("")
+    const [requestMessage, setRequestMessage] = useState("")
+
     if (!project) {
-        return <div className="p-4 sm:p-6">Project not found</div>
+        return (
+            <div className="flex min-h-screen bg-background">
+                <StudentSidebar />
+                <main className="flex-1 p-4 sm:p-6">
+                    <Card className="border-border bg-card p-6 text-center">
+                        <h2 className="text-xl font-bold text-foreground mb-2">Project Not Found</h2>
+                        <p className="text-sm text-muted-foreground mb-4">The project you're looking for doesn't exist.</p>
+                        <Link href="/student/projects">
+                            <Button>Back to Projects</Button>
+                        </Link>
+                    </Card>
+                </main>
+            </div>
+        )
     }
+
+    const availableSupervisors = mockSupervisors.filter(s => s.department === project.department)
 
     const handleAddKeyword = () => {
         if (keywordInput.trim() && keywords.length < 5) {
@@ -55,10 +83,33 @@ export default function ProjectWorkspacePage({ params }: { params: Promise<{ id:
         setFiles(files.filter((_, i) => i !== index))
     }
 
+    const handleSendRequest = () => {
+        if (!selectedSupervisor || !requestMessage.trim()) return
+
+        const supervisor = availableSupervisors.find(s => s.id === selectedSupervisor)
+        if (!supervisor) return
+
+        createSupervisorRequest({
+            projectId: project.id,
+            supervisorId: supervisor.id,
+            supervisorName: supervisor.name,
+            status: 'pending',
+            requestMessage: requestMessage.trim(),
+        })
+
+        setIsRequestDialogOpen(false)
+        setSelectedSupervisor("")
+        setRequestMessage("")
+
+        // Show success message (in real app, use toast)
+        alert(`Supervision request sent to ${supervisor.name}!`)
+    }
+
     const getStatusBadge = () => {
         const statusConfig = {
             draft_pending_team: { label: "Pending Team", color: "bg-yellow-100 text-yellow-800" },
             active_no_supervisor: { label: "Need Supervisor", color: "bg-orange-100 text-orange-800" },
+            pending_supervisor: { label: "Pending Supervisor", color: "bg-blue-100 text-blue-800" },
             in_progress: { label: "In Progress", color: "bg-blue-100 text-blue-800" },
             pending_review: { label: "Under Review", color: "bg-purple-100 text-purple-800" },
             published: { label: "Published", color: "bg-green-100 text-green-800" },
@@ -81,7 +132,7 @@ export default function ProjectWorkspacePage({ params }: { params: Promise<{ id:
                                 {getStatusBadge()}
                             </div>
                             <p className="text-xs sm:text-sm text-muted-foreground">
-                                Created on {new Date(project.created_at).toLocaleDateString()}
+                                Created on {new Date(project.createdAt).toLocaleDateString()}
                             </p>
                         </div>
                         <div className="flex gap-2 flex-shrink-0">
@@ -103,10 +154,10 @@ export default function ProjectWorkspacePage({ params }: { params: Promise<{ id:
                         {project.collaborators.map((collab, idx) => (
                             <div key={idx} className="flex items-center gap-2">
                                 <Avatar className="h-6 w-6 sm:h-8 sm:w-8">
-                                    <AvatarFallback className="text-xs">{collab.user_name.charAt(0)}</AvatarFallback>
+                                    <AvatarFallback className="text-xs">{collab.userName.charAt(0)}</AvatarFallback>
                                 </Avatar>
-                                <span className="text-xs sm:text-sm text-foreground">{collab.user_name}</span>
-                                {collab.role === "primary" && (
+                                <span className="text-xs sm:text-sm text-foreground">{collab.userName}</span>
+                                {collab.role === "primary_author" && (
                                     <Badge variant="outline" className="text-xs">Lead</Badge>
                                 )}
                             </div>
@@ -142,7 +193,7 @@ export default function ProjectWorkspacePage({ params }: { params: Promise<{ id:
                                         <div>
                                             <Label className="text-xs sm:text-sm font-medium text-muted-foreground">Supervisor</Label>
                                             <p className="text-xs sm:text-sm text-foreground mt-1 sm:mt-2">
-                                                {project.supervisor_id ? "Dr. Ahmed Hassan" : "Not assigned yet"}
+                                                {project.supervisorId ? project.supervisorName : "Not assigned yet"}
                                             </p>
                                         </div>
                                     </div>
@@ -156,7 +207,7 @@ export default function ProjectWorkspacePage({ params }: { params: Promise<{ id:
                                         <CheckCircle className="h-4 w-4 sm:h-5 sm:w-5 text-green-600 mt-0.5 flex-shrink-0" />
                                         <div>
                                             <p className="text-xs sm:text-sm font-medium text-foreground">Project Created</p>
-                                            <p className="text-xs text-muted-foreground">{new Date(project.created_at).toLocaleDateString()}</p>
+                                            <p className="text-xs text-muted-foreground">{new Date(project.createdAt).toLocaleDateString()}</p>
                                         </div>
                                     </div>
                                     <div className="flex items-start gap-3">
@@ -393,38 +444,157 @@ export default function ProjectWorkspacePage({ params }: { params: Promise<{ id:
                                         <div key={idx} className="flex items-center justify-between p-2 sm:p-3 rounded-lg bg-muted/50">
                                             <div className="flex items-center gap-2 sm:gap-3">
                                                 <Avatar className="h-8 w-8">
-                                                    <AvatarFallback className="text-xs">{collab.user_name.charAt(0)}</AvatarFallback>
+                                                    <AvatarFallback className="text-xs">{collab.userName.charAt(0)}</AvatarFallback>
                                                 </Avatar>
                                                 <div>
-                                                    <p className="text-xs sm:text-sm font-medium text-foreground">{collab.user_name}</p>
-                                                    <p className="text-xs text-muted-foreground capitalize">{collab.role} Author</p>
+                                                    <p className="text-xs sm:text-sm font-medium text-foreground">{collab.userName}</p>
+                                                    <p className="text-xs text-muted-foreground capitalize">{collab.role.replace('_', ' ')}</p>
                                                 </div>
                                             </div>
-                                            <Badge variant="outline" className={`text-xs ${collab.invitation_status === "accepted" ? "text-green-600" : "text-yellow-600"}`}>
-                                                {collab.invitation_status}
+                                            <Badge variant="outline" className={`text-xs ${collab.invitationStatus === "accepted" ? "text-green-600" : "text-yellow-600"}`}>
+                                                {collab.invitationStatus}
                                             </Badge>
                                         </div>
                                     ))}
                                 </div>
                             </Card>
 
-                            {!project.supervisor_id && (
+                            {(project.status === "active_no_supervisor" || project.status === "pending_supervisor") && (
                                 <Card className="border-border bg-card p-3 sm:p-4 md:p-6">
-                                    <h2 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">Find Supervisor</h2>
-                                    <p className="text-xs sm:text-sm text-muted-foreground mb-4">
-                                        Your project needs a supervisor to proceed. Browse available supervisors and send a request.
-                                    </p>
-                                    <Link href="/student/browse-supervisors">
-                                        <Button size="sm" className="w-full sm:w-auto text-xs sm:text-sm h-8 sm:h-9">
-                                            Browse Supervisors
-                                        </Button>
-                                    </Link>
+                                    <div className="flex items-center gap-2 mb-3 sm:mb-4">
+                                        <UserCheck className="h-5 w-5 text-primary" />
+                                        <h2 className="text-base sm:text-lg font-semibold text-foreground">Supervisor Assignment</h2>
+                                    </div>
+
+                                    {project.status === "pending_supervisor" ? (
+                                        <div className="flex items-center gap-3 p-3 rounded-lg bg-blue-50 dark:bg-blue-950/20 border border-blue-200 dark:border-blue-900">
+                                            <Clock className="h-5 w-5 text-blue-600 flex-shrink-0" />
+                                            <div>
+                                                <p className="text-xs sm:text-sm font-medium text-foreground">Supervision request pending</p>
+                                                <p className="text-xs text-muted-foreground mt-1">
+                                                    Waiting for supervisor response. You'll be notified once they accept or decline.
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ) : (
+                                        <>
+                                            <p className="text-xs sm:text-sm text-muted-foreground mb-4">
+                                                Select a supervisor from your department ({project.department}) to guide your research project.
+                                            </p>
+
+                                            <div className="space-y-3">
+                                                <Label className="text-xs sm:text-sm font-medium text-foreground">Available Supervisors</Label>
+                                                <Select value={selectedSupervisor} onValueChange={setSelectedSupervisor}>
+                                                    <SelectTrigger className="bg-input border-border text-foreground text-xs sm:text-sm">
+                                                        <SelectValue placeholder="Select a supervisor" />
+                                                    </SelectTrigger>
+                                                    <SelectContent>
+                                                        {availableSupervisors.map(supervisor => (
+                                                            <SelectItem key={supervisor.id} value={supervisor.id}>
+                                                                <div className="flex flex-col">
+                                                                    <span className="font-medium">{supervisor.name}</span>
+                                                                    <span className="text-xs text-muted-foreground">
+                                                                        {supervisor.specialization} • {supervisor.currentProjects} projects
+                                                                    </span>
+                                                                </div>
+                                                            </SelectItem>
+                                                        ))}
+                                                    </SelectContent>
+                                                </Select>
+
+                                                {selectedSupervisor && (
+                                                    <div className="mt-3 p-3 rounded-lg bg-muted/50 border border-border">
+                                                        {(() => {
+                                                            const supervisor = availableSupervisors.find(s => s.id === selectedSupervisor)
+                                                            return supervisor ? (
+                                                                <div className="space-y-2">
+                                                                    <p className="text-xs sm:text-sm font-medium text-foreground">{supervisor.name}</p>
+                                                                    <p className="text-xs text-muted-foreground">Specialization: {supervisor.specialization}</p>
+                                                                    <p className="text-xs text-muted-foreground">Current Projects: {supervisor.currentProjects}</p>
+                                                                </div>
+                                                            ) : null
+                                                        })()}
+                                                    </div>
+                                                )}
+
+                                                <Button
+                                                    onClick={() => setIsRequestDialogOpen(true)}
+                                                    disabled={!selectedSupervisor}
+                                                    size="sm"
+                                                    className="w-full sm:w-auto text-xs sm:text-sm h-8 sm:h-9 mt-2"
+                                                >
+                                                    <Send className="h-3 w-3 sm:h-4 sm:w-4 mr-2" />
+                                                    Send Supervision Request
+                                                </Button>
+                                            </div>
+                                        </>
+                                    )}
+                                </Card>
+                            )}
+
+                            {project.supervisorId && (
+                                <Card className="border-border bg-card p-3 sm:p-4 md:p-6">
+                                    <h2 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4">Supervisor</h2>
+                                    <div className="flex items-center gap-3 p-3 rounded-lg bg-green-50 dark:bg-green-950/20 border border-green-200 dark:border-green-900">
+                                        <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
+                                        <div>
+                                            <p className="text-xs sm:text-sm font-medium text-foreground">{project.supervisorName}</p>
+                                            <p className="text-xs text-muted-foreground">Supervising your project</p>
+                                        </div>
+                                    </div>
                                 </Card>
                             )}
                         </TabsContent>
                     </Tabs>
                 </div>
             </main>
+
+            <Dialog open={isRequestDialogOpen} onOpenChange={setIsRequestDialogOpen}>
+                <DialogContent className="sm:max-w-[500px]">
+                    <DialogHeader>
+                        <DialogTitle>Send Supervision Request</DialogTitle>
+                    </DialogHeader>
+                    <div className="space-y-4 py-4">
+                        <div>
+                            <Label className="text-sm font-medium text-foreground mb-2">Supervisor</Label>
+                            <p className="text-sm text-muted-foreground">
+                                {availableSupervisors.find(s => s.id === selectedSupervisor)?.name}
+                            </p>
+                        </div>
+                        <div>
+                            <Label className="text-sm font-medium text-foreground mb-2">Project</Label>
+                            <p className="text-sm text-muted-foreground">{project.title}</p>
+                        </div>
+                        <div>
+                            <Label htmlFor="message" className="text-sm font-medium text-foreground mb-2">
+                                Request Message *
+                            </Label>
+                            <Textarea
+                                id="message"
+                                value={requestMessage}
+                                onChange={(e) => setRequestMessage(e.target.value)}
+                                placeholder="Explain why you'd like this supervisor to guide your research..."
+                                className="min-h-[120px] bg-input border-border text-foreground"
+                            />
+                            <p className="text-xs text-muted-foreground mt-1">
+                                Include your research topic, methodology, and why you chose this supervisor.
+                            </p>
+                        </div>
+                    </div>
+                    <DialogFooter>
+                        <Button variant="outline" onClick={() => setIsRequestDialogOpen(false)}>
+                            Cancel
+                        </Button>
+                        <Button
+                            onClick={handleSendRequest}
+                            disabled={!requestMessage.trim()}
+                        >
+                            <Send className="h-4 w-4 mr-2" />
+                            Send Request
+                        </Button>
+                    </DialogFooter>
+                </DialogContent>
+            </Dialog>
         </div>
     )
 }
