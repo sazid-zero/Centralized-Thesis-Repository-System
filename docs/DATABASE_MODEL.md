@@ -1,8 +1,8 @@
-# SUST THESIS/PROJECTS REPOSITORY (RESEARCH PORTAL) - DATABASE MODEL & DESIGN DOCUMENT
+# SUST THESIS/PROJECTS REPOSITORY (RESEARCH HUB) - DATABASE MODEL & DESIGN DOCUMENT
 
 ## 1. SYSTEM OVERVIEW
 
-The SUST Research Portal Repository is a role-based thesis management system with the following workflow:
+The SUST Research Hub Repository is a role-based thesis management system with the following workflow:
 
 ### Workflow Steps:
 1. **User Registration Request**: Students/Supervisors register → Request sent to Admin

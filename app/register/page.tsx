@@ -49,7 +49,7 @@ export default function RegisterPage() {
                         <div className="flex h-10 w-10 items-center justify-center rounded-lg bg-gradient-to-r from-primary to-accent text-primary-foreground">
                             <BookOpen className="h-6 w-6" />
                         </div>
-                        <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">SUST Research Portal</span>
+                        <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">SUST Research Hub</span>
                     </Link>
                     <Link href="/login" className="text-sm text-muted-foreground hover:text-foreground transition-colors">
                         Already have an account? <span className="text-primary font-semibold">Sign in</span>

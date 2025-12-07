@@ -88,7 +88,7 @@ export default function ThesisDetailsPage({ params }: { params: Promise<{ id: st
                                 <Search className="h-6 w-6 text-primary-foreground" />
                             </div>
                             <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Research Portal
+                Research Hub
               </span>
                         </Link>
 

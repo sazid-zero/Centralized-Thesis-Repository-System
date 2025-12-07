@@ -253,7 +253,7 @@ export default function Home() {
                                 <BookOpen className="h-6 w-6 text-primary-foreground" />
                             </div>
                             <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Research Portal
+                Research Hub
               </span>
                         </Link>
 
@@ -336,7 +336,7 @@ export default function Home() {
                             <BookOpen className="h-6 w-6 text-primary-foreground" />
                         </div>
                         <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              Research Portal
+              Research Hub
             </span>
                     </Link>
 
@@ -407,7 +407,7 @@ export default function Home() {
                                 <BookOpen className="h-6 w-6 text-primary-foreground" />
                             </div>
                             <span className="text-lg font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-                Research Portal
+                Research Hub
               </span>
                         </div>
                         <motion.div
@@ -987,7 +987,7 @@ export default function Home() {
                                 <div className="flex h-8 w-8 items-center justify-center rounded-lg bg-gradient-to-br from-primary to-accent">
                                     <BookOpen className="h-5 w-5 text-primary-foreground" />
                                 </div>
-                                <span className="font-bold text-foreground">SUST Research Portal</span>
+                                <span className="font-bold text-foreground">SUST Research Hub</span>
                             </div>
                             <p className="text-sm text-muted-foreground">Centralized repository for academic research at SUST.</p>
                         </div>

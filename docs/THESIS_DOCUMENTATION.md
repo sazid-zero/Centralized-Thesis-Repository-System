@@ -2445,7 +2445,7 @@ export default function ProjectWorkspace({ params }: { params: { id: string } })
 **Responsive Typography:**
 \`\`\`tsx
 <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold">
-  Research Portal
+  Research Hub
 </h1>
 
 <p className="text-sm md:text-base lg:text-lg text-muted-foreground">

@@ -30,7 +30,7 @@ export default function LoginPage() {
                             <BookOpen className="h-6 w-6" />
                         </div>
                         <span className="text-xl font-bold bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent">
-              SUST Research Portal
+              SUST Research Hub
             </span>
                     </Link>
                     <div className="flex items-center gap-4">
