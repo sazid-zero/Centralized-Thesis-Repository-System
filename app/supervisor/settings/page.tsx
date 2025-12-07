@@ -10,9 +10,11 @@ import { Bell, Mail, Shield, Palette } from "lucide-react"
 export default function SupervisorSettings() {
     return (
         <div className="flex min-h-screen bg-background">
-            <SupervisorSidebar />
+            <div className="lg:block lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-64 lg:border-r lg:border-border lg:bg-card lg:overflow-hidden">
+        <SupervisorSidebar />
+      </div>
 
-            <main className="flex-1">
+            <main className="flex-1 lg:ml-64 overflow-y-auto">
                 {/* Header */}
                 <div className="border-b border-border bg-card p-4 sm:p-6">
                     <div>

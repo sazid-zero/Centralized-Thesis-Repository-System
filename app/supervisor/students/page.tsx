@@ -34,8 +34,10 @@ export default function SupervisorStudentsPage() {
 
     return (
         <div className="flex h-screen bg-background">
-            <SupervisorSidebar />
-            <main className="flex-1">
+            <div className="lg:block lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-64 lg:border-r lg:border-border lg:bg-card lg:overflow-hidden">
+        <SupervisorSidebar />
+      </div>
+            <main className="flex-1 lg:ml-64 overflow-y-auto">
                 <div className="p-4 sm:p-6">
                     <div className="mb-8">
                         <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground mb-2">My Students</h1>

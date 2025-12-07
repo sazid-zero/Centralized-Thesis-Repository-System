@@ -53,9 +53,11 @@ export default function StudentDashboard() {
 
     return (
         <div className="flex min-h-screen w-full bg-background">
-            <StudentSidebar />
+            <div className="lg:block lg:fixed lg:left-0 lg:top-0 lg:h-screen lg:w-64 lg:border-r lg:border-border lg:bg-card lg:overflow-hidden">
+        <StudentSidebar />
+      </div>
 
-            <main className="mb-20 w-full">
+            <main className="mb-20 w-full lg:ml-64 overflow-y-auto">
                 <div className="border-b border-border bg-card p-4 sm:p-6">
                     <div className="flex flex-wrap items-center justify-between gap-3">
                         <div>
