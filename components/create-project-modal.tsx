@@ -54,7 +54,7 @@ export function CreateProjectModal({ onClose, onSuccess }: CreateProjectModalPro
             {
                 id: "1",
                 userId: "student1",
-                userName: "John Doe",
+                userName: "Sharif Mahmud",
                 userEmail: "john@example.com",
                 role: "primary_author",
                 invitationStatus: "accepted",
@@ -80,7 +80,7 @@ export function CreateProjectModal({ onClose, onSuccess }: CreateProjectModalPro
             keywords,
             status: coAuthors.length > 0 ? "draft_pending_team" : "active_no_supervisor",
             createdBy: "student1",
-            createdByName: "John Doe",
+            createdByName: "Sharif Mahmud",
             collaborators,
             files: [],
         })
@@ -90,7 +90,7 @@ export function CreateProjectModal({ onClose, onSuccess }: CreateProjectModalPro
                 userId: `user_${email}`,
                 type: "project_invitation",
                 title: "Project Invitation",
-                message: `John Doe invited you to collaborate on "${title}"`,
+                message: `Sharif Mahmud invited you to collaborate on "${title}"`,
                 read: false,
                 actionUrl: `/student/projects/${newProject.id}`,
                 actionLabel: "View Invitation",

@@ -3248,7 +3248,7 @@ export function ResearchBrowser() {
             field={project.field} 
             authors={project.collaborators.map(c => ({ // Mock authors
               id: Number(c.userId), // Mock user ID
-              name: c.userId === 'user1' ? 'John Doe' : 'Jane Smith', // Mock names
+              name: c.userId === 'user1' ? 'Sharif Mahmud' : 'Sharmin Akther', // Mock names
               role: c.role,
               avatar: c.userId === 'user1' ? '/avatars/john.png' : '/avatars/jane.png'
             }))} 
@@ -4350,7 +4350,7 @@ Get list of projects with filters.
       "authors": [
         {
           "id": 123,
-          "name": "John Doe",
+          "name": "Sharif Mahmud",
           "role": "primary_author"
         }
       ],
@@ -4497,7 +4497,7 @@ Browse available supervisors.
   "supervisors": [
     {
       "id": 789,
-      "name": "Dr. Jane Smith",
+      "name": "Dr. Sharmin Akther",
       "department": "Computer Science",
       "field": "Artificial Intelligence",
       "bio": "Professor specializing in...",
